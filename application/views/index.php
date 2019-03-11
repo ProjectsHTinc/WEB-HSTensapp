@@ -72,7 +72,7 @@
                                 </li>
                             </ul>
                             <a href="<?php echo base_url(); ?>register" class="button bt-black pull-right"><i class="ion-ios-unlocked-outline"></i></a>
-                              <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right"><i class="ion-android-add-circle"></i></a>
+                            <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right"><i class="ion-android-add-circle"></i></a>
                         </div>
                     </nav>
                 </div>
