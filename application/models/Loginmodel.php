@@ -63,6 +63,81 @@ Class Loginmodel extends CI_Model
 
        }
 
+
+       function get_register($name,$password,$email,$phone,$username){
+          $query="INSERT INTO user_master(email,email_verify,mobile,mobile_verify,password,user_role,status,created_at) VALUES('$email','N','$phone','N','$password','2','Active',NOW())";
+         $resultset=$this->db->query($query);
+         $insert_id = $this->db->insert_id();
+         $query_2="INSERT INTO user_details (user_master_id,created_at,created_by) VALUES('$insert_id',NOW(),'$insert_id')";
+         $resultset_2=$this->db->query($query_2);
+         // if($resultset_2){
+         //   echo "success";
+         // }else{
+         //   echo "failed";
+         // }
+      $s=$email;
+      $encrypt_email= base64_encode($s);
+      if($resultset_2){
+        $to=$email;
+        $subject="Welcome to Heyla App";
+        $htmlContent = '
+        <html>
+        <head>
+        <title></title>
+           </head>
+           <body style="background-color:#E4F1F7;"><div style="background-image: url('.base_url().'assets/front/images/email_1.png);height:700px;margin: auto;width: 100%;background-repeat: no-repeat;">
+              <div  style="padding:50px;width:400px;"><p>Dear '.$name.'</p>
+             <p style="font-size:20px;">Welcome to
+              <center><img src="'.base_url().'assets/front/images/heyla_b.png" style="width:120px;"></center>
+             </p>
+             <p style="margin-left:50px;"> <br>
+             To allow us to confirm the validity of your email address,click this verification link. <center>   <a href="'. base_url().'welcome/emailverfiy/'.$encrypt_email.'" target="_blank"style="background-color: #478ECC;    padding: 12px;    text-decoration: none;    color: #fff;    border-radius: 20px;">Verfiy  Here</a></center>  </p>
+             <p style="font-size:20px;">Thank you and enjoy, <br>
+               The Heyla Team
+               </p>
+             </body>
+          </html>';
+      $headers = "MIME-Version: 1.0" . "\r\n";
+      $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+      // Additional headers
+      $headers .= 'From: heylapp<info@heylapp.com>' . "\r\n";
+      $sent= mail($to,$subject,$htmlContent,$headers);
+        echo "success";
+      }else{
+        echo "failed";
+      }
+
+       }
+
+    function email_verify($email){
+     $decrpty_email=base64_decode($email);
+     $check_username="SELECT * FROM user_master WHERE email='$decrpty_email'";
+
+     $res=$this->db->query($check_username);
+     if($res->num_rows()==1){
+       foreach($res->result() as $rows){}
+         if($rows->email_verify=='Y'){
+           $data=array("msg"=>"Email  has been Verified Already Thank You.");
+             return $data;
+         }else{
+           $user_id=$rows->id;
+           $update="UPDATE user_master SET email_verify='Y' WHERE id='$user_id'";
+           $result=$this->db->query($update);
+           if($result){
+            $data=array("msg"=>"verify");
+            return $data;
+           }else{
+             $data=array("msg"=>"Some Thing Went Wrong Please Contact Us");
+               return $data;
+           }
+         }
+
+     }else{
+       $data=array("msg"=>"Some Thing Went Wrong Please Contact Us");
+         return $data;
+     }
+   }
+
        function getuser($user_id){
          $query="SELECT eu.* From edu_users as eu  WHERE eu.user_id='$user_id'";
          $resultset=$this->db->query($query);
@@ -115,6 +190,24 @@ Class Loginmodel extends CI_Model
            }else{
              echo "true";
          }
+       }
+       function checkmobile($phone){
+       $select="SELECT * FROM user_master Where mobile='$phone'";
+         $result=$this->db->query($select);
+         if($result->num_rows()>0){
+           echo "false";
+           }else{
+             echo "true";
+         }
+       }
+       function checkemail($email){
+         $select="SELECT * FROM user_master Where email='$email'";
+           $result=$this->db->query($select);
+           if($result->num_rows()>0){
+             echo "false";
+             }else{
+               echo "true";
+           }
        }
 
        function check_password_match($old_password,$user_id){
@@ -181,6 +274,9 @@ Class Loginmodel extends CI_Model
      }
 
        }
+
+
+
 
 
 
