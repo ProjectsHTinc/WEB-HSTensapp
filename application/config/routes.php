@@ -56,7 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 //--------PIA MODULE Starts-------//
-
+$route['dashboard'] = 'welcome/dashboard';
 $route['contact'] = 'welcome/contact';
 $route['register'] = 'welcome/register';
 $route['login'] = 'welcome/login';

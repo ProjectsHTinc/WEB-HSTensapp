@@ -2,6 +2,7 @@
     <div class="container">
 
         <div class="row">
+          <?php print_r(	$data=$this->session->userdata()); ?>
             <div class="col-sm-12 col-lg-3 col-md-6">
                 <div class="iq-fancy-box text-center">
                     <div class="iq-icon">
@@ -46,7 +47,7 @@
                     </div>
                 </div>
             </div>
-        
+
         </div>
     </div>
 </section>

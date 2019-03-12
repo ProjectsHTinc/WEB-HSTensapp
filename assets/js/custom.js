@@ -256,7 +256,7 @@ $(document).ready(function() {
           },
           password: {
               required: true,
-              alphanumeric: true
+              // alphanumeric: true
           },
           email: {
 								required: true,
@@ -304,12 +304,19 @@ $(document).ready(function() {
                  url: "welcome/get_register",
                  type: 'POST',
                  data: $('#registerform').serialize(),
+                 dataType: "json",
                  success: function(response) {
-                     if (response=="success") {
-                                 window.setTimeout(function(){location.reload()},3000);
-                     }else{
+                    var stats=response.status;
+                       $("#loading").show();
+                       setTimeout(function(){ },3000);
+                     if (stats=="success") {
+                        $("#loading").hide();
+                         $('#last_insert').val(response.last_id)
+                         $("#ins_details").show();
+                         $('#first_form').hide();
+                   }else{
 
-                     }
+                       }
                  }
              });
            }
@@ -318,4 +325,143 @@ $(document).ready(function() {
 jQuery.validator.addMethod("alphanumeric", function(value, element) {
 return this.optional(element) || /^\w+$/i.test(value);
 }, "Letters, numbers, and underscores only please");
+
+
+    $('#ins_detail_form').validate({
+      rules: {
+        institute_code: {
+            required: true,
+            lettersonly: true,
+            maxlength: 10,
+            minlength:6,
+            remote: {
+                   url: "welcome/check_ins_code",
+                   type: "post"
+                }
+        },
+          institute_name: {
+              required: true,
+              remote: {
+                     url: "welcome/check_ins_name",
+                     type: "post"
+                  }
+          },
+          institute_type: {
+              required: true
+          },
+          city: {
+              required: true
+          },
+          state: {
+              required: true
+          },
+          no_of_student: {
+              required: true
+          },
+          how_you_hear: {
+              required: true
+          },
+          notes: {
+              required: true
+          },
+          contact_person: {
+              required: true
+          },
+          person_designation: {
+              required: true
+          }
+      },
+      messages: {
+          city: "Please Enter City",
+          contact_person: "Please Enter Contact Person",
+          state: "Please Enter State",
+          person_designation: "Enter Person Designation",
+          institute_type: "Select Institute Type",
+          institute_code: {
+									 required: "Enter the Institute Code.",
+                   lettersonly: "Only Characters",
+                   maxlength:"Maximum 10 Characters",
+                   minlength:"Minimum 6 Characters",
+									 remote: "Institute Code already in Exist!"
+							 },
+          institute_name: {
+									 required: "Please enter Institute Name",
+									 remote: "Institute Name already in Exist!"
+							 },
+          no_of_student: {
+              required: "Enter No Of Students",
+              number:"Only Numbers"
+
+             }
+      },
+    submitHandler: function(form) {
+      $.ajax({
+                 url: "welcome/get_ins_details",
+                 type: 'POST',
+                 data: $('#ins_detail_form').serialize(),
+                 dataType: "json",
+                 success: function(response) {
+                    var stats=response.status;
+                     if (stats=="success") {
+                       swal({
+                         title: "Thank you for Registering!",
+                         text: "Verfiy Your Email",
+                         type: "success"
+                     }).then(function() {
+                         window.location = "login";
+                     });
+                   }else{
+
+                       }
+                 }
+             });
+           }
+
+});
+
+
+
+$('#login_form').validate({
+  rules: {
+      email: {
+          required: true
+      },
+      password: {
+          required: true
+      }
+  },
+  messages: {
+      email: "Please Enter Email",
+      password: "Please Enter Password"
+  },
+submitHandler: function(form) {
+  $.ajax({
+             url: "welcome/check_login",
+             type: 'POST',
+             data: $('#login_form').serialize(),
+             dataType: "json",
+             success: function(response) {
+                var stats=response.status;                
+                 if (stats=="success") {
+                   swal('Logging in Please wait')
+                   window.setTimeout(function () {
+                    location.href = "dashboard";
+                }, 3000);
+
+               }else if(stats=='incomplete'){
+                 $("#loading").hide();
+                  $('#last_insert').val(response.last_id)
+                  $("#ins_details").show();
+                  $('#login_section').hide();
+               }else{
+                   $('#res').html(response.msg)
+                   }
+             }
+         });
+       }
+
+});
+
+
+
 });

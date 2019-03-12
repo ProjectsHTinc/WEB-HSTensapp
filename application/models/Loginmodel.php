@@ -9,54 +9,58 @@ Class Loginmodel extends CI_Model
 
   }
 
-       function login($email,$password)
+       function check_login($email,$password)
        {
-         $query = "SELECT * FROM edu_users WHERE  user_name = '$email'";
+         $query = "SELECT * FROM user_master WHERE  email = '$email'";
           $resultset=$this->db->query($query);
           if($resultset->num_rows()==1){
-             $pwdcheck="SELECT * FROM edu_users WHERE user_name='$email' AND user_password='$password'";
+             $pwdcheck="SELECT * FROM user_master WHERE email='$email' AND password='$password'";
             $res=$this->db->query($pwdcheck);
 
             if($res->num_rows()==1){
                foreach($res->result() as $rows){
-                 $quer="SELECT status FROM edu_users WHERE user_id='$rows->user_id'";
+                 $quer="SELECT * FROM user_master WHERE id='$rows->id'";
                  $resultset=$this->db->query($quer);
-                // return $resultset->result();
+                 $email_verify=$rows->email_verify;
+                 if($email_verify=='N'){
+                   $data= array("status" => "failed","msg" => "Verify your Email Account");
+                   return $data;
+                 }
+                 $mobile_verify=$rows->mobile_verify;
+                 if($mobile_verify=='N'){
+                   $data= array("status" => "failed","msg" => "Verify your Mobile Number");
+                   return $data;
+                 }
+                 $detail_flag=$rows->detail_flag;
+                 if($detail_flag=='0'){
+                   $data= array("status" => "incomplete","msg" => "Fill the Insitute details","last_id"=>$rows->id);
+                   return $data;
+                 }
+
                  $status= $rows->status;
+
                  switch($status){
                     case "Active":
-                      $data = array("user_name"  => $rows->user_name,"msg"  =>"success","name"=>$rows->name, "pia_id" => $rows->pia_id,"user_type"=>$rows->user_type,"status"=>$rows->status,"user_id"=>$rows->user_id,"user_pic"=>$rows->user_pic);
+                      $data = array("email"  => $rows->email,"mobile"  => $rows->mobile,"msg"  =>"success","detail_flag"=>$rows->detail_flag,"user_role"=>$rows->user_role,"status"=>"success","user_id"=>$rows->id);
+                      $this->session->set_userdata($data);
                       return $data;
-                      //break;
-                     //print_r($data);exit;
-                      // break;
+
                     case "Inactive":
-                            $data= array("status" => "Deactive","msg" => "Your Account Is De-Activated");
+                            $data= array("status" => "failed","msg" => "Your Account Is De-Activated");
                             return $data;
                       break;
 
-
-                 }
-
-
-                //  if($rows->status=='A'){
-                //    $data = array("user_name"  => $rows->user_name,"msg"  =>"success","name"=>$rows->name, "school_id" => $rows->school_id,"user_type"=>$rows->user_type,"status"=>$rows->status,"user_id"=>$rows->user_id,"user_pic"=>$rows->user_pic);
-                //
-                //  }
-
-                   $data = array("user_name"  => $rows->user_name,"msg"  =>"success","name"=>$rows->name, "pia_id" => $rows->pia_id,"user_type"=>$rows->user_type,"status"=>$rows->status,"user_id"=>$rows->user_id,"user_pic"=>$rows->user_pic);
-                   $this->session->set_userdata($data);
-                   return $data;
+                      }
                    }
                  }
                  else{
-                  $data= array("status" => "notRegistered","msg" => "Password Wrong");
+                  $data= array("status" => "failed","msg" => "Invalid Email or Password");
                   return $data;
                  }
                  }
 
                 else{
-                  $data= array("status" => "notRegistered","msg" => " Email invalid");
+                  $data= array("status" => "failed","msg" => "Invalid Email or Password");
                   return $data;
 
             }
@@ -65,54 +69,66 @@ Class Loginmodel extends CI_Model
 
 
        function get_register($name,$password,$email,$phone,$username){
-          $query="INSERT INTO user_master(email,email_verify,mobile,mobile_verify,password,user_role,status,created_at) VALUES('$email','N','$phone','N','$password','2','Active',NOW())";
+         $query="INSERT INTO user_master(email,email_verify,mobile,mobile_verify,password,user_role,status,detail_flag,created_at) VALUES('$email','N','$phone','N','$password','2','Active','0',NOW())";
          $resultset=$this->db->query($query);
          $insert_id = $this->db->insert_id();
          $query_2="INSERT INTO user_details (user_master_id,created_at,created_by) VALUES('$insert_id',NOW(),'$insert_id')";
          $resultset_2=$this->db->query($query_2);
-         // if($resultset_2){
-         //   echo "success";
-         // }else{
-         //   echo "failed";
-         // }
-      $s=$email;
-      $encrypt_email= base64_encode($s);
-      if($resultset_2){
-        $to=$email;
-        $subject="Welcome to Heyla App";
-        $htmlContent = '
-        <html>
-        <head>
-        <title></title>
-           </head>
-           <body style="background-color:#E4F1F7;"><div style="background-image: url('.base_url().'assets/front/images/email_1.png);height:700px;margin: auto;width: 100%;background-repeat: no-repeat;">
-              <div  style="padding:50px;width:400px;"><p>Dear '.$name.'</p>
-             <p style="font-size:20px;">Welcome to
-              <center><img src="'.base_url().'assets/front/images/heyla_b.png" style="width:120px;"></center>
-             </p>
-             <p style="margin-left:50px;"> <br>
-             To allow us to confirm the validity of your email address,click this verification link. <center>   <a href="'. base_url().'welcome/emailverfiy/'.$encrypt_email.'" target="_blank"style="background-color: #478ECC;    padding: 12px;    text-decoration: none;    color: #fff;    border-radius: 20px;">Verfiy  Here</a></center>  </p>
-             <p style="font-size:20px;">Thank you and enjoy, <br>
-               The Heyla Team
-               </p>
-             </body>
-          </html>';
-      $headers = "MIME-Version: 1.0" . "\r\n";
-      $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-      // Additional headers
-      $headers .= 'From: heylapp<info@heylapp.com>' . "\r\n";
-      $sent= mail($to,$subject,$htmlContent,$headers);
-        echo "success";
-      }else{
-        echo "failed";
-      }
+          $s=$email;
+          $encrypt_email= base64_encode($s);
+          if($resultset_2){
+            $to=$email;
+            $subject="Welcome to ENSYFI App";
+            $htmlContent = '
+            <html>
+            <head>
+            <title></title>
+               </head>
+               <body style="background-color:#E4F1F7;"><div style="background-image: url('.base_url().'assets/front/images/email_1.png);height:700px;margin: auto;width: 100%;background-repeat: no-repeat;">
+                  <div  style="padding:50px;width:400px;"><p>Dear '.$name.'</p>
+                 <p style="font-size:20px;">Welcome to
+                  <center><img src="'.base_url().'assets/front/images/heyla_b.png" style="width:120px;"></center>
+                 </p>
+                 <p style="margin-left:50px;"> <br>
+                 To allow us to confirm the validity of your email address,click this verification link. <center>   <a href="'. base_url().'welcome/emailverfiy/'.$encrypt_email.'" target="_blank"style="background-color: #478ECC;    padding: 12px;    text-decoration: none;    color: #fff;    border-radius: 20px;">Verfiy  Here</a></center>  </p>
+                 <p style="font-size:20px;">Thank you and enjoy, <br>
+                   The Heyla Team
+                   </p>
+                 </body>
+              </html>';
+          $headers = "MIME-Version: 1.0" . "\r\n";
+          $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+          // Additional headers
+          $headers .= 'From: ensyfi<info@ensyfi.com>' . "\r\n";
+          $sent= mail($to,$subject,$htmlContent,$headers);
+          $data = array("status" => "success","last_id"=>$insert_id);
+          return $data;
+          }else{
+            $data = array("status" => "failed");
+            return $data;
+          }
 
        }
+
+
+    function get_ins_details($institute_code,$last_insert,$institute_name,$institute_type,$person_designation,$contact_person,$city,$state,$no_of_student,$how_you_hear,$notes){
+       $update_query="UPDATE user_details SET institute_name='$institute_name',person_designation='$person_designation',contact_person='$contact_person',institute_type='$institute_type',city='$city',state='$state',no_of_student='$no_of_student',how_you_hear='$how_you_hear',notes='$notes',updated_by='$last_insert',updated_at=NOW()  WHERE user_master_id='$last_insert'";
+      $resultset_2=$this->db->query($update_query);
+      $update_query_2="UPDATE user_master SET institute_code='$institute_code',detail_flag='1',updated_by='$last_insert',updated_at=NOW() WHERE id='$last_insert'";
+      $resultset_update=$this->db->query($update_query_2);
+      if($resultset_update){
+        $data = array("status" => "success");
+        return $data;
+      }else{
+        $data = array("status" => "failed");
+        return $data;
+      }
+
+    }
 
     function email_verify($email){
      $decrpty_email=base64_decode($email);
      $check_username="SELECT * FROM user_master WHERE email='$decrpty_email'";
-
      $res=$this->db->query($check_username);
      if($res->num_rows()==1){
        foreach($res->result() as $rows){}
@@ -131,7 +147,6 @@ Class Loginmodel extends CI_Model
                return $data;
            }
          }
-
      }else{
        $data=array("msg"=>"Some Thing Went Wrong Please Contact Us");
          return $data;
@@ -202,6 +217,24 @@ Class Loginmodel extends CI_Model
        }
        function checkemail($email){
          $select="SELECT * FROM user_master Where email='$email'";
+           $result=$this->db->query($select);
+           if($result->num_rows()>0){
+             echo "false";
+             }else{
+               echo "true";
+           }
+       }
+       function check_ins_code($institute_code){
+         $select="SELECT * FROM user_master Where institute_code='$institute_code'";
+           $result=$this->db->query($select);
+           if($result->num_rows()>0){
+             echo "false";
+             }else{
+               echo "true";
+           }
+       }
+       function check_ins_name($institute_name){
+         $select="SELECT * FROM user_details Where institute_name='$institute_name'";
            $result=$this->db->query($select);
            if($result->num_rows()>0){
              echo "false";

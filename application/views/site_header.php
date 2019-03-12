@@ -35,6 +35,8 @@
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/additional-methods.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 
 <body data-spy="scroll" data-offset="80">
