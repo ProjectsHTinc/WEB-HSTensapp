@@ -10,8 +10,7 @@ class Welcome extends CI_Controller {
 
 			    $this->load->helper('url');
 			    $this->load->library('session');
-					$this->load->model('centermodel');
-					$this->load->model('loginmodel');
+				$this->load->model('loginmodel');
 	 }
 
 
@@ -36,12 +35,14 @@ class Welcome extends CI_Controller {
 			public function dashboard()
 			{
 				$data=$this->session->userdata();
+				print_r($data);
+				
 				$user_id=$this->session->userdata('user_id');
-			 	$user_type=$this->session->userdata('user_type');
+			 	$user_type=$this->session->userdata('user_role');
 				if($user_type=='1'){
-					$this->load->view('site_header');
-					$this->load->view('dashboard');
-					$this->load->view('site_footer');
+					$this->load->view('admin/header');
+					$this->load->view('admin/dashboard');
+					$this->load->view('admin/footer');
 				}else if($user_type=='2'){
 					$this->load->view('site_header');
 					$this->load->view('dashboard');
