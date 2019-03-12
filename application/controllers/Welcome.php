@@ -38,11 +38,11 @@ class Welcome extends CI_Controller {
 				$data=$this->session->userdata();
 				$user_id=$this->session->userdata('user_id');
 			 	$user_type=$this->session->userdata('user_type');
-				if($user_id=='1'){
+				if($user_type=='1'){
 					$this->load->view('site_header');
 					$this->load->view('dashboard');
 					$this->load->view('site_footer');
-				}else if($user_id=='2'){
+				}else if($user_type=='2'){
 					$this->load->view('site_header');
 					$this->load->view('dashboard');
 					$this->load->view('site_footer');
