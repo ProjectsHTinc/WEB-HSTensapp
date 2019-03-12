@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Home extends CI_Controller {
 
 
 		function __construct() {
@@ -35,8 +35,6 @@ class Welcome extends CI_Controller {
 			public function dashboard()
 			{
 				$data=$this->session->userdata();
-				print_r($data);
-				
 				$user_id=$this->session->userdata('user_id');
 			 	$user_type=$this->session->userdata('user_role');
 				if($user_type=='1'){

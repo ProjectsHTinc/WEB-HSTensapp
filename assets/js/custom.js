@@ -262,7 +262,7 @@ $(document).ready(function() {
 								required: true,
 								email: true,
 								remote: {
-											 url: "welcome/checkemail",
+											 url: "home/checkemail",
 											 type: "post"
 										}
 						},
@@ -273,7 +273,7 @@ $(document).ready(function() {
                 minlength:10,
                 number:true,
                 remote: {
-                       url: "welcome/checkmobile",
+                       url: "home/checkmobile",
                        type: "post"
                     }
           }
@@ -301,7 +301,7 @@ $(document).ready(function() {
       },
     submitHandler: function(form) {
       $.ajax({
-                 url: "welcome/get_register",
+                 url: "home/get_register",
                  type: 'POST',
                  data: $('#registerform').serialize(),
                  dataType: "json",
@@ -335,14 +335,14 @@ return this.optional(element) || /^\w+$/i.test(value);
             maxlength: 10,
             minlength:6,
             remote: {
-                   url: "welcome/check_ins_code",
+                   url: "home/check_ins_code",
                    type: "post"
                 }
         },
           institute_name: {
               required: true,
               remote: {
-                     url: "welcome/check_ins_name",
+                     url: "home/check_ins_name",
                      type: "post"
                   }
           },
@@ -396,7 +396,7 @@ return this.optional(element) || /^\w+$/i.test(value);
       },
     submitHandler: function(form) {
       $.ajax({
-                 url: "welcome/get_ins_details",
+                 url: "home/get_ins_details",
                  type: 'POST',
                  data: $('#ins_detail_form').serialize(),
                  dataType: "json",
@@ -436,12 +436,12 @@ $('#login_form').validate({
   },
 submitHandler: function(form) {
   $.ajax({
-             url: "welcome/check_login",
+             url: "home/check_login",
              type: 'POST',
              data: $('#login_form').serialize(),
              dataType: "json",
              success: function(response) {
-                var stats=response.status;                
+                var stats=response.status;
                  if (stats=="success") {
                    swal('Logging in Please wait')
                    window.setTimeout(function () {

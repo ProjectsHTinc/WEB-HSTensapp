@@ -56,11 +56,11 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 //--------PIA MODULE Starts-------//
-$route['dashboard'] = 'welcome/dashboard';
-$route['contact'] = 'welcome/contact';
-$route['register'] = 'welcome/register';
-$route['login'] = 'welcome/login';
+$route['dashboard'] = 'home/dashboard';
+$route['contact'] = 'home/contact';
+$route['register'] = 'home/register';
+$route['login'] = 'home/login';
 // $route['project_details/(:num)'] = 'welcome/project_details/$1';
-$route['about'] = 'welcome/about';
-$route['home'] = 'welcome/index';
+$route['about'] = 'home/about';
+$route['home'] = 'home/index';
 //--------PIA MODULE ENDS-------//
