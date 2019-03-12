@@ -8,7 +8,7 @@
                         <div class="contact-form">
 
                             <div class="section-field">
-                                <input class="require" id="email" type="text" placeholder="email*" name="email">
+                                <input class="require" id="email" type="text" placeholder="Email*" name="email">
                             </div>
                             <div class="section-field">
                                 <input class="require" id="contact_name" type="text" placeholder="Password*" name="password">
@@ -16,6 +16,7 @@
                             <div class="section-field">
                                 <p id="res"></p>
                             </div>
+
 
 
 
@@ -85,3 +86,18 @@
   display: none;
 }
 </style>
+<script>
+// var counter = 60;
+//   var interval = setInterval(function() {
+//       counter--;
+//       jQuery("#number").html(counter);
+//       if (counter == 0) {
+//         //Do something
+//         jQuery("#number").html("Countdown ended!");
+//         // Stop the counter
+//         clearInterval(interval);
+//         alert("hi");
+//       }
+//   }, 1000);
+
+</script>
