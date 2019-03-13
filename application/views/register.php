@@ -30,6 +30,26 @@
                 </div>
             </div>
         </div>
+        <div class="row justify-content-center" id="otp_section">
+            <div class="col-md-6 col-lg-4">
+                <div class="iq-get-in">
+                    <h4 class="iq-tw-7 iq-mb-20">Mobile verification</h4>
+                    <form id="mobile_otp_form" method="post" action="" enctype="multipart/form-data">
+                        <div class="contact-form">
+                            <div class="section-field">
+                                <input class=" " id="name" type="text" placeholder="Enter the OTP*" name="otp">
+                                <input  id="last_insert" type="hidden" name="last_insert" value="">
+                            </div>
+                          <!-- <span id="count">10</span> seconds... <span><a onclick="resend_otp()" id="resent_btn">Resend OTP</a></span></p> -->
+                            <div class="section-field">
+                                <p id="res"></p>
+                            </div>
+                            <button id="submit" name="submit" type="submit" value="Send" class="button iq-mt-15">Submit OTP</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <center><img src="<?php echo base_url(); ?>assets/loader.gif" id="loading"></center>
           <div class="container">
         <div class="row justify-content-center" id="ins_details">
@@ -93,7 +113,13 @@
 #ins_details{
   display: none;
 }
+#otp_section{
+  display: none;
+}
 #loading{
+  display: none;
+}
+#resent_btn{
   display: none;
 }
 </style>

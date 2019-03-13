@@ -6,6 +6,7 @@ Class Loginmodel extends CI_Model
   public function __construct()
   {
       parent::__construct();
+      $this->load->model('smsmodel');
 
   }
 
@@ -69,7 +70,11 @@ Class Loginmodel extends CI_Model
 
 
        function get_register($name,$password,$email,$phone,$username){
-         $query="INSERT INTO user_master(email,email_verify,mobile,mobile_verify,password,user_role,status,detail_flag,created_at) VALUES('$email','N','$phone','N','$password','2','Active','0',NOW())";
+         $digits = 6;
+         $otp=rand(pow(10, $digits-1), pow(10, $digits)-1);
+         $notes=$otp;
+         $this->smsmodel->send_sms($phone,$notes);
+         $query="INSERT INTO user_master(email,email_verify,mobile,mobile_otp,mobile_verify,password,user_role,status,detail_flag,created_at) VALUES('$email','N','$phone','$otp','N','$password','2','Active','0',NOW())";
          $resultset=$this->db->query($query);
          $insert_id = $this->db->insert_id();
          $query_2="INSERT INTO user_details (user_master_id,created_at,created_by) VALUES('$insert_id',NOW(),'$insert_id')";
@@ -243,6 +248,19 @@ Class Loginmodel extends CI_Model
            }
        }
 
+       function check_otp($otp,$last_insert){
+         $select="SELECT * FROM user_master Where mobile_otp='$otp' AND id='$last_insert'";
+           $result=$this->db->query($select);
+           if($result->num_rows()==1){
+             $update="UPDATE user_master SET mobile_verify='Y' WHERE id='$last_insert'";
+              $result=$this->db->query($update);             
+             $data = array("status" => "success","last_id"=>$last_insert);
+             return $data;
+             }else{
+               $data = array("status" => "failed","msg"=>"Invalid OTP");
+               return $data;
+           }
+       }
        function check_password_match($old_password,$user_id){
          $pwd=md5($old_password);
          $select="SELECT * FROM edu_users Where user_password='$pwd' AND user_id='$user_id'";

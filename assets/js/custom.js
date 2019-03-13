@@ -260,22 +260,22 @@ $(document).ready(function() {
           },
           email: {
 								required: true,
-								email: true,
-								remote: {
-											 url: "home/checkemail",
-											 type: "post"
-										}
+								email: true
+								// remote: {
+								// 			 url: "home/checkemail",
+								// 			 type: "post"
+								// 		}
 						},
 
           phone: {
             required: true,
                 maxlength: 10,
                 minlength:10,
-                number:true,
-                remote: {
-                       url: "home/checkmobile",
-                       type: "post"
-                    }
+                number:true
+                // remote: {
+                //        url: "home/checkmobile",
+                //        type: "post"
+                //     }
           }
       },
       messages: {
@@ -311,8 +311,9 @@ $(document).ready(function() {
                        setTimeout(function(){ },3000);
                      if (stats=="success") {
                         $("#loading").hide();
-                         $('#last_insert').val(response.last_id)
-                         $("#ins_details").show();
+                         $('#last_insert').val(response.last_id);
+                         $("#otp_section").show();
+                         $("#ins_details").hide();
                          $('#first_form').hide();
                    }else{
 
@@ -462,6 +463,46 @@ submitHandler: function(form) {
 
 });
 
+$('#mobile_otp_form').validate({
+  rules: {
+      otp: {
+          required: true,
+          maxlength: 6,
+          minlength:6
+      }
+  },
+  messages: {
+    otp: {
+             required: "Enter the OTP.",
+             lettersonly: "Only Characters",
+             maxlength:"Maximum 6 Numbers",
+             minlength:"Minimum 6 Numbers"
+
+         }
+  },
+submitHandler: function(form) {
+  $.ajax({
+             url: "home/check_otp",
+             type: 'POST',
+             data: $('#mobile_otp_form').serialize(),
+             dataType: "json",
+             success: function(response) {
+                var stats=response.status;
+                 if (stats=="success"){
+                   $("#loading").hide();
+                    $('#last_insert').val(response.last_id);
+                    $("#otp_section").hide();
+                    $("#ins_details").show();
+                    $('#first_form').hide();
+
+               }else{
+                   $('#res').html(response.msg)
+                   }
+             }
+         });
+       }
+
+});
 
 
 });

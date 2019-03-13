@@ -58,6 +58,13 @@ class Home extends CI_Controller {
 				$data['res']=$this->loginmodel->check_login($email,$password);
 				echo json_encode($data['res']);
 			}
+			public function check_otp()
+			{
+				$otp=$this->db->escape_str($this->input->post('otp'));
+				$last_insert=$this->db->escape_str($this->input->post('last_insert'));
+				$data['res']=$this->loginmodel->check_otp($otp,$last_insert);
+				echo json_encode($data['res']);
+			}
 
 			public function get_register(){
 				$name=$this->db->escape_str($this->input->post('name'));
@@ -85,6 +92,7 @@ class Home extends CI_Controller {
 				echo json_encode($data['res']);
 
 			}
+
 
 			public function checkmobile(){
 						$phone=$this->input->post('phone');
