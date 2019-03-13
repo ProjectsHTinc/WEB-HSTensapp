@@ -71,8 +71,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#team">Modules</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#blog">Blog</a>
+                                <li class="nav-item dropdown">
+                                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
+                                   <div class="dropdown-menu">
+                                     <a class="dropdown-item" href="#">Action</a>
+                                  
+                                   </div>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#contact">Contact</a>
@@ -86,3 +90,8 @@
             </div>
         </div>
     </header>
+    <style>
+    li.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+    </style>
