@@ -60,7 +60,7 @@
                         <div class="contact-form">
                           <div class="section-field">
                               <input class=" " id="institute_code" type="text" placeholder="Institute Code" name="institute_code">
-                              <input  id="last_insert" type="hidden" name="last_insert" value="">
+                              <input  id="last_insert_id" type="hidden" name="last_insert" value="">
                           </div>
                             <div class="section-field">
                                 <input class=" " id="institute_name" type="text" placeholder="Institute Name*" name="institute_name">

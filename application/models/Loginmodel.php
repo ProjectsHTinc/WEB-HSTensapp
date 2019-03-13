@@ -253,7 +253,7 @@ Class Loginmodel extends CI_Model
            $result=$this->db->query($select);
            if($result->num_rows()==1){
              $update="UPDATE user_master SET mobile_verify='Y' WHERE id='$last_insert'";
-              $result=$this->db->query($update);             
+              $result=$this->db->query($update);
              $data = array("status" => "success","last_id"=>$last_insert);
              return $data;
              }else{

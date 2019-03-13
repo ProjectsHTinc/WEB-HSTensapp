@@ -260,22 +260,22 @@ $(document).ready(function() {
           },
           email: {
 								required: true,
-								email: true
-								// remote: {
-								// 			 url: "home/checkemail",
-								// 			 type: "post"
-								// 		}
+								email: true,
+								remote: {
+											 url: "home/checkemail",
+											 type: "post"
+										}
 						},
 
           phone: {
             required: true,
                 maxlength: 10,
                 minlength:10,
-                number:true
-                // remote: {
-                //        url: "home/checkmobile",
-                //        type: "post"
-                //     }
+                number:true,
+                remote: {
+                       url: "home/checkmobile",
+                       type: "post"
+                    }
           }
       },
       messages: {
@@ -490,7 +490,7 @@ submitHandler: function(form) {
                 var stats=response.status;
                  if (stats=="success"){
                    $("#loading").hide();
-                    $('#last_insert').val(response.last_id);
+                    $('#last_insert_id').val(response.last_id);
                     $("#otp_section").hide();
                     $("#ins_details").show();
                     $('#first_form').hide();
