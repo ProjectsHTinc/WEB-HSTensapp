@@ -75,7 +75,7 @@
                                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
                                    <div class="dropdown-menu">
                                      <a class="dropdown-item" href="#">Action</a>
-                                  
+
                                    </div>
                                 </li>
                                 <li class="nav-item">
@@ -90,8 +90,3 @@
             </div>
         </div>
     </header>
-    <style>
-    li.dropdown:hover > .dropdown-menu {
-    display: block;
-}
-    </style>

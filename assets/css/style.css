@@ -1979,3 +1979,6 @@ border-radius: 3px; margin-right: 2px; }
     font-size: 13px;
     font-weight: 600;
 }
+li.dropdown:hover > .dropdown-menu {
+display: block;
+}
