@@ -505,4 +505,121 @@ submitHandler: function(form) {
 });
 
 
+  $('#plan_form').validate({
+      rules: {
+         plan_name: {
+              required: true
+          },
+          institute_type: {
+              required: true
+          },
+          no_of_users: {
+              required: true,
+			  number:true
+          },
+          duration: {
+              required: true
+          },
+          pricing: {
+              required: true,
+			  number:true
+          }
+         
+      },
+      messages: {
+          plan_name: "Please Enter Plan Name",
+		  institute_type: "Select Institute Type",
+          duration: "Select Plan Duration",
+		  pricing: {
+              required: "Please Enter Plan Price",
+              number:"Only Numbers"
+             },
+          no_of_users: {
+              required: "Enter No Of Users",
+              number:"Only Numbers"
+             }
+      },
+    submitHandler: function(form) {
+      $.ajax({
+                 url: "get_plan_details",
+                 type: 'POST',
+                 data: $('#plan_form').serialize(),
+                 dataType: "json",
+                 success: function(response) {
+                    var stats=response.status;
+                     if (stats=="success") {
+                       swal({
+                         title: "Plan Added!..",
+                         type: "success"
+                     }).then(function() {
+                         window.location = "plans";
+                     });
+                   }else{
+
+                       }
+                 }
+             });
+           }
+
+});
+
+
+ $('#edit_plan_form').validate({
+      rules: {
+         plan_name: {
+              required: true
+          },
+          institute_type: {
+              required: true
+          },
+          no_of_users: {
+              required: true,
+			  number:true
+          },
+          duration: {
+              required: true
+          },
+          pricing: {
+              required: true,
+			  number:true
+          }
+         
+      },
+      messages: {
+          plan_name: "Please Enter Plan Name",
+		  institute_type: "Select Institute Type",
+          duration: "Select Plan Duration",
+		  pricing: {
+              required: "Please Enter Plan Price",
+              number:"Only Numbers"
+             },
+          no_of_users: {
+              required: "Enter No Of Users",
+              number:"Only Numbers"
+             }
+      },
+    submitHandler: function(form) {
+      $.ajax({
+                 url: "../update_plan_details",
+                 type: 'POST',
+                 data: $('#edit_plan_form').serialize(),
+                 dataType: "json",
+                 success: function(response) {
+                    var stats=response.status;
+                     if (stats=="success") {
+                       swal({
+                         title: "Plan Updated!..",
+                         type: "success"
+                     }).then(function() {
+                         window.location = "../plans";
+                     });
+                   }else{
+
+                       }
+                 }
+             });
+           }
+
+});
+
 });

@@ -15,7 +15,7 @@ Class Loginmodel extends CI_Model
          $query = "SELECT * FROM user_master WHERE  email = '$email'";
           $resultset=$this->db->query($query);
           if($resultset->num_rows()==1){
-             $pwdcheck="SELECT * FROM user_master WHERE email='$email' AND password='$password'";
+            $pwdcheck="SELECT * FROM user_master WHERE email='$email' AND password='$password'";
             $res=$this->db->query($pwdcheck);
 
             if($res->num_rows()==1){
@@ -42,7 +42,14 @@ Class Loginmodel extends CI_Model
 
                  switch($status){
                     case "Active":
-                      $data = array("email"  => $rows->email,"mobile"  => $rows->mobile,"msg"  =>"success","detail_flag"=>$rows->detail_flag,"user_role"=>$rows->user_role,"status"=>"success","user_id"=>$rows->id);
+					
+					 $sQuery = "SELECT * FROM user_details WHERE user_master_id = '$rows->id'";
+					 $sResult = $this->db->query($sQuery);
+					  foreach($sResult->result() as $srow){
+						   $institute_type = $srow->institute_type ;
+					  }
+
+                      $data = array("email"=>$rows->email,"mobile"=>$rows->mobile,"msg"=>"success","detail_flag"=>$rows->detail_flag,"user_role"=>$rows->user_role,"status"=>"success","user_id"=>$rows->id,"inst_type"=>$institute_type);
                       $this->session->set_userdata($data);
                       return $data;
 
@@ -105,7 +112,7 @@ Class Loginmodel extends CI_Model
           $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
           // Additional headers
           $headers .= 'From: ensyfi<info@ensyfi.com>' . "\r\n";
-          $sent= mail($to,$subject,$htmlContent,$headers);
+          //$sent= mail($to,$subject,$htmlContent,$headers);
           $data = array("status" => "success","last_id"=>$insert_id);
           return $data;
           }else{

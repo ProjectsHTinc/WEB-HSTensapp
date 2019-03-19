@@ -51,40 +51,55 @@
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="ion-navicon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+						
+						 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto justify-content-end">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="<?php echo base_url(); ?>home">Home</a>
+                                    <a class="nav-link" href="<?php echo base_url(); ?>">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#how-it-works">About</a>
+                                    <a class="nav-link" href="<?php echo base_url(); ?>#how-it-works">About</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#software-features">Service</a>
+                                    <a class="nav-link" href="<?php echo base_url(); ?>#software-features">Service</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#great-screenshots">Screenshots</a>
+                                    <a class="nav-link" href="<?php echo base_url(); ?>#great-screenshots">Screenshots</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#pricing">Pricing</a>
+                                    <a class="nav-link" href="<?php echo base_url(); ?>#pricing">Pricing</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#team">Modules</a>
+                                    <a class="nav-link" href="<?php echo base_url(); ?>#team">Team</a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?php echo base_url(); ?>#blog">Blog</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?php echo base_url(); ?>#contact">Contact</a>
+                                </li>
+								<?php $email = $this->session->userdata('email');
+								if($email !=''){?>
+								<li class="nav-item  active dropdown">
+                                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
                                    <div class="dropdown-menu">
-                                     <a class="dropdown-item" href="#">Action</a>
-
+                                     <a class="dropdown-item" href="<?php echo base_url(); ?>dashboard">Dashboard</a>
+									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_plans">My Plans</a>
+									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_profile">Profile</a>
                                    </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#contact">Contact</a>
-                                </li>
+							<?php  } ?>	
                             </ul>
-              <a href="<?php echo base_url(); ?>register" class="button bt-black pull-right" title="Register"><i class="fa fa-user" aria-hidden="true"></i></a>
-              <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right" title="Login here"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                            <?php $email = $this->session->userdata('email');
+							if($email !=''){?>
+								<a href="<?php echo base_url(); ?>logout" class="button bt-black pull-right"><i class="ion-android-close"></i></a>
+						<?php }else{ ?>
+							  <a href="<?php echo base_url(); ?>register" class="button bt-black pull-right" title="Register"><i class="fa fa-user" aria-hidden="true"></i></a>
+							  <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right" title="Login here"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+						<?php  } ?>
                         </div>
+					
+                        
                     </nav>
                 </div>
             </div>

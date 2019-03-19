@@ -34,7 +34,8 @@
     <script src="<?php echo base_url(); ?>assets/js/popper.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/js/additional-methods.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/additional-methods.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body data-spy="scroll" data-offset="80">
@@ -57,14 +58,24 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?php echo base_url(); ?>admin/dashboard">Dashboard</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<?php echo base_url(); ?>admin/plans">Plans</a>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Plans</a>
+                                   <div class="dropdown-menu">
+                                     <a class="dropdown-item" href="<?php echo base_url(); ?>admin/add_plan">Add Plan</a>
+										<a class="dropdown-item" href="<?php echo base_url(); ?>admin/plans">View Plans</a>
+                                   </div>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?php echo base_url(); ?>admin/customers">Customers</a>
                                 </li>
                             </ul>
-                             <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right"><i class="ion-android-add-circle"></i></a>
+						<?php $email = $this->session->userdata('email');
+							if($email !=''){?>
+								<a href="<?php echo base_url(); ?>logout" class="button bt-black pull-right"><i class="ion-android-close"></i></a>
+						<?php }else{ ?>
+							  <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right"><i class="ion-log-in"></i></a>
+						<?php  } ?>
+						 
                         </div>
                     </nav>
                 </div>

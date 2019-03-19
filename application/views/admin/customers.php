@@ -1,52 +1,33 @@
 <section class="overview-block-ptb grey-bg" style="margin-top:50px;">
     <div class="container">
-
+	<h4 class="iq-tw-7 iq-mb-20">Customers</h4>
         <div class="row">
-            <div class="col-sm-12 col-lg-3 col-md-6">
-                <div class="iq-fancy-box text-center">
-                    <div class="iq-icon">
-                        <i aria-hidden="true" class="ion-ios-monitor-outline"></i>
-                    </div>
-                    <div class="fancy-content">
-                        <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">High Resolution</h5>
-                        <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-lg-3 col-md-6 r4-mt-30">
-                <div class="iq-fancy-box text-center">
-                    <div class="iq-icon">
-                        <i aria-hidden="true" class="ion-ios-settings"></i>
-                    </div>
-                    <div class="fancy-content">
-                        <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Color Schemes</h5>
-                        <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-lg-3 col-md-6 r-mt-30">
-                <div class="iq-fancy-box text-center">
-                    <div class="iq-icon">
-                        <i aria-hidden="true" class="ion-social-googleplus-outline"></i>
-                    </div>
-                    <div class="fancy-content">
-                        <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Google Fonts</h5>
-                        <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-lg-3 col-md-6 r-mt-30">
-                <div class="iq-fancy-box text-center">
-                    <div class="iq-icon">
-                        <i aria-hidden="true" class="ion-ios-heart-outline"></i>
-                    </div>
-                    <div class="fancy-content">
-                        <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Clean Codes</h5>
-                        <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                    </div>
-                </div>
-            </div>
-        
+		
+	  <table class="table">
+		<thead class="thead-light">
+		  <tr>
+			<th>Institute Code</th>
+			<th>Institute Name</th>
+			<th>Contact Person</th>
+			<th>Mobile</th>
+			<th>Status</th>
+			<th>Action</th>
+		  </tr>
+		</thead>
+		<tbody>
+		<?php foreach($result as $rows){ ?>
+		  <tr>
+			<td><?php echo $rows->institute_code; ?></td>
+			<td><?php echo $rows->institute_name; ?></td>
+			<td><?php echo $rows->contact_person; ?></td>
+			<td><?php echo $rows->mobile; ?></td>
+			<td><?php echo $rows->status; ?></td>
+			<td><a href="<?php echo base_url();?>admin/view_customer/<?php echo base64_encode($rows->id);?>">View</a> | <a href="<?php echo base_url();?>admin/edit_customer/<?php echo base64_encode($rows->id);?>">Edit</a></td>
+		  </tr>
+		<?php } ?>
+		</tbody>
+	  </table>
+
         </div>
     </div>
 </section>

@@ -12,6 +12,7 @@ $route['dashboard'] = 'home/dashboard';
 $route['contact'] = 'home/contact';
 $route['register'] = 'home/register';
 $route['login'] = 'home/login';
+$route['logout'] = 'home/logout';
 // $route['project_details/(:num)'] = 'welcome/project_details/$1';
 $route['about'] = 'home/about';
 $route['home'] = 'home/index';

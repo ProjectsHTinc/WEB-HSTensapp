@@ -70,9 +70,24 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#contact">Contact</a>
                                 </li>
+								<?php $email = $this->session->userdata('email');
+								if($email !=''){?>
+								<li class="nav-item dropdown">
+                                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
+                                   <div class="dropdown-menu">
+                                     <a class="dropdown-item" href="<?php echo base_url(); ?>dashboard">Dashboard</a>
+
+                                   </div>
+                                </li>
+							<?php  } ?>	
                             </ul>
-                            <a href="<?php echo base_url(); ?>register" class="button bt-black pull-right" title="Register"><i class="fa fa-user" aria-hidden="true"></i></a>
-                            <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right" title="Login here"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                           <?php $email = $this->session->userdata('email');
+							if($email !=''){?>
+								<a href="<?php echo base_url(); ?>logout" class="button bt-black pull-right"><i class="ion-android-close"></i></a>
+						<?php }else{ ?>
+							  <a href="<?php echo base_url(); ?>register" class="button bt-black pull-right" title="Register"><i class="fa fa-user" aria-hidden="true"></i></a>
+							  <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right" title="Login here"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+						<?php  } ?>
                         </div>
                     </nav>
                 </div>
