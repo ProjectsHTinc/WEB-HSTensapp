@@ -84,7 +84,7 @@
                                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
                                    <div class="dropdown-menu">
                                      <a class="dropdown-item" href="<?php echo base_url(); ?>dashboard">Dashboard</a>
-									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_plans">My Plans</a>
+									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_renewals">My Renewals</a>
 									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_profile">Profile</a>
                                    </div>
                                 </li>

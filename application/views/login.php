@@ -11,7 +11,7 @@
                                 <input class="require" id="email" type="text" placeholder="Email*" name="email">
                             </div>
                             <div class="section-field">
-                                <input class="require" id="contact_name" type="text" placeholder="Password*" name="password">
+                                <input class="require" id="contact_name" type="password" placeholder="Password*" name="password">
                             </div>
                             <div class="section-field">
                                 <p id="res"></p>

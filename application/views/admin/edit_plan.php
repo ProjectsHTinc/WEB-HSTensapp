@@ -19,6 +19,7 @@
 							<div class="section-field">
 							 <select name="duration" >
                                   <option value="">Select Plan Duration</option>
+								  <option value="0">Demo Plan</option>
                                   <option value="1">One Year</option>
                                   <option value="2">Two Years</option>
                                   <option value="3">Three Years</option>

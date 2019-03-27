@@ -7,6 +7,7 @@ class Home extends CI_Controller {
 			    $this->load->helper('url');
 			    $this->load->library('session');
 				$this->load->model('loginmodel');
+				$this->load->model('usermodel');
 	 }
 
 	public function index()	{
@@ -18,25 +19,29 @@ class Home extends CI_Controller {
 		$this->load->view('register');
 		$this->load->view('site_footer');
 	}
+	
 	public function login(){
 		$this->load->view('site_header');
 		$this->load->view('login');
 		$this->load->view('site_footer');
 	}
+	
 	public function dashboard(){
 		$data=$this->session->userdata();
 		$user_id=$this->session->userdata('user_id');
+		$inst_type=$this->session->userdata('inst_type');
 		$user_type=$this->session->userdata('user_role');
+		$data['user_plans']=$this->usermodel->user_plans($user_id);
+		$data['user_inst_plans']=$this->usermodel->user_inst_plans($inst_type);
+		//print_r($data);
 		if($user_type=='1'){
 			$this->load->view('admin/header');
 			$this->load->view('admin/dashboard');
 			$this->load->view('admin/footer');
-		}else if($user_type=='2'){
-			$this->load->view('site_header');
-			$this->load->view('dashboard');
-			$this->load->view('site_footer');
 		}else{
-
+			$this->load->view('site_header');
+			$this->load->view('dashboard',$data);
+			$this->load->view('site_footer');
 		}
 
 	}
@@ -82,13 +87,13 @@ class Home extends CI_Controller {
 
 
 	public function checkmobile(){
-				$phone=$this->input->post('phone');
-				$data=$this->loginmodel->checkmobile($phone);
+		$phone=$this->input->post('phone');
+		$data=$this->loginmodel->checkmobile($phone);
 	}
 	
 	public function checkemail(){
-				$email=$this->input->post('email');
-				$data=$this->loginmodel->checkemail($email);
+		$email=$this->input->post('email');
+		$data=$this->loginmodel->checkemail($email);
 	}
 
 	public function check_ins_code(){

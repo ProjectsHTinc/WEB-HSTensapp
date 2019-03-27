@@ -12,7 +12,7 @@ Class Loginmodel extends CI_Model
 
        function check_login($email,$password)
        {
-         $query = "SELECT * FROM user_master WHERE  email = '$email'";
+		  $query = "SELECT * FROM user_master WHERE  email = '$email'";
           $resultset=$this->db->query($query);
           if($resultset->num_rows()==1){
             $pwdcheck="SELECT * FROM user_master WHERE email='$email' AND password='$password'";
@@ -204,7 +204,7 @@ Class Loginmodel extends CI_Model
          $select="SELECT * FROM edu_pia Where pia_email='$email' AND id!='$staff_id'";
          $result=$this->db->query($select);
          if($result->num_rows()>0){
-           echo "false";
+			echo "false";
            }else{
              echo "true";
          }
@@ -332,11 +332,6 @@ Class Loginmodel extends CI_Model
      }
 
        }
-
-
-
-
-
 
 
 }
