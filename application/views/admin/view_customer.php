@@ -71,7 +71,7 @@
 		<?php foreach($purchase_details as $rows){ ?>
 		  <tr>
 			<td><?php echo $rows->plan_name; ?></td>
-			<td><?php echo $rows->purchased_date ; ?></td>
+			<td><?php echo $rows->purchase_date ; ?></td>
 			<td><?php echo $rows->purchase_amount ; ?></td>
 			<td><?php echo $rows->status ; ?></td>
 		  </tr>
