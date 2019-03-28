@@ -61,12 +61,13 @@ class Admin extends CI_Controller {
 	public function get_plan_details(){
 			$plan_name=$this->db->escape_str($this->input->post('plan_name'));
 			$institute_type=$this->db->escape_str($this->input->post('institute_type'));
+			$plan_type=$this->db->escape_str($this->input->post('plan_type'));
 			$no_of_users=$this->db->escape_str($this->input->post('no_of_users'));
 			$duration=$this->db->escape_str($this->input->post('duration'));
 			$pricing=$this->db->escape_str($this->input->post('pricing'));
 			$discount=$this->db->escape_str($this->input->post('discount'));
 			$notes=$this->db->escape_str($this->input->post('notes'));
-			$data['res']=$this->adminmodel->add_plan_details($plan_name,$institute_type,$no_of_users,$duration,$pricing,$discount,$notes);
+			$data['res']=$this->adminmodel->add_plan_details($plan_name,$institute_type,$plan_type,$no_of_users,$duration,$pricing,$discount,$notes);
 			echo json_encode($data['res']);
 	}
 	
@@ -93,13 +94,14 @@ class Admin extends CI_Controller {
 			$plan_id=$this->db->escape_str($this->input->post('plan_id'));
 			$plan_name=$this->db->escape_str($this->input->post('plan_name'));
 			$institute_type=$this->db->escape_str($this->input->post('institute_type'));
+			$plan_type=$this->db->escape_str($this->input->post('plan_type'));
 			$no_of_users=$this->db->escape_str($this->input->post('no_of_users'));
 			$duration=$this->db->escape_str($this->input->post('duration'));
 			$pricing=$this->db->escape_str($this->input->post('pricing'));
 			$discount=$this->db->escape_str($this->input->post('discount'));
 			$notes=$this->db->escape_str($this->input->post('notes'));
 			$status=$this->db->escape_str($this->input->post('status'));
-			$data['res']=$this->adminmodel->update_plan_details($user_id,$plan_id,$plan_name,$institute_type,$no_of_users,$duration,$pricing,$discount,$notes,$status);
+			$data['res']=$this->adminmodel->update_plan_details($user_id,$plan_id,$plan_name,$institute_type,$plan_type,$no_of_users,$duration,$pricing,$discount,$notes,$status);
 			echo json_encode($data['res']);
 	}
 	

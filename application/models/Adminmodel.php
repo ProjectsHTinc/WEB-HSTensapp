@@ -8,8 +8,8 @@ Class Adminmodel extends CI_Model
       //$this->load->model('smsmodel');
   }
 
-	function add_plan_details($plan_name,$institute_type,$no_of_users,$duration,$pricing,$discount,$notes){
-		$query = "INSERT INTO plan_master(plan_name,plan_type,no_of_users,notes,duration,pricing,discount,status) VALUES('$plan_name','$institute_type','$no_of_users','$notes','$duration','$pricing','$discount','Active')";
+	function add_plan_details($plan_name,$institute_type,$plan_type,$no_of_users,$duration,$pricing,$discount,$notes){
+		$query = "INSERT INTO plan_master(plan_name,institute_type,plan_type,no_of_users,notes,duration,pricing,discount,status) VALUES('$plan_name','$institute_type','$plan_type','$no_of_users','$notes','$duration','$pricing','$discount','Active')";
 		$result = $this->db->query($query);
 		if($result){
 			$response = array("status" => "success");
@@ -33,8 +33,8 @@ Class Adminmodel extends CI_Model
 		return $result;
 	}
 
-	function update_plan_details($user_id,$plan_id,$plan_name,$institute_type,$no_of_users,$duration,$pricing,$discount,$notes,$status){
-		$query = "UPDATE `plan_master` SET `plan_name`='$plan_name',`plan_type`='$institute_type',`no_of_users`='$no_of_users',`notes`='$notes',`duration`='$duration',`pricing`='$pricing',`discount`='$discount',`status`='$status',`updated_by`='$$user_id',`updated_at`=now() WHERE id ='$plan_id'";
+	function update_plan_details($user_id,$plan_id,$plan_name,$institute_type,$plan_type,$no_of_users,$duration,$pricing,$discount,$notes,$status){
+		$query = "UPDATE `plan_master` SET `plan_name`='$plan_name',`institute_type`='$institute_type',`plan_type`='$plan_type',`no_of_users`='$no_of_users',`notes`='$notes',`duration`='$duration',`pricing`='$pricing',`discount`='$discount',`status`='$status',`updated_by`='$$user_id',`updated_at`=now() WHERE id ='$plan_id'";
 		$res = $this->db->query($query);
 		if($res) {
 			$response = array("status" => "success");

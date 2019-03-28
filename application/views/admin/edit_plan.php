@@ -14,7 +14,7 @@
                                   <option value="2">College</option>
                                   <option value="3">PIA</option>
                                 </select>
-								<script language="JavaScript">document.edit_plan_form.institute_type.value="<?php echo $rows->plan_type ; ?>";</script>
+								<script language="JavaScript">document.edit_plan_form.institute_type.value="<?php echo $rows->institute_type ; ?>";</script>
                             </div>
 							<div class="section-field">
 							 <select name="duration" >
@@ -27,6 +27,14 @@
 								  <option value="5">Five Years</option>
                                 </select>
 								<script language="JavaScript">document.edit_plan_form.duration.value="<?php echo $rows->duration  ; ?>";</script>
+                            </div>
+							<div class="section-field">
+							 <select name="plan_type">
+                                  <option value="">Select Plan Type</option>
+                                  <option value="Free">Free</option>
+                                  <option value="Paid">Paid</option>
+                                </select>
+								<script language="JavaScript">document.edit_plan_form.plan_type.value="<?php echo $rows->plan_type  ; ?>";</script>
                             </div>
 							 <div class="section-field">
                                 <input class=" " id="plan_name" type="text" placeholder="Plan Name *" name="plan_name" value="<?php echo $rows->plan_name ; ?>">

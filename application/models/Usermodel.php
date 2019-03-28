@@ -24,7 +24,7 @@ Class Usermodel extends CI_Model
 			
 		} */
 				
-		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.plan_type = B.id AND A.plan_type = '$inst_type' AND A.status='Active'";
+		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id AND A.institute_type = '$inst_type' AND A.status='Active'";
 		$res = $this->db->query($query);
 		$user_inst_plans = $res->result();
 		return $user_inst_plans;
@@ -85,12 +85,12 @@ Class Usermodel extends CI_Model
 		$sResult = $this->db->query($sQuery);
 		foreach($sResult->result() as $srow){
 		   //$plan_id = $srow->plan_id ;
-		   $plan_type = $srow->plan_type ;
+		   $institute_type = $srow->institute_type ;
 		   $no_of_users = $srow->no_of_users;
 		   
-		   if ($plan_type ==1){
+		   if ($institute_type ==1){
 			   $plan_type_name = "School";
-		   } else if ($plan_type ==2){
+		   } else if ($institute_type ==2){
 			   $plan_type_name = "College";
 		   } else {
 			    $plan_type_name = "PIA";
@@ -147,7 +147,7 @@ Class Usermodel extends CI_Model
 		$query = "INSERT INTO user_plan_history(user_id,plan_id,purchase_order_id,activated_date,expiry_date,status,created_by,created_at) VALUES('$user_id','$plan_id','$order_id','$current_date','$expiry_date','Live','$user_id',now())";
 		$result = $this->db->query($query);
 		
-		$query = "INSERT INTO institute_dashboard(user_master_id,user_type_id,user_type,no_of_users,created_by,created_at) VALUES('$user_id','$plan_type','$plan_type_name','$no_of_users','$user_id',now())";
+		$query = "INSERT INTO institute_dashboard(user_master_id,user_type_id,user_type,no_of_users,created_by,created_at) VALUES('$user_id','$institute_type','$plan_type_name','$no_of_users','$user_id',now())";
 		$result = $this->db->query($query);
 		
 		redirect('/dashboard');
@@ -160,10 +160,10 @@ Class Usermodel extends CI_Model
 		$sResult = $this->db->query($sQuery);
 		foreach($sResult->result() as $srow){
 		   $plan_id = $srow->plan_id ;
-		   $inst_type = $srow->plan_type ;
+		   $inst_type = $srow->institute_type ;
 		}
 		
-		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.plan_type = B.id AND A.plan_type = '$inst_type' AND A.id !='$plan_id'  AND A.status='Active'";
+		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id AND A.institute_type = '$inst_type' AND A.id !='$plan_id'  AND A.status='Active'";
 		$res = $this->db->query($query);
 		$user_inst_plans = $res->result();
 		return $user_inst_plans;
