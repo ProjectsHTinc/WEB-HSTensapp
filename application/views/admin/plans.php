@@ -1,9 +1,9 @@
 <section class="overview-block-ptb grey-bg" style="margin-top:50px;">
     <div class="container">
-	     <h4 class="iq-tw-7 iq-mb-20">Plans</h4>
+	<h4 class="iq-tw-7 iq-mb-20">Plans</h4>
         <div class="row">
-    <div class="col-md-12">
-	  <table class="table" id="example">
+		
+	  <table class="table">
 		<thead class="thead-light">
 		  <tr>
 			<th>Plan Name</th>
@@ -27,7 +27,7 @@
 		<?php } ?>
 		</tbody>
 	  </table>
-  </div>
+
         </div>
     </div>
 </section>

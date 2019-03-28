@@ -15,6 +15,15 @@ Class Usermodel extends CI_Model
    }
 
    function user_inst_plans($inst_type){
+		$user_id = $this->session->userdata('user_id');
+		
+		/* $query="SELECT A.*,B.plan_name,B.no_of_users from user_plan_history A, plan_master B WHERE A.plan_id = B.id AND A.user_id='$user_id'";
+		$res=$this->db->query($query);
+		if($res->num_rows()==1){
+			$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.plan_type = B.id AND A.plan_type = '$inst_type' AND A.status='Active'";
+			
+		} */
+				
 		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.plan_type = B.id AND A.plan_type = '$inst_type' AND A.status='Active'";
 		$res = $this->db->query($query);
 		$user_inst_plans = $res->result();
@@ -147,12 +156,12 @@ Class Usermodel extends CI_Model
 	
 	function user_plan_history($user_id){
 
-		$sQuery="SELECT * from user_plan_history WHERE user_id='$user_id' AND status ='Live'";
+		$sQuery="SELECT * from user_plan_history A,plan_master B WHERE A.plan_id = B.id AND A.user_id='$user_id' AND A.status ='Live'";
 		$sResult = $this->db->query($sQuery);
 		foreach($sResult->result() as $srow){
 		   $plan_id = $srow->plan_id ;
+		   $inst_type = $srow->plan_type ;
 		}
-		$inst_type =1;
 		
 		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.plan_type = B.id AND A.plan_type = '$inst_type' AND A.id !='$plan_id'  AND A.status='Active'";
 		$res = $this->db->query($query);

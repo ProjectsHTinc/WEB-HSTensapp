@@ -13,16 +13,20 @@ Class Loginmodel extends CI_Model
        function check_login($email,$password)
        {
 		  $query = "SELECT * FROM user_master WHERE  email = '$email'";
-          $resultset=$this->db->query($query);
-          if($resultset->num_rows()==1){
-            $pwdcheck="SELECT * FROM user_master WHERE email='$email' AND password='$password'";
-            $res=$this->db->query($pwdcheck);
+          $resultset = $this->db->query($query);
+          
+		  if($resultset->num_rows()==1){
+            $pwdcheck = "SELECT * FROM user_master WHERE email='$email' AND password='$password'";
+            $res = $this->db->query($pwdcheck);
 
             if($res->num_rows()==1){
                foreach($res->result() as $rows){
-                 $quer="SELECT * FROM user_master WHERE id='$rows->id'";
-                 $resultset=$this->db->query($quer);
-                 $email_verify=$rows->email_verify;
+
+				 $user_master_id = $rows->id;
+                 $quer="SELECT * FROM user_master WHERE id='$user_master_id'";
+                 $resultset = $this->db->query($quer);
+                 
+				 $email_verify=$rows->email_verify;
                  if($email_verify=='N'){
                    $data= array("status" => "failed","msg" => "Verify your Email Account");
                    return $data;
@@ -32,25 +36,40 @@ Class Loginmodel extends CI_Model
                    $data= array("status" => "failed","msg" => "Verify your Mobile Number");
                    return $data;
                  }
-                 $detail_flag=$rows->detail_flag;
+                 
+				 $detail_flag=$rows->detail_flag;
                  if($detail_flag=='0'){
                    $data= array("status" => "incomplete","msg" => "Fill the Insitute details","last_id"=>$rows->id);
                    return $data;
                  }
-
                  $status= $rows->status;
 
                  switch($status){
                     case "Active":
 					
-					 $sQuery = "SELECT * FROM user_details WHERE user_master_id = '$rows->id'";
+					 $sQuery = "SELECT * FROM user_details WHERE user_master_id = '$user_master_id'";
 					 $sResult = $this->db->query($sQuery);
 					  foreach($sResult->result() as $srow){
 						   $institute_type = $srow->institute_type ;
 					  }
 
-                      $data = array("email"=>$rows->email,"mobile"=>$rows->mobile,"msg"=>"success","detail_flag"=>$rows->detail_flag,"user_role"=>$rows->user_role,"status"=>"success","user_id"=>$rows->id,"inst_type"=>$institute_type);
-                      $this->session->set_userdata($data);
+					 $sQuery = "SELECT * FROM user_plan_history WHERE user_id = '$user_master_id' AND status = 'Live'";
+					 $sResultset = $this->db->query($sQuery);
+					 if($sResultset->num_rows()>0){
+						foreach($sResultset->result() as $srow){
+							   $expiry_date = $srow->expiry_date ;
+							   $plan_id = $srow->id ;
+						}
+							$current_date = date("Y-m-d H:i:s"); ;
+							
+							if ($current_date >= $expiry_date){
+							 $update_query = "UPDATE user_plan_history SET status ='Expiry' WHERE id='$plan_id'";
+							 $resultset = $this->db->query($update_query);
+							}
+					 }
+							$data = array("email"=>$rows->email,"mobile"=>$rows->mobile,"msg"=>"success","detail_flag"=>$rows->detail_flag,"user_role"=>$rows->user_role,"status"=>"success","user_id"=>$rows->id,"inst_type"=>$institute_type);
+							$this->session->set_userdata($data);
+
                       return $data;
 
                     case "Inactive":
@@ -60,6 +79,12 @@ Class Loginmodel extends CI_Model
 
                       }
                    }
+				   
+				   
+				  
+				  
+				  
+				   
                  }
                  else{
                   $data= array("status" => "failed","msg" => "Invalid Email or Password");

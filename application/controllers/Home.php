@@ -38,10 +38,12 @@ class Home extends CI_Controller {
 			$this->load->view('admin/header');
 			$this->load->view('admin/dashboard');
 			$this->load->view('admin/footer');
-		}else{
+		}else if ($user_type=='2'){
 			$this->load->view('site_header');
 			$this->load->view('dashboard',$data);
 			$this->load->view('site_footer');
+		} else {
+			 redirect('/login');
 		}
 
 	}

@@ -15,13 +15,20 @@
                                 </select>
                             </div>
 							<div class="section-field">
-							 <select name="duration" >
+							 <select name="duration">
                                   <option value="">Select Plan Duration</option>
                                   <option value="1">One Year</option>
                                   <option value="2">Two Years</option>
                                   <option value="3">Three Years</option>
 								  <option value="4">Four Years</option>
 								  <option value="5">Five Years</option>
+                                </select>
+                            </div>
+							<div class="section-field">
+							 <select name="plan_type">
+                                  <option value="">Select Plan Type</option>
+                                  <option value="Free">Free</option>
+                                  <option value="Paid">Paid</option>
                                 </select>
                             </div>
 							 <div class="section-field">

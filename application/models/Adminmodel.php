@@ -20,7 +20,7 @@ Class Adminmodel extends CI_Model
 	}
 
 	function view_plan_details(){
-		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.plan_type = B.id";
+		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id";
 		$res = $this->db->query($query);
 		$result = $res->result();
 		return $result;

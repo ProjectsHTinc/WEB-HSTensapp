@@ -513,6 +513,9 @@ submitHandler: function(form) {
           institute_type: {
               required: true
           },
+		   plan_type: {
+              required: true
+          },
           no_of_users: {
               required: true,
 			  number:true
@@ -529,6 +532,7 @@ submitHandler: function(form) {
       messages: {
           plan_name: "Please Enter Plan Name",
 		  institute_type: "Select Institute Type",
+		  plan_type: "Select Plan Type",
           duration: "Select Plan Duration",
 		  pricing: {
               required: "Please Enter Plan Price",
@@ -572,6 +576,9 @@ submitHandler: function(form) {
           institute_type: {
               required: true
           },
+		   plan_type: {
+              required: true
+          },
           no_of_users: {
               required: true,
 			  number:true
@@ -588,6 +595,7 @@ submitHandler: function(form) {
       messages: {
           plan_name: "Please Enter Plan Name",
 		  institute_type: "Select Institute Type",
+		  plan_type: "Select Plan Type",
           duration: "Select Plan Duration",
 		  pricing: {
               required: "Please Enter Plan Price",
