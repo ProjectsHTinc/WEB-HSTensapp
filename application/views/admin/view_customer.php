@@ -1,10 +1,10 @@
 <section class="overview-block-ptb grey-bg" style="margin-top:50px;">
     <div class="container">
-	
+
        <div class="row">
 	   <h4 class="iq-tw-7 iq-mb-20">Customer Details</h4>
 		<?php foreach($customer_details as $rows){ } ?>
-		<table  class="table">
+		<table  class="table" id="example">
 		  <tr>
 			<td>Inst. Code</td>
 			<td><?php echo $rows->institute_code; ?></td>

@@ -27,6 +27,11 @@
 <script src="<?php echo base_url(); ?>assets/js/custom.js"></script>
 
 <script src="<?php echo base_url(); ?>assets/js/style-customizer.js"></script>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+});
+</script>
 </body>
 
 </html>

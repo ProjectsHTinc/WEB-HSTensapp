@@ -30,12 +30,15 @@
 
     <link rel="stylesheet" href="javascript:void(0)" data-style="styles">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style-customizer.css" />
+
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/popper.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/additional-methods.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
 
 </head>
 
@@ -51,7 +54,7 @@
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="ion-navicon"></span>
                         </button>
-						
+
 						 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto justify-content-end">
                                 <li class="nav-item">
@@ -88,7 +91,7 @@
 									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_profile">Profile</a>
                                    </div>
                                 </li>
-							<?php  } ?>	
+							<?php  } ?>
                             </ul>
                             <?php $email = $this->session->userdata('email');
 							if($email !=''){?>
@@ -98,8 +101,8 @@
 							  <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right" title="Login here"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
 						<?php  } ?>
                         </div>
-					
-                        
+
+
                     </nav>
                 </div>
             </div>
