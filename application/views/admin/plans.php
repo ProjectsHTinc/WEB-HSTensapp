@@ -1,9 +1,9 @@
 <section class="overview-block-ptb grey-bg" style="margin-top:50px;">
     <div class="container">
 	<h4 class="iq-tw-7 iq-mb-20">Plans</h4>
-        <div class="row">
-		
-	  <table class="table">
+        <div class="col-md-12">
+
+	  <table class="table" id="example">
 		<thead class="thead-light">
 		  <tr>
 			<th>Plan Name</th>
