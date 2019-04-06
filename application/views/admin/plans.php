@@ -2,7 +2,7 @@
     <div class="container">
 	<h4 class="iq-tw-7 iq-mb-20">Plans</h4>
         <div class="col-md-12">
-
+		
 	  <table class="table" id="example">
 		<thead class="thead-light">
 		  <tr>
