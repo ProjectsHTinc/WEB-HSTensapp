@@ -293,6 +293,20 @@ Class Loginmodel extends CI_Model
                return $data;
            }
        }
+	   
+	   function check_school_code($school_id){
+			$select = "SELECT * FROM user_master WHERE institute_code = '$school_id' AND status = 'Active' AND user_role = '2' AND detail_flag ='1' AND email_verify = 'Y' AND mobile_verify = 'Y'";
+			$result = $this->db->query($select);
+				if($result->num_rows()>0){
+					//$data = array("status" => "success","school_url"=>"http://www.ensyfi.com/".$school_id);
+					$data = array("status" => "success","school_url"=>"http://localhost/".$school_id);
+				}else{
+					$data = array("status" => "failed","msg"=>"Invalid School Code!..");
+				}
+			return $data;
+       }
+	   
+	   
        function check_password_match($old_password,$user_id){
          $pwd=md5($old_password);
          $select="SELECT * FROM edu_users Where user_password='$pwd' AND user_id='$user_id'";

@@ -60,7 +60,13 @@ class Home extends CI_Controller {
 		$data['res']=$this->loginmodel->check_otp($otp,$last_insert);
 		echo json_encode($data['res']);
 	}
-
+	
+	public function check_school_code(){
+		$school_id=$this->db->escape_str($this->input->post('school_id'));
+		$data['res']=$this->loginmodel->check_school_code($school_id);
+		echo json_encode($data['res']);
+	}
+		
 	public function get_register(){
 		$name=$this->db->escape_str($this->input->post('name'));
 		$password=md5($this->db->escape_str($this->input->post('password')));

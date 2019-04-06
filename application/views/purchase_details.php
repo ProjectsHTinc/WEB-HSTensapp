@@ -38,20 +38,31 @@
 	  
 	<?php  if( ($plan_id==1 || $plan_id==2 || $plan_id ==3) ) { ?>
 		 <form method="post" name="customerData"  class="confirm_process" action="<?php echo base_url(); ?>user/checkout_demo/">
-				  <input type="hidden" name="purchase_id" value="<?php echo $rows->id;?>"/>
-				  <input type="hidden" name="order_id" value="<?php echo $order_id;?>"/>
-                  <input type="submit" value="CheckOut" class="btn btn-primary">
+			  <input type="hidden" name="purchase_id" value="<?php echo $rows->id;?>"/>
+			  <input type="hidden" name="order_id" value="<?php echo $order_id;?>"/>
+			  <input type="submit" value="CheckOut" class="btn btn-primary">
          </form>
 	<?php } else { ?>
+			<form method="post" name="customerData"  class="confirm_process" action="<?php echo base_url(); ?>ccavenue_web/ccavRequestHandler.php">
+				<input type="hidden" name="merchant_id" value="89958"/>
+				<input type="hidden" name="order_id" value="<?php echo $order_id;?>"/>
+				<input type="hidden" name="amount" value="<?php echo $rows->purchase_amount;?>"/>
+				<input type="hidden" name="currency" value="INR"/>
+				<input type="hidden" name="redirect_url" value="<?php echo base_url(); ?>ccavenue_web/ccavResponseHandler.php"/>
+				<input type="hidden" name="cancel_url" value="<?php echo base_url(); ?>dashboard/"/>
+				<input type="hidden" name="language" value="EN"/>
+				<input type="submit" value="CheckOut" class="btn btn-primary">
+            </form>
+<!--
 		<form method="post" name="paytm" id='paytm' class="confirm_process" action="https://heylaapp.com/paytm_web/pgRedirect.php">
-		<input type="hidden" name="ORDER_ID" value="<?php echo $order_id;?>"/>
+		<input type="hidden" name="ORDER_ID" value="<?php //echo $order_id;?>"/>
 		<input type="hidden" name="CUST_ID" value="123456"/>
 		<input type="hidden" name="INDUSTRY_TYPE_ID" value="Retail109"/>
 		<input type="hidden" name="CHANNEL_ID" value="WAP"/>
-		<input type="hidden" name="TXN_AMOUNT" value="<?php echo $rows->purchase_amount;?>"/>
+		<input type="hidden" name="TXN_AMOUNT" value="<?php //echo $rows->purchase_amount;?>"/>
 		<input type="submit" value="CheckOut" class="btn btn-primary">
 	</form>
-		
+-->
 	<?php } ?>
 		</div>
 </div>

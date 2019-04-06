@@ -42,6 +42,12 @@ class Admin extends CI_Controller {
 		 }		
 	}
 	
+	public function check_plan_name(){
+		$plan_name=$this->input->post('plan_name');
+		$institute_type=$this->input->post('institute_type');
+		$data=$this->adminmodel->check_plan_name($plan_name,$institute_type);
+	}
+	
 	public function add_plan()
 	{
 		$user_data = $this->session->userdata();

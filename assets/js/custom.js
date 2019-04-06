@@ -463,6 +463,40 @@ submitHandler: function(form) {
 
 });
 
+
+$('#sch_login_form').validate({
+  rules: {
+      school_id: {
+          required: true
+      }
+  },
+  messages: {
+      school_id: "Please Enter School Code"
+  },
+submitHandler: function(form) {
+  $.ajax({
+             url: "home/check_school_code",
+             type: 'POST',
+             data: $('#sch_login_form').serialize(),
+             dataType: "json",
+             success: function(response) {
+                var stats=response.status;
+				
+                 if (stats=="success") {
+					var school_url = response.school_url;
+                   swal('Logging in Please wait')
+						window.setTimeout(function () {
+							location.href = school_url;
+					}, 3000);
+               }else{
+                   $('#sch_res').html(response.msg)
+                   }
+             }
+         });
+       }
+
+});
+
 $('#mobile_otp_form').validate({
   rules: {
       otp: {
@@ -508,7 +542,11 @@ submitHandler: function(form) {
   $('#plan_form').validate({
       rules: {
          plan_name: {
-              required: true
+               required: true,
+              remote: {
+                     url: "check_plan_name",
+                     type: "post"
+                  }
           },
           institute_type: {
               required: true
@@ -530,7 +568,10 @@ submitHandler: function(form) {
          
       },
       messages: {
-          plan_name: "Please Enter Plan Name",
+		  institute_code: {
+				required: "Please Enter Plan Name",
+				remote: "Plan Name already in Exist!"
+			},
 		  institute_type: "Select Institute Type",
 		  plan_type: "Select Plan Type",
           duration: "Select Plan Duration",

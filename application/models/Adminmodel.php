@@ -19,6 +19,17 @@ Class Adminmodel extends CI_Model
 		return $response;
 	}
 
+	function check_plan_name($plan_name,$institute_type){
+		$select="SELECT * FROM plan_master Where plan_name='$plan_name'";
+         //$select="SELECT * FROM plan_master Where plan_name='$plan_name' AND institute_type = '$institute_type'";
+         $result=$this->db->query($select);
+           if($result->num_rows()>0){
+             echo "false";
+             }else{
+               echo "true";
+           }
+       }
+	   
 	function view_plan_details(){
 		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id";
 		$res = $this->db->query($query);

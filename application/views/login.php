@@ -1,9 +1,10 @@
 <section id="contact-us" class="footer-info white-bg" style="margin-top:100px;">
     <div class="container">
         <div class="row justify-content-center" id="login_section">
-            <div class="col-md-6 col-lg-4">
+			
+			<div class="col-md-6 col-lg-4">
                 <div class="iq-get-in">
-                    <h4 class="iq-tw-7 iq-mb-20">Login</h4>
+                    <h4 class="iq-tw-7 iq-mb-20">Customer Login</h4>
                     <form id="login_form" method="post" enctype="multipart/form-data">
                         <div class="contact-form">
 
@@ -16,18 +17,32 @@
                             <div class="section-field">
                                 <p id="res"></p>
                             </div>
-
-
-
-
                             <button id="submit" name="submit" type="submit" value="Send" class="button iq-mt-15">Login</button>
-
                         </div>
                     </form>
-                    
+                </div>
+            </div>
+
+			<div class="col-md-6 col-lg-4">
+                <div class="iq-get-in">
+                    <h4 class="iq-tw-7 iq-mb-20">School Login</h4>
+                    <form id="sch_login_form" method="post" enctype="multipart/form-data">
+                        <div class="contact-form">
+
+                            <div class="section-field">
+                                <input class="require" id="school_id" type="text" placeholder="School Code*" name="school_id">
+                            </div>
+                            <div class="section-field">
+                                <p id="sch_res"></p>
+                            </div>
+                            <button id="submit" name="submit" type="submit" value="Send" class="button iq-mt-15">Login</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+		
+		
         <div class="row justify-content-center" id="ins_details">
             <div class="col-md-6 col-lg-6">
                 <div class="iq-get-in">
