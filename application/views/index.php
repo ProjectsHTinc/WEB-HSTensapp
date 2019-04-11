@@ -81,7 +81,7 @@
 
                                    </div>
                                 </li>
-							<?php  } ?>	
+							<?php  } ?>
                             </ul>
                            <?php $email = $this->session->userdata('email');
 							if($email !=''){?>
@@ -103,7 +103,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class=" iq-font-white iq-tw-8">Perfect Landing Template</h1>
-                        <p class="iq-font-white iq-pt-15 iq-mb-20 iq-mlr-100 iq-plr-50">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley,</p>
+                        <p class="iq-font-white iq-pt-15 iq-mb-20 iq-mlr-100 iq-plr-50">The ultimate master for college, school and parent communication app in India that makes the job easy for administrators, teachers, students and parents.</p>
                         <a href="javascript:void(0)" class="button bt-black iq-mt-10 iq-mb-50">Download</a>
                     </div>
                     <div class="col-md-12">
@@ -136,31 +136,38 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="heading-title">
-                                <h3 class="title iq-tw-7">How it Works</h3>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley,</p>
+                                <h3 class="title iq-tw-7">MODULES FOR SCHOOLS AND COLLEGES</h3>
+                                <p>This school parent app is designed for the betterment of educational institutions, teachers, parents and students, speculating their needs and requirements.</p>
                             </div>
                         </div>
                     </div>
                     <div class="row ">
-                        <div class="col-sm-12 col-lg-4">
+                        <div class="col-sm-12 col-lg-3">
                             <div class="iq-works-box no-shadow text-center">
                                 <img src="<?php echo base_url(); ?>assets/images/services/icon1.png" alt="#">
-                                <h5 class="iq-tw-7 text-uppercase iq-mt-25 iq-mb-15">Easy to Customize</h5>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
+                                <h5 class="iq-tw-7 text-uppercase iq-mt-25 iq-mb-15">Admin</h5>
+                                <p>Rules over the access of teachers, parents & students who stay connected at all times.  </p>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-lg-4">
+                        <div class="col-sm-12 col-lg-3">
                             <div class="iq-works-box no-shadow text-center">
                                 <img src="<?php echo base_url(); ?>assets/images/services/icon2.png" alt="#">
-                                <h5 class="iq-tw-7 text-uppercase iq-mt-25 iq-mb-15">Multipurpose layout</h5>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
+                                <h5 class="iq-tw-7 text-uppercase iq-mt-25 iq-mb-15">Staff </h5>
+                                <p>Helps in eliminating the paperwork, class notes and other information regarding on and off are communicated securely.</p>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-lg-4">
+                        <div class="col-sm-12 col-lg-3">
                             <div class="iq-works-box no-shadow text-center">
                                 <img src="<?php echo base_url(); ?>assets/images/services/icon3.png" alt="#">
-                                <h5 class="iq-tw-7 text-uppercase iq-mt-25 iq-mb-15">Unique Design</h5>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
+                                <h5 class="iq-tw-7 text-uppercase iq-mt-25 iq-mb-15">Parents</h5>
+                                <p>Parents are updated with activities happening in school premises, class assignments and important notifications.</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-3">
+                            <div class="iq-works-box no-shadow text-center">
+                                <img src="<?php echo base_url(); ?>assets/images/services/icon3.png" alt="#">
+                                <h5 class="iq-tw-7 text-uppercase iq-mt-25 iq-mb-15">Students</h5>
+                                <p>Students are updated with their attendance, performance, class assignments and important circular alerts.</p>
                             </div>
                         </div>
                     </div>
@@ -172,31 +179,21 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <h2 class="iq-tw-6 iq-mb-25">What is Sofbox ?</h2>
-                        <p class="iq-font-15">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        <p class="iq-font-15 iq-mt-20">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                        <h6 class="iq-tw-6 iq-mt-25">Discover our best ever services.</h6>
-                        <a href="javascript:void(0)" class="button iq-mt-10">Click Here</a>
+                        <h6 class="iq-tw-6 iq-mb-25">ENSFYFI- EDUCATION SYSTEM SIMPLIFIED</h6>
+                        <p class="iq-font-15">Ensyfi’s aspiration in digitising the communication world between the school and the parent, supplementing the technology materialized in 2017. This imaginative conception or anticipation helps schools save on frequency, monopolize the monotonous tasks, and schools can utilise the protected time to satisfy a human bond with the parental guys. At the parents' side, the application provides them with real-time updates about their kids at a single touch, thus creating a positive soul connect with the school. Simplifying the best of school communication app in India.</p><br>
+                        <p>“Ensyfi, more the intelligence, less the algorithm.”</p>
+                        <p class="iq-font-15 iq-mt-20">All in one school app for parents in India
+Running a school or college is a complex endeavour and when it comes to connecting the stakeholders – the administration, teachers, students and parents is a time-consuming process and can gobble a lot of time. This school app in India is major evidence in reducing stress for school authorities. <br>
+Ensyfi is a solution that aims to simplify administrative processes and connect teachers with students and parents in a seamless environment round the clock. The solution is a culmination of our deep understanding of how educational institutions work and the blending of relevant technologies for delivering a world-class product. We set an example for the teacher-parent communication app in India.
+</p>
+
                     </div>
                     <div class="col-lg-6 align-self-center">
                         <img class="iq-works-img" src="<?php echo base_url(); ?>assets/images/drive/01.png" alt="drive01">
                     </div>
                 </div>
             </div>
-            <div class="iq-objects">
-                <span class="iq-objects-01">
-<img src="<?php echo base_url(); ?>assets/images/drive/02.png" alt="drive02">
-</span>
-                <span class="iq-objects-02" data-bottom="transform:translatey(50px)" data-top="transform:translatey(-100px);">
-<img src="<?php echo base_url(); ?>assets/images/drive/03.png" alt="drive02">
-</span>
-                <span class="iq-objects-03" data-bottom="transform:translatex(50px)" data-top="transform:translatex(-100px);">
-<img src="<?php echo base_url(); ?>assets/images/drive/04.png" alt="drive02">
-</span>
-                <span class="iq-objects-04 iq-fadebounce">
-<span class="iq-round"></span>
-                </span>
-            </div>
+
         </section>
 
         <section id="software-features" class="overview-block-ptb iq-mt-50 software">
@@ -206,29 +203,15 @@
             <div class="container">
                 <div class="row justify-content-end">
                     <div class="col-lg-6">
-                        <h2 class="iq-tw-6 iq-mb-25">Software Features</h2>
-                        <p class="iq-font-15">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        <ul class="iq-mt-40 iq-list">
-                            <li class="iq-tw-6"><i class="ion-android-done-all iq-mr-10 iq-font-blue iq-font-30"></i><span class="iq-font-black">Simply dummy text of the Lorem Ipsum is printing and type setting industry.</span></li>
-                            <li class="iq-tw-6"><i class="ion-android-done-all iq-mr-10 iq-font-blue iq-font-30"></i><span class="iq-font-black">Simply dummy text of the Lorem Ipsum is printing and type setting industry.</span></li>
-                            <li class="iq-tw-6"><i class="ion-android-done-all iq-mr-10 iq-font-blue iq-font-30"></i><span class="iq-font-black">Simply dummy text of the Lorem Ipsum is printing and type setting industry.</span></li>
-                            <li class="iq-tw-6"><i class="ion-android-done-all iq-mr-10 iq-font-blue iq-font-30"></i><span class="iq-font-black">Simply dummy text of the Lorem Ipsum is printing and type setting industry.</span></li>
-                            <li class="iq-tw-6"><i class="ion-android-done-all iq-mr-10 iq-font-blue iq-font-30"></i><span class="iq-font-black">Simply dummy text of the Lorem Ipsum is printing and type setting industry.</span></li>
-                        </ul>
+                        <h6 class="iq-tw-6 iq-mb-25">THE LEADING-EDGE APPLICATION CONNECTING COLLEGES AND STUDENTS IN A POPULAR APPROACH</h6>
+                        <p class="iq-font-15">The solitary unique way where colleges cater to the needs and make the product doubtlessly the foremost available in the market. Ensyfi is a user-friendly college mobile app for communication between the colleges and students. The application helps in connecting the administrators and teachers to communicate with students. To make more the convenience easier, Ensyfi is a classy example. </p>
+                            <h6 class="iq-tw-6 iq-mb-25">For Project Implementation Agencies</h6>
+                            <p class="iq-font-15">It is almost a roller coaster ride when we make a selection for Ensyfi because here the PIA is getting benefitted by making the monitoring policy easy. The process is so simple that we make work easy for trainers and students. The trainers can just access the students profile multiple times and make the trade simple as ABC.
+</p>
                     </div>
                 </div>
             </div>
-            <div class="iq-objects-software">
-                <span class="iq-objects-01" data-bottom="transform:translatey(50px)" data-top="transform:translatey(-100px);">
-<img src="<?php echo base_url(); ?>assets/images/drive/03.png" alt="drive02">
-</span>
-                <span class="iq-objects-02" data-bottom="transform:translatex(50px)" data-top="transform:translatex(-100px);">
-<img src="<?php echo base_url(); ?>assets/images/drive/04.png" alt="drive02">
-</span>
-                <span class="iq-objects-03 iq-fadebounce">
-<span class="iq-round"></span>
-                </span>
-            </div>
+
         </section>
 
         <section id="great-screenshots" class="overview-block-ptb iq-bg-over  iq-over-blue-80 iq-screenshots iq-parallax" data-jarallax='{"speed": 0.6}' style="background: url(images/bg/07.jpg);">
@@ -274,40 +257,7 @@
             </div>
         </section>
 
-        <div id="features" class="iq-amazing-tab white-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active1" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i aria-hidden="true" class="ion-monitor"></i><span>Desktop View</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i aria-hidden="true" class="ion-ipad"></i><span>Tab View</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contactt" role="tab" aria-controls="contactt" aria-selected="false"><i aria-hidden="true" class="ion-iphone"></i><span>Mobile View</span></a>
-                            </li>
-                        </ul>
-                        <div class="tab-content iq-mt-50" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> <img class="img-fluid mx-auto d-block" src="<?php echo base_url(); ?>assets/images/drive/06.png" alt="screenshots1"></div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <h2 class="iq-tw-6 iq-mb-25">Software Features</h2>
-                                <p class="iq-font-15">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                <ul class="iq-mt-40 iq-list">
-                                    <li class="iq-tw-6"><i class="ion-android-done-all iq-mr-10 iq-font-blue iq-font-30"></i><span class="iq-font-black">Simply dummy text of the Lorem Ipsum is printing and type setting industry.</span></li>
-                                    <li class="iq-tw-6"><i class="ion-android-done-all iq-mr-10 iq-font-blue iq-font-30"></i><span class="iq-font-black">Simply dummy text of the Lorem Ipsum is printing and type setting industry.</span></li>
-                                    <li class="iq-tw-6"><i class="ion-android-done-all iq-mr-10 iq-font-blue iq-font-30"></i><span class="iq-font-black">Simply dummy text of the Lorem Ipsum is printing and type setting industry.</span></li>
-                                    <li class="iq-tw-6"><i class="ion-android-done-all iq-mr-10 iq-font-blue iq-font-30"></i><span class="iq-font-black">Simply dummy text of the Lorem Ipsum is printing and type setting industry.</span></li>
-                                    <li class="iq-tw-6"><i class="ion-android-done-all iq-mr-10 iq-font-blue iq-font-30"></i><span class="iq-font-black">Simply dummy text of the Lorem Ipsum is printing and type setting industry.</span></li>
-                                </ul>
-                            </div>
-                            <div class="tab-pane fade" id="contactt" role="tabpanel" aria-labelledby="contact-tab"><img class="img-fluid mx-auto d-block" src="<?php echo base_url(); ?>assets/images/drive/06.png" alt="screenshots3"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <section class="overview-block-ptb grey-bg">
             <div class="container">
@@ -326,8 +276,8 @@
                                 <i aria-hidden="true" class="ion-ios-monitor-outline"></i>
                             </div>
                             <div class="fancy-content">
-                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">High Resolution</h5>
-                                <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Centralised Operations</h5>
+                                <p>A single portal for administrators, staffs, students, and parents.</p>
                             </div>
                         </div>
                     </div>
@@ -337,8 +287,8 @@
                                 <i aria-hidden="true" class="ion-ios-settings"></i>
                             </div>
                             <div class="fancy-content">
-                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Color Schemes</h5>
-                                <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Administrative Control</h5>
+                                <p>Collection of fees, manage leaves, circular or events notifications, endorsement for leaves and on-duty approvals, multi-level tracking.</p>
                             </div>
                         </div>
                     </div>
@@ -348,8 +298,8 @@
                                 <i aria-hidden="true" class="ion-social-googleplus-outline"></i>
                             </div>
                             <div class="fancy-content">
-                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Google Fonts</h5>
-                                <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Students Helpdesk</h5>
+                                <p>Access to home assignments, mark sheets, and attendance records.</p>
                             </div>
                         </div>
                     </div>
@@ -359,8 +309,8 @@
                                 <i aria-hidden="true" class="ion-ios-heart-outline"></i>
                             </div>
                             <div class="fancy-content">
-                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Clean Codes</h5>
-                                <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Academic</h5>
+                                <p>Learn about extra and co-curricular activities, view teachers and students profile.</p>
                             </div>
                         </div>
                     </div>
@@ -370,8 +320,8 @@
                                 <i aria-hidden="true" class="ion-ios-checkmark-outline"></i>
                             </div>
                             <div class="fancy-content">
-                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Responsive Design</h5>
-                                <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Parental controls</h5>
+                                <p>Monitor Attendance, Access: Mark List, Notifications, Fee Payment History, Holiday Listing, Send Communication, Receive SMS alerts.</p>
                             </div>
                         </div>
                     </div>
@@ -381,8 +331,8 @@
                                 <i aria-hidden="true" class="ion-ios-color-wand-outline"></i>
                             </div>
                             <div class="fancy-content">
-                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Easy to Use</h5>
-                                <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Popular</h5>
+                                <p>Send (automated) and Receive SMS alerts, Create User Groups, Assign Multi-level Authorities, Customise Features, Privacy Controls, User-friendly Display, Round-the-Clock Access, Multi-channel Support.</p>
                             </div>
                         </div>
                     </div>
@@ -392,8 +342,8 @@
                                 <i aria-hidden="true" class="ion-ios-photos-outline"></i>
                             </div>
                             <div class="fancy-content">
-                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Perfect Showcase</h5>
-                                <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Fees Management</h5>
+                                <p>Fee Notifications, Paid/Unpaid Updates, Fee due dates.</p>
                             </div>
                         </div>
                     </div>
@@ -403,8 +353,8 @@
                                 <i aria-hidden="true" class="ion-ios-videocam-outline"></i>
                             </div>
                             <div class="fancy-content">
-                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Video Animation</h5>
-                                <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                <h5 class="iq-tw-6 iq-pt-20 iq-pb-10">Teachers’ Tools</h5>
+                                <p>It allows teachers to take attendance on the mobile app and all reporting is automated through the administrator.</p>
                             </div>
                         </div>
                     </div>
@@ -412,66 +362,7 @@
             </div>
         </section>
 
-        <div class="iq-pt-80 iq-counter-box iq-bg-over iq-over-blue-90 iq-font-white iq-parallax" data-jarallax='{"speed": 0.6}' style="background: url(images/bg/02.jpg);">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-12 text-left">
-                        <div class="counter"> <i class="ion-ios-folder-outline " aria-hidden="true"></i>
-                            <div class="counter-date">
-                                <label class="iq-font-white text-uppercase">APP DOWNLOADS</label>
-                                <span class="timer iq-tw-7" data-to="1540" data-speed="10000">1540</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12 text-left r4-mt-30">
-                        <div class="counter"> <i class="ion-ios-paper-outline " aria-hidden="true"></i>
-                            <div class="counter-date">
-                                <label class="iq-font-white text-uppercase">HAPPY CLIENTS</label>
-                                <span class="timer iq-tw-7" data-to="2530" data-speed="10000">2530</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12 text-left r-mt-30">
-                        <div class="counter"> <i class="ion-ios-person-outline " aria-hidden="true"></i>
-                            <div class="counter-date">
-                                <label class="iq-font-white text-uppercase">ACTIVE ACCOUNTS</label>
-                                <span class="timer iq-tw-7" data-to="8120" data-speed="10000">8120</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12 text-left r-mt-30">
-                        <div class="counter"> <i class="ion-ios-star " aria-hidden="true"></i>
-                            <div class="counter-date">
-                                <label class="iq-font-white text-uppercase">TOTAL APP RATES</label>
-                                <span class="timer iq-tw-7" data-to="1620" data-speed="10000">1620</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="counter-info iq-mt-60 iq-pt-40">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic type setting, Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                            <p class="iq-mt-30">It has survived not only five centuries, but also the leap into electronic type setting, Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                            <a href="javascript:void(0)" class="button bt-black iq-mt-15 iq-mb-30">Download</a>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="counter-info-img">
-                                <img class="center-block" src="images/drive/07.png" alt="#">
-                                <div class="waves-box">
-                                    <a href="video/01.html" class="iq-video popup-youtube"><i class="ion-ios-play-outline"></i></a>
-                                    <div class="iq-waves">
-                                        <div class="waves wave-1"></div>
-                                        <div class="waves wave-2"></div>
-                                        <div class="waves wave-3"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <section class="overview-block-ptb white-bg iq-loved-customers">
             <div class="container">
@@ -615,96 +506,7 @@
             </div>
         </section>
 
-        <section id="team" class="overview-block-ptb white-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="heading-title">
-                            <h3 class="title iq-tw-7">Meet the Team</h3>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley,</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 col-lg-3 col-md-6">
-                        <div class="iq-team grey-bg">
-                            <div class="iq-team-img">
-                                <img src="<?php echo base_url(); ?>assets/images/team/01.jpg" class="img-fluid center-block" alt="#">
-                            </div>
-                            <div class="iq-team-info text-center">
-                                <h5 class="iq-font-black iq-tw-6">JD Adams</h5>
-                                <span class="team-post iq-tw-5">Web Designer</span>
-                            </div>
-                            <div class="share">
-                                <ul>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-google"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-github"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-lg-3 col-md-6 r4-mt-30">
-                        <div class="iq-team grey-bg">
-                            <div class="iq-team-img">
-                                <img src="<?php echo base_url(); ?>assets/images/team/02.jpg" class="img-fluid center-block" alt="#">
-                            </div>
-                            <div class="iq-team-info text-center">
-                                <h5 class="iq-font-black iq-tw-6">Rinkal Oberoi</h5>
-                                <span class="team-post iq-tw-5">Web Designer</span>
-                            </div>
-                            <div class="share">
-                                <ul>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-google"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-github"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-lg-3 col-md-6 r-mt-30">
-                        <div class="iq-team grey-bg">
-                            <div class="iq-team-img">
-                                <img src="<?php echo base_url(); ?>assets/images/team/03.jpg" class="img-fluid center-block" alt="#">
-                            </div>
-                            <div class="iq-team-info text-center">
-                                <h5 class="iq-font-black iq-tw-6">Jason Deol</h5>
-                                <span class="team-post iq-tw-5">Web Designer</span>
-                            </div>
-                            <div class="share">
-                                <ul>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-google"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-github"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-lg-3 col-md-6 r-mt-30">
-                        <div class="iq-team grey-bg">
-                            <div class="iq-team-img">
-                                <img src="<?php echo base_url(); ?>assets/images/team/04.jpg" class="img-fluid center-block" alt="#">
-                            </div>
-                            <div class="iq-team-info text-center">
-                                <h5 class="iq-font-black iq-tw-6">kush Jackson</h5>
-                                <span class="team-post iq-tw-5">Web Designer</span>
-                            </div>
-                            <div class="share">
-                                <ul>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-google"></i></a></li>
-                                    <li><a href="javascript:void(0)"><i class="fa fa-github"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
 
         <section id="compare-services" class="overview-block-ptb iq-over iq-over-blue-90 iq-parallax" data-jarallax='{"speed": 0.6}' style="background: url(images/bg/05.jpg);">
             <div class="container">
@@ -890,224 +692,12 @@
                     </div>
                 </div>
             </div>
-            <div class="iq-objects-asked">
-                <span class="iq-objects-01">
-<img src="<?php echo base_url(); ?>assets/images/drive/02.png" alt="drive02">
-</span>
-                <span class="iq-objects-02" data-bottom="transform:translatex(50px)" data-top="transform:translatex(-100px);">
-<img src="<?php echo base_url(); ?>assets/images/drive/04.png" alt="drive02">
-</span>
-                <span class="iq-objects-03 iq-fadebounce">
-<span class="iq-round"></span>
-                </span>
-            </div>
+
         </section>
 
-        <section id="blog" class="overview-block-ptb grey-bg iq-blog">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="heading-title">
-                            <h3 class="title iq-tw-7">Latest Blog Post</h3>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley,</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true" data-items="3" data-items-laptop="3" data-items-tab="2" data-items-mobile="2" data-items-mobile-sm="1" data-margin="30">
-                            <div class="item">
-                                <div class="iq-blog-box">
-                                    <div class="iq-blog-image clearfix">
-                                        <div class="media-wrapper">
-                                            <video style="width:100%;height:100%;" id="player1" poster="video/01.jpg" controls preload="none">
-                                                <source type="video/m4v" src="video/01.html" />
-                                                <source type="video/webm" src="video/01.webm" />
-                                                <source type="video/ogg" src="video/01.ogv" />
-                                            </video>
-                                        </div>
-                                    </div>
-                                    <div class="iq-blog-detail">
-                                        <div class="blog-title"> <a href="blog-single.html"><h5 class="iq-tw-6 iq-mb-10">Blogpost With HTML Video</h5> </a> </div>
-                                        <div class="blog-content">
-                                            <p>Quae laboriosam sunt consectetur, assumenda provident lorem ipsum dolor sit amet, consectetur adipisicing elit. hic perspiciatis.</p>
-                                        </div>
-                                        <div class="iq-blog-meta">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-user-circle" aria-hidden="true"></i> Tom Herry</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-calendar" aria-hidden="true"></i> 12 Aug 2017</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="iq-blog-box">
-                                    <div class="iq-blog-image clearfix">
-                                        <img class="img-fluid center-block" src="images/blog/01.jpg" alt="#">
-                                    </div>
-                                    <div class="iq-blog-detail">
-                                        <div class="blog-title"> <a href="blog-single.html"><h5 class="iq-tw-6 iq-mb-10">Blogpost With Image</h5> </a> </div>
-                                        <div class="blog-content">
-                                            <p>Quae laboriosam sunt consectetur, assumenda provident lorem ipsum dolor sit amet, consectetur adipisicing elit. hic perspiciatis.</p>
-                                        </div>
-                                        <div class="iq-blog-meta">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-user-circle" aria-hidden="true"></i> Tom Herry</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-calendar" aria-hidden="true"></i> 12 Aug 2017</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="iq-blog-box">
-                                    <div class="iq-blog-image clearfix">
-                                        <div class="iq-bolg-video">
-                                            <iframe src="https://player.vimeo.com/video/176916362"></iframe>
-                                        </div>
-                                    </div>
-                                    <div class="iq-blog-detail">
-                                        <div class="blog-title"> <a href="blog-single.html"><h5 class="iq-tw-6 iq-mb-10">Blogpost With Vimeo</h5> </a> </div>
-                                        <div class="blog-content">
-                                            <p>Quae laboriosam sunt consectetur, assumenda provident lorem ipsum dolor sit amet, consectetur adipisicing elit. hic perspiciatis.</p>
-                                        </div>
-                                        <div class="iq-blog-meta">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-user-circle" aria-hidden="true"></i> Tom Herry</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-calendar" aria-hidden="true"></i> 12 Aug 2017</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="iq-blog-box">
-                                    <div class="iq-blog-image clearfix">
-                                        <div class="iq-bolg-video">
-                                            <iframe src="https://www.youtube.com/embed/nrJtHemSPW4?rel=0" allowfullscreen></iframe>
-                                        </div>
-                                    </div>
-                                    <div class="iq-blog-detail">
-                                        <div class="blog-title"> <a href="blog-single.html"><h5 class="iq-tw-6 iq-mb-10">Blogpost With Youtube</h5> </a> </div>
-                                        <div class="blog-content">
-                                            <p>Quae laboriosam sunt consectetur, assumenda provident lorem ipsum dolor sit amet, consectetur adipisicing elit. hic perspiciatis.</p>
-                                        </div>
-                                        <div class="iq-blog-meta">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-user-circle" aria-hidden="true"></i> Tom Herry</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-calendar" aria-hidden="true"></i> 12 Aug 2017</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="iq-blog-box">
-                                    <div class="iq-blog-image clearfix">
-                                        <img class="img-fluid center-block" src="images/blog/03.jpg" alt="#">
-                                        <div class="players" id="player2-container">
-                                            <div class="media-wrapper">
-                                                <audio id="player2" preload="none" controls>
-                                                    <source src="http://www.largesound.com/ashborytour/sound/AshboryBYU.mp3" type="audio/mp3">
-                                                </audio>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="iq-blog-detail">
-                                        <div class="blog-title"> <a href="blog-single.html"><h5 class="iq-tw-6 iq-mb-10">Blogpost With Audio</h5> </a> </div>
-                                        <div class="blog-content">
-                                            <p>Quae laboriosam sunt consectetur, assumenda provident lorem ipsum dolor sit amet, consectetur adipisicing elit. hic perspiciatis.</p>
-                                        </div>
-                                        <div class="iq-blog-meta">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-user-circle" aria-hidden="true"></i> Tom Herry</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-calendar" aria-hidden="true"></i> 12 Aug 2017</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="iq-blog-box">
-                                    <div class="iq-blog-image clearfix">
-                                        <img class="img-fluid center-block" src="images/blog/02.jpg" alt="#">
-                                    </div>
-                                    <div class="iq-blog-detail">
-                                        <div class="blog-title"> <a href="blog-single.html"><h5 class="iq-tw-6 iq-mb-10">Blogpost With Image</h5> </a> </div>
-                                        <div class="blog-content">
-                                            <p>Quae laboriosam sunt consectetur, assumenda provident lorem ipsum dolor sit amet, consectetur adipisicing elit. hic perspiciatis.</p>
-                                        </div>
-                                        <div class="iq-blog-meta">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-user-circle" aria-hidden="true"></i> Tom Herry</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-calendar" aria-hidden="true"></i> 12 Aug 2017</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="iq-blog-box">
-                                    <div class="iq-blog-image clearfix">
-                                        <div class="owl-carousel arrow-1" data-autoplay="true" data-loop="true" data-nav="true" data-dots="false" data-items="1" data-items-laptop="1" data-items-tab="1" data-items-mobile="1" data-items-mobile-sm="1" data-margin="30">
-                                            <div class="item">
-                                                <img class="img-fluid" src="images/blog/01.jpg" alt="#">
-                                            </div>
-                                            <div class="item">
-                                                <img class="img-fluid" src="images/blog/02.jpg" alt="#">
-                                            </div>
-                                            <div class="item">
-                                                <img class="img-fluid" src="images/blog/03.jpg" alt="#">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="iq-blog-detail">
-                                        <div class="blog-title"> <a href="blog-single.html"><h5 class="iq-tw-6 iq-mb-10">Blogpost With Slider</h5> </a> </div>
-                                        <div class="blog-content">
-                                            <p>Quae laboriosam sunt consectetur, assumenda provident lorem ipsum dolor sit amet, consectetur adipisicing elit. hic perspiciatis.</p>
-                                        </div>
-                                        <div class="iq-blog-meta">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-user-circle" aria-hidden="true"></i> Tom Herry</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-calendar" aria-hidden="true"></i> 12 Aug 2017</a></li>
-                                                <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-comment-o" aria-hidden="true"></i> 5</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <div class="iq-our-clients white-bg iq-ptb-50">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="true" data-dots="false" data-items="5" data-items-laptop="5" data-items-tab="4" data-items-mobile="3" data-items-mobile-sm="1" data-margin="30">
-                            <div class="item"> <img class="img-fluid center-block" src="images/clients/01.png" alt="#"></div>
-                            <div class="item"> <img class="img-fluid center-block" src="images/clients/02.png" alt="#"></div>
-                            <div class="item"> <img class="img-fluid center-block" src="images/clients/03.png" alt="#"></div>
-                            <div class="item"> <img class="img-fluid center-block" src="images/clients/04.png" alt="#"></div>
-                            <div class="item"> <img class="img-fluid center-block" src="images/clients/05.png" alt="#"></div>
-                            <div class="item"> <img class="img-fluid center-block" src="images/clients/06.png" alt="#"></div>
-                            <div class="item"> <img class="img-fluid center-block" src="images/clients/07.png" alt="#"></div>
-                            <div class="item"> <img class="img-fluid center-block" src="images/clients/08.png" alt="#"></div>
-                            <div class="item"> <img class="img-fluid center-block" src="images/clients/09.png" alt="#"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
 
     </div>
 
@@ -1126,8 +716,8 @@
                     <div class="col-lg-7">
                         <form class="form-inline">
                             <div class="form-group">
-                                <label for="inputPassword2" class="sr-only">Password</label>
-                                <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+                                <label for="inputPassword2" class="sr-only"></label>
+                                <input type="password" class="form-control" id="inputPassword2" placeholder="Enter Email ">
                             </div>
                             <a class="button bt-white iq-ml-25" href="javascript:void(0)">subscribe</a>
                         </form>
@@ -1138,8 +728,8 @@
 
         <section id="contact-us" class="footer-info white-bg">
             <div class="container">
-                <div class="row justify-content-end">
-                    <div class="col-md-6 col-lg-4">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6">
                         <div class="iq-get-in">
                             <h4 class="iq-tw-7 iq-mb-20">Get in Touch</h4>
                             <form id="contact" method="post">
@@ -1170,64 +760,71 @@
                             </form>
                         </div>
                     </div>
+                    <div class="col-md-6 col-lg-3" >
+
+                      <div class="iq-footer-box text-left" style="margin-top:70px;">
+                          <div class="iq-icon">
+                              <i aria-hidden="true" class="ion-ios-location-outline"></i>
+                          </div>
+                          <div class="footer-content">
+                              <h4 class="iq-tw-6 iq-pb-10">Address</h4>
+                              <p>1234 North Avenue Luke Lane, South Bend, IN 360001</p>
+                          </div>
+                      </div>
+
+                      <div class="iq-footer-box text-left" style="margin-top:40px;">
+                          <div class="iq-icon">
+                              <i aria-hidden="true" class="ion-ios-telephone-outline"></i>
+                          </div>
+                          <div class="footer-content">
+                              <h4 class="iq-tw-6 iq-pb-10">Phone</h4>
+                              <p>+0123 456 789
+                                  <br>Mon-Fri 8:00am - 8:00pm
+                                  <br>
+                              </p>
+                          </div>
+                      </div>
+
+
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+
+
+                      <div class="iq-footer-box text-left" style="margin-top:70px;">
+                          <div class="iq-icon">
+                              <i aria-hidden="true" class="ion-ios-email-outline"></i>
+                          </div>
+                          <div class="footer-content">
+                              <h4 class="iq-tw-6 iq-pb-10">Mail</h4>
+                              <p><a href="">info@ensyfi.com</a>
+                                  <br>24 X 7 online support
+                                  <br>
+                              </p>
+                          </div>
+                      </div>
+
+                      <ul class="info-share" style="margin-top:40px;">
+                          <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i></a></li>
+                          <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i></a></li>
+                          <li><a href="javascript:void(0)"><i class="fa fa-google"></i></a></li>
+                          <li><a href="javascript:void(0)"><i class="fa fa-github"></i></a></li>
+                      </ul>
+
+
+
+                    </div>
                 </div>
             </div>
-            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.840108181602!2d144.95373631539215!3d-37.8172139797516!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d4c2b349649%3A0xb6899234e561db11!2sEnvato!5e0!3m2!1sen!2sin!4v1497005461921" style="border:0" allowfullscreen></iframe>
+
         </section>
         <section class="footer-info iq-pt-60">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-lg-3">
-                        <div class="iq-footer-box text-left">
-                            <div class="iq-icon">
-                                <i aria-hidden="true" class="ion-ios-location-outline"></i>
-                            </div>
-                            <div class="footer-content">
-                                <h4 class="iq-tw-6 iq-pb-10">Address</h4>
-                                <p>1234 North Avenue Luke Lane, South Bend, IN 360001</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 r4-mt-30">
-                        <div class="iq-footer-box text-left">
-                            <div class="iq-icon">
-                                <i aria-hidden="true" class="ion-ios-telephone-outline"></i>
-                            </div>
-                            <div class="footer-content">
-                                <h4 class="iq-tw-6 iq-pb-10">Phone</h4>
-                                <p>+0123 456 789
-                                    <br>Mon-Fri 8:00am - 8:00pm
-                                    <br>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 r-mt-30">
-                        <div class="iq-footer-box text-left">
-                            <div class="iq-icon">
-                                <i aria-hidden="true" class="ion-ios-email-outline"></i>
-                            </div>
-                            <div class="footer-content">
-                                <h4 class="iq-tw-6 iq-pb-10">Mail</h4>
-                                <p><a href="https://iqonicthemes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="07747277776875734774686165687f2964686a">[email&#160;protected]</a>
-                                    <br>24 X 7 online support
-                                    <br>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 align-self-center">
-                        <ul class="info-share">
-                            <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="javascript:void(0)"><i class="fa fa-google"></i></a></li>
-                            <li><a href="javascript:void(0)"><i class="fa fa-github"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
+
                 <div class="row iq-mt-40">
                     <div class="col-sm-12 text-center">
-                        <div class="footer-copyright iq-ptb-20">Copyright @<span id="copyright"> <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script></span> <a href="javascript:void(0)" class="text-green">Sofbox.</a> All Rights Reserved </div>
+                        <div class="footer-copyright iq-ptb-20"><span id="copyright">
+                        <?php echo date("Y"); ?></span> &nbsp;Developed by
+                          <a href="https://happysanztech.com" target="_blank" class="text-green">Happy Sanz Tech.</a> </div>
                     </div>
                 </div>
             </div>
