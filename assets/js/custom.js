@@ -687,7 +687,7 @@ $('#plans_select_form').validate({
                          title: "Plan Selected!..",
                          type: "success"
                      }).then(function() {
-                         window.location = "user/payment_plan/"+last_insert_id;
+                         window.location = "user/purchase_plan/"+last_insert_id;
                      });
                    }else{
 
@@ -698,30 +698,5 @@ $('#plans_select_form').validate({
 
 });
 
-$('#plans_update_form').validate({
-    submitHandler: function(form) {
-      $.ajax({
-                 url: "../user_select_plan",
-                 type: 'POST',
-                 data: $('#plans_update_form').serialize(),
-                 dataType: "json",
-                 success: function(response) {
-                    var stats=response.status;
-					var last_insert_id=response.last_insert_id;
-                     if (stats=="success") {
-                       swal({
-                         title: "Plan Selected!..",
-                         type: "success"
-                     }).then(function() {
-                         window.location = "../payment_plan/"+last_insert_id;
-                     });
-                   }else{
-
-                       }
-                 }
-             });
-           }
-
-});
 
 });

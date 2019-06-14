@@ -160,22 +160,39 @@ Class Usermodel extends CI_Model
 
 //#################### SMS End ####################//
   
-   function user_plans($user_id){
+   function inst_plans(){
+		$user_id = $this->session->userdata('user_id');
+		$inst_type = $this->session->userdata('inst_type');
+
+		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id AND A.institute_type = '$inst_type' AND A.status='Active'";
+		$res = $this->db->query($query);
+
+		/* $sQuery = "SELECT * FROM user_plan_history WHERE user_id = '$user_id'";
+		$sResult = $this->db->query($sQuery);
+		 if($sResult->num_rows()>0){
+
+			$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id AND A.institute_type = '$inst_type' AND A.status='Active' AND A.id NOT IN (1,2,3);";
+			$res = $this->db->query($query);
+		 } else {
+			$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id AND A.institute_type = '$inst_type' AND A.status='Active'";
+			$res = $this->db->query($query);
+		 } */
+		 
+		$inst_plans = $res->result();
+		return $inst_plans;
+	}
+	
+	
+   function user_plans(){
+	 $user_id = $this->session->userdata('user_id');
+	 
 	 $query="SELECT A.*,B.plan_name,B.no_of_users from user_plan_history A, plan_master B WHERE A.plan_id = B.id AND A.user_id='$user_id' AND A.status ='Live'";
 	 $res=$this->db->query($query);
 	 $user_plans = $res->result();
 	 return $user_plans;
    }
 
-   function user_inst_plans($inst_type){
-		$user_id = $this->session->userdata('user_id');
-			
-		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id AND A.institute_type = '$inst_type' AND A.status='Active'";
-		$res = $this->db->query($query);
-		$user_inst_plans = $res->result();
-		return $user_inst_plans;
-	}
-	
+  	
 	function user_select_plan($plan_id){
 		$user_id = $this->session->userdata('user_id');
 		
@@ -237,7 +254,8 @@ Class Usermodel extends CI_Model
 	}
 
 	
-	function checkout_demo($purchase_id,$order_id){
+	function order_confirm($purchase_id){
+	    
 		$user_id = $this->session->userdata('user_id');
 		$current_date = date('Y-m-d H:i:s');
 		$startDate = time();
@@ -247,8 +265,11 @@ Class Usermodel extends CI_Model
 		$sResult = $this->db->query($sQuery);
 		foreach($sResult->result() as $srow){
 		   $plan_id = $srow->plan_id ;
+           $purchase_order_id = $srow->purchase_order_id ;
 		   $user_id = $srow->user_id ;
 		}
+		
+		
 		
 		$sQuery = "SELECT * FROM plan_master WHERE id = '$plan_id'";
 		$sResult = $this->db->query($sQuery);
@@ -265,71 +286,83 @@ Class Usermodel extends CI_Model
 		   }
 		}
 
-		$sQuery = "SELECT * FROM user_master WHERE id = '$user_id'";
+
+
+        $sQuery = "SELECT * FROM user_plan_history WHERE user_id = '$user_id'";
 		$sResult = $this->db->query($sQuery);
-		foreach($sResult->result() as $srow){
-		   $institute_code = $srow->institute_code ;
-		}
 		
-		
-		//#-------------DATABASE AND TABLE CREATION--------------#//
-		
-		$base_db =  "ensyfi_".$institute_code;
-		
-		$db_query = "CREATE DATABASE IF NOT EXISTS `".$base_db."`";
-        $db_ex = $this->db->query($db_query);	
-		
-		$config = array();
-		$config['hostname'] = "localhost";
-		$config['username'] = "root";
-		//$config['password'] = "O+E7vVgBr#{}";
-		$config['password'] = "";
-		$config['database'] = $base_db;
-		$config['dbdriver'] = "mysqli";
-		$config['dbprefix'] = "";
-		$config['pconnect'] = FALSE;
-		$config['db_debug'] = TRUE;
-		$config['cache_on'] = FALSE;
-		$config['cachedir'] = "";
-		$config['char_set'] = "utf8";
-		$config['dbcollat'] = "utf8_general_ci";
+		if($sResult->num_rows()>0){
+		    
+		   // echo "Already Exist";
+		   // exit;
+		    
+           }else{
 
-
-		$CI =& get_instance();
-		$CI->db_1 = $CI->load->database($config, TRUE);
-		$CI->db_1 =& $CI->db_1;
- 
-		$temp_line = '';
-		$lines = file($_SERVER["DOCUMENT_ROOT"]."/source/ens_app.sql"); 
-		foreach ($lines as $line)
-		{
-			if (substr($line, 0, 2) == '--' || $line == '' || substr($line, 0, 1) == '#')
-				continue;
-			$temp_line .= $line;
-			if (substr(trim($line), -1, 1) == ';')
-			{
-			    $this->db_1->query($temp_line);
-				$temp_line = '';
-			}
-		}
-
-		$query = "INSERT INTO edu_users(`user_id`, `school_id`, `name`, `user_name`, `user_password`, `user_pic`, `user_type`, `user_master_id`, `parent_id`, `teacher_id`, `student_id`, `created_date`, `updated_date`, `status`, `last_login_date`, `login_count`, `password_status`) VALUES
-(1, '$institute_code', '$institute_code', 'admin', '21232f297a57a5a743894a0e4a801fc3', '', 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active', '0000-00-00 00:00:00', 0, 1)";
-		$result = $this->db_1->query($query);
-		
-		$this->db_1->close();
-		
-		//#-------------DATABASE AND TABLE CREATION END--------------#//
-		
-		
-		
-		$src = $_SERVER["DOCUMENT_ROOT"]."/ensyfi_source";
-		$dst = $_SERVER["DOCUMENT_ROOT"]."/".$institute_code;
-		$this->folder_copy($src,$dst);
-
-		$dbFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/database.php";
-		$fDb = fopen($dbFile,"w");
-		$string = <<<MOD
+        		$sQuery = "SELECT * FROM user_master WHERE id = '$user_id'";
+        		$sResult = $this->db->query($sQuery);
+        		foreach($sResult->result() as $srow){
+        		   $institute_code = $srow->institute_code ;
+        		}
+        		
+        		
+        		//#-------------DATABASE AND TABLE CREATION--------------#//
+        		
+        		$base_db =  "ensyfi_".$institute_code;
+        		
+        		$db_query = "CREATE DATABASE IF NOT EXISTS `".$base_db."`";
+                $db_ex = $this->db->query($db_query);	
+        		
+        		$config = array();
+        		$config['hostname'] = "localhost";
+        		$config['username'] = "root";
+        		$config['password'] = "O+E7vVgBr#{}";
+        	//	$config['password'] = "";
+        		$config['database'] = $base_db;
+        		$config['dbdriver'] = "mysqli";
+        		$config['dbprefix'] = "";
+        		$config['pconnect'] = FALSE;
+        		$config['db_debug'] = TRUE;
+        		$config['cache_on'] = FALSE;
+        		$config['cachedir'] = "";
+        		$config['char_set'] = "utf8";
+        		$config['dbcollat'] = "utf8_general_ci";
+        
+        
+        		$CI =& get_instance();
+        		$CI->db_1 = $CI->load->database($config, TRUE);
+        		$CI->db_1 =& $CI->db_1;
+         
+        		$temp_line = '';
+        		$lines = file($_SERVER["DOCUMENT_ROOT"]."/ensyfi_source_sql/ens_app.sql"); 
+        		foreach ($lines as $line)
+        		{
+        			if (substr($line, 0, 2) == '--' || $line == '' || substr($line, 0, 1) == '#')
+        				continue;
+        			$temp_line .= $line;
+        			if (substr(trim($line), -1, 1) == ';')
+        			{
+        			    $this->db_1->query($temp_line);
+        				$temp_line = '';
+        			}
+        		}
+        
+        		$query = "INSERT INTO edu_users(`user_id`, `school_id`, `name`, `user_name`, `user_password`, `user_pic`, `user_type`, `user_master_id`, `parent_id`, `teacher_id`, `student_id`, `created_date`, `updated_date`, `status`, `last_login_date`, `login_count`, `password_status`) VALUES
+        (1, '$institute_code', '$institute_code', 'admin', '21232f297a57a5a743894a0e4a801fc3', '', 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active', '0000-00-00 00:00:00', 0, 1)";
+        		$result = $this->db_1->query($query);
+        		
+        		$this->db_1->close();
+        		
+        		//#-------------DATABASE AND TABLE CREATION END--------------#//
+        		
+        		
+        		
+        		$src = $_SERVER["DOCUMENT_ROOT"]."/ensyfi_source_code";
+        		$dst = $_SERVER["DOCUMENT_ROOT"]."/".$institute_code;
+        		$this->folder_copy($src,$dst);
+        
+        		$dbFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/database.php";
+        		$fDb = fopen($dbFile,"w");
+$string = <<<MOD
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 \$active_group = 'default';
@@ -357,16 +390,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 );
 MOD;
 
-		fwrite($fDb, $string);
-		fclose($fDb);
-		chmod($dbFile,0777);
-		
-		$base_url = "http://localhost/".$institute_code;
-		//$base_url = "http://ensyfi.com/".$institute_code;
-
-		$conFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/config.php";
-		$fcon = fopen($conFile,"w");
-		$content = <<<POD
+        		fwrite($fDb, $string);
+        		fclose($fDb);
+        		chmod($dbFile,0777);
+        		
+        		//$base_url = "http://localhost/".$institute_code;
+        		$base_url = "http://ensyfi.com/".$institute_code;
+        
+        		$conFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/config.php";
+        		$fcon = fopen($conFile,"w");
+$content = <<<POD
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 \$config['base_url'] = '$base_url';
@@ -419,38 +452,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 \$config['proxy_ips'] = '';
 POD;
 
-		fwrite($fcon, $content);
-		fclose($fcon);
-		chmod($conFile,0777);
-		
+        		fwrite($fcon, $content);
+        		fclose($fcon);
+        		chmod($conFile,0777);
+        
+        		$query = "INSERT INTO user_plan_history(user_id,plan_id,purchase_order_id,activated_date,expiry_date,status,created_by,created_at) VALUES('$user_id','$plan_id','$purchase_order_id','$current_date','$expiry_date','Live','$user_id',now())";
+        		$result = $this->db->query($query);
+        		
+        		$query = "INSERT INTO institute_dashboard(user_master_id,user_type_id,user_type,no_of_users,created_by,created_at) VALUES('$user_id','$institute_type','$plan_type_name','$no_of_users','$user_id',now())";
+        		$result = $this->db->query($query);
+        		
+        		redirect('/dashboard');
+           }    
 
-		$query="UPDATE user_purchase_history SET status='Live',purchase_order_id = '$order_id' WHERE id = '$purchase_id'";
-        $ex=$this->db->query($query);
-		   
-		$query = "INSERT INTO user_plan_history(user_id,plan_id,purchase_order_id,activated_date,expiry_date,status,created_by,created_at) VALUES('$user_id','$plan_id','$order_id','$current_date','$expiry_date','Live','$user_id',now())";
-		$result = $this->db->query($query);
 		
-		$query = "INSERT INTO institute_dashboard(user_master_id,user_type_id,user_type,no_of_users,created_by,created_at) VALUES('$user_id','$institute_type','$plan_type_name','$no_of_users','$user_id',now())";
-		$result = $this->db->query($query);
-		
-		redirect('/dashboard');
 	}
 	
-	
-	function user_plan_history($user_id){
 
-		$sQuery="SELECT * from user_plan_history A,plan_master B WHERE A.plan_id = B.id AND A.user_id='$user_id' AND A.status ='Live'";
-		$sResult = $this->db->query($sQuery);
-		foreach($sResult->result() as $srow){
-		   $plan_id = $srow->plan_id ;
-		   $inst_type = $srow->institute_type ;
-		}
-		
-		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id AND A.institute_type = '$inst_type' AND A.id !='$plan_id'  AND A.status='Active'";
-		$res = $this->db->query($query);
-		$user_inst_plans = $res->result();
-		return $user_inst_plans;
-
-   }
 }
 ?>

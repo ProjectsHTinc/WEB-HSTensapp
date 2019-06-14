@@ -1,6 +1,7 @@
 <?php 
 	if (count($purchase_details)>0){ 
 	  foreach($purchase_details as $rows){ 
+	    $purchase_id = $rows->id;
 		$plan_id = $rows->plan_id;
 		$user_id = $rows->user_id;
 	  }
@@ -9,7 +10,7 @@
 		for ($i = 0; $i < 7; $i++) {
 			$randomNumber .= $number[rand(0, 7 - 1)];
 		}
-		$order_id = $randomNumber."-".$user_id;
+		$order_id = $randomNumber."-".$user_id."-".$purchase_id;
 ?>
 <section class="overview-block-ptb grey-bg" style="margin-top:50px;">
     <div class="container">
@@ -44,7 +45,7 @@
          </form>
 	<?php } else { ?>
 			<form method="post" name="customerData"  class="confirm_process" action="<?php echo base_url(); ?>ccavenue_web/ccavRequestHandler.php">
-				<input type="hidden" name="merchant_id" value="89958"/>
+				<input type="hidden" name="merchant_id" value="216134"/>
 				<input type="hidden" name="order_id" value="<?php echo $order_id;?>"/>
 				<input type="hidden" name="amount" value="<?php echo $rows->purchase_amount;?>"/>
 				<input type="hidden" name="currency" value="INR"/>
@@ -53,16 +54,6 @@
 				<input type="hidden" name="language" value="EN"/>
 				<input type="submit" value="CheckOut" class="btn btn-primary">
             </form>
-<!--
-		<form method="post" name="paytm" id='paytm' class="confirm_process" action="https://heylaapp.com/paytm_web/pgRedirect.php">
-		<input type="hidden" name="ORDER_ID" value="<?php //echo $order_id;?>"/>
-		<input type="hidden" name="CUST_ID" value="123456"/>
-		<input type="hidden" name="INDUSTRY_TYPE_ID" value="Retail109"/>
-		<input type="hidden" name="CHANNEL_ID" value="WAP"/>
-		<input type="hidden" name="TXN_AMOUNT" value="<?php //echo $rows->purchase_amount;?>"/>
-		<input type="submit" value="CheckOut" class="btn btn-primary">
-	</form>
--->
 	<?php } ?>
 		</div>
 </div>

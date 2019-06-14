@@ -1,77 +1,47 @@
 <?php 
 	if (count($user_plans)>0){ 
-	  foreach($user_plans as $rows){ }
+		foreach($user_plans as $rows){  
+			$old_plan_id = $rows->plan_id; 
+		}
+	} else {
+		$old_plan_id = "";
+	}
 ?>
-<section class="overview-block-ptb grey-bg" style="margin-top:50px;">
-    <div class="container">
-		<div class="row">
-           <table class="table">
-	 
-		<thead class="thead-light">
-		  <tr>
-			<th>Plan Name</th>
-			<th>activated_date</th>
-			<th>expiry_date</th>
-			<th>Plan Users</th>
-			<th>Status</th>
-		  </tr>
-		</thead>
-		<tbody>
-		  <tr>
-			<td><?php echo $rows->plan_name; ?></td>
-			<td><?php echo date("d-m-Y  h:i:s", strtotime($rows->activated_date)); ?></td>
-			<td><?php echo date("d-m-Y  h:i:s", strtotime($rows->expiry_date)); ?></td>
-			<td><?php echo $rows->no_of_users; ?></td>
-			<td><?php echo $rows->status; ?></td>
-		  </tr>	
-		  <tr>
-			<td colspan='5' align="right"><form method="post" name="customerData"  class="confirm_process" action="<?php echo base_url(); ?>user/change_plan/"><button id="submit" name="submit" type="submit" value="Send" class="button iq-mt-15">Change Plan</button></form></td>
-		 </tr>
-		</tbody>
-	  </table>
-		</div>
-</div>
-</section>
-<?php
-		  } else {
-  ?>
-     <section class="overview-block-ptb grey-bg" style="margin-top:50px;">
-    <div class="container">
-	
-        <div class="row">
-		
-	  <table class="table">
-	  <form id="plans_select_form" method="post" enctype="multipart/form-data">
-		<thead class="thead-light">
-		  <tr>
-			<th>Plan Name</th>
-			<th>Plan Pricing</th>
-			<th>No.of Users</th>
-			<th>Plan Duration</th>
-			<th>Action</th>
-		  </tr>
-		</thead>
-		<tbody>
-		<?php $i = 0; foreach($user_inst_plans as $rows){ ?>
-		  <tr>
-			<td><?php echo $rows->plan_name; ?></td>
-			<td>₹ <?php echo $rows->pricing; ?></td>
-			<td><?php echo $rows->no_of_users; ?></td>
-			<td><?php echo $rows->duration; ?> Years</td>
-			<td><input type="radio" name="plan_id" value="<?php echo $rows->id; ?>" <?php if ($i == '0') {?>checked<?php } ?>></td>
-		  </tr>
-		<?php  $i = $i+1; } ?>
-		<tr>
-			<td colspan='5' align="right"><button id="submit" name="submit" type="submit" value="Send" class="button iq-mt-15">Purchase</button></td>
-		 </tr>
-		</tbody></form>
-	  </table>
+ 	<section id="pricing" class="overview-block-ptb grey-bg iq-price-table" style="padding-top:150px;">
+		<form id="plans_select_form" method="post" enctype="multipart/form-data">
+            <div class="container">
+                <div class="row">
 
-        </div>
-    </div>
-</section>
+					<?php $i = 0; foreach($inst_plans as $rows){ ?>
 
-		  <?php } ?>
+                    <div class="col-md-3 col-lg-3 wow flipInY r4-mt-30" data-wow-duration="1s" style="visibility: visible; animation-duration: 1s; animation-name: flipInY;">
+                        <div class="iq-pricing pricing-02 text-center">
+                            <div class="price-title iq-parallax iq-over-blue-80" data-jarallax="{&quot;speed&quot;: 0.6}" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; z-index: 0;" data-jarallax-original-styles="background: url(images/bg/08.jpg);">
+                                <h2 class="iq-font-white iq-tw-7"><small>₹</small> <?php echo $rows->pricing; ?><small></small></h2>
+                                <span class="text-uppercase iq-tw-4 iq-font-white"><?php echo $rows->plan_name; ?></span>
+                            <div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -100;" id="jarallax-container-2"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;http://localhost/ensapp/images/bg/08.jpg&quot;); position: fixed; top: 0px; left: 495.5px; width: 358px; height: 220.9px; overflow: hidden; pointer-events: none; margin-top: 43.05px; transform: translate3d(0px, 86.97px, 0px);"></div></div></div>
+                            <ul>
+                                <li><?php echo $rows->no_of_users; ?> Users</li>
+                                <li><?php echo $rows->duration; ?> Years</li>
+                            </ul>
+                            <div class="price-footer">
+								<?php if ($old_plan_id != $rows->id) { ?>
+								<input type="radio" name="plan_id" value="<?php echo $rows->id; ?>" <?php if ($i == '0') {?>checked<?php } ?>>
+								<?php } ?>
+                            </div>
+                        </div>
+                    </div>
+					
+					<?php $i = $i+1;  } ?>
+                </div>
+				<?php if ($old_plan_id !="") { ?>
+					<button id="submit" name="submit" type="submit" value="Send" class="button iq-mt-15" style="float:right;">Change Plan</button>
+				<?php } else { ?>
+					<button id="submit" name="submit" type="submit" value="Send" class="button iq-mt-15" style="float:right;">Purchase</button>
+				<?php }  ?>
+            </div></form>
+        </section>    
+
 		
 		
     

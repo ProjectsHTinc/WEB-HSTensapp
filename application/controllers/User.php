@@ -25,7 +25,7 @@ class User extends CI_Controller {
 		}
 	}
 
-	public function payment_plan(){
+	public function purchase_plan(){
 		$datas = $this->session->userdata();
 		$user_id = $this->session->userdata('user_id');
 		$user_type = $this->session->userdata('user_type');
@@ -40,7 +40,25 @@ class User extends CI_Controller {
 		 }
 	}
 	
-	public function checkout_demo(){
+	public function order_confirm($enc_purchase_id){
+		$purchase_id = base64_decode($enc_purchase_id);
+		$datas = $this->session->userdata();
+		$user_id = $this->session->userdata('user_id');
+		$user_type = $this->session->userdata('user_type');
+		//$purchase_id = $this->uri->segment(3);
+		
+		$datas['purchase_details'] = $this->usermodel->order_confirm($purchase_id);
+		
+		if($user_id !=''){
+			$this->load->view('site_header');
+			$this->load->view('order_confirmation');
+			$this->load->view('site_footer');
+		 }else{
+			 redirect('/login');
+		 }
+	}
+	
+	/* public function checkout_demo(){
 		$datas = $this->session->userdata();
 		$user_id = $this->session->userdata('user_id');
 		$user_type = $this->session->userdata('user_type');
@@ -56,24 +74,20 @@ class User extends CI_Controller {
 		 }else{
 			 redirect('/login');
 		 }
-	}
+	} */
 	
-	public function change_plan(){
+	/* public function change_plan(){
 		$datas = $this->session->userdata();
 		$user_id = $this->session->userdata('user_id');
 		$user_type = $this->session->userdata('user_type');
-		//$purchase_id = $this->input->post('purchase_id');
 		$datas['user_plan_history'] = $this->usermodel->user_plan_history($user_id);
-		//print_r($datas);
-		//exit;
 		if($user_id !=''){
 			$this->load->view('site_header');
 			$this->load->view('change_plan',$datas);
-			//$this->load->view('change_plan');
 			$this->load->view('site_footer');
 		 }else{
 			 redirect('/login');
 		 }
-	}
+	} */
 	
 }

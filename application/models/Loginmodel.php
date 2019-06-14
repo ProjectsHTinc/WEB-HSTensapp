@@ -63,8 +63,12 @@ Class Loginmodel extends CI_Model
 							$current_date = date("Y-m-d H:i:s"); ;
 							
 							if ($current_date >= $expiry_date){
-							 $update_query = "UPDATE user_plan_history SET status ='Expiry' WHERE id='$plan_id'";
-							 $resultset = $this->db->query($update_query);
+								 $update_query = "UPDATE user_plan_history SET status ='Expiry' WHERE id='$plan_id'";
+								 $resultset = $this->db->query($update_query);
+								 
+								 $update_query = "UPDATE user_purchase_history SET status ='Expiry' WHERE plan_id='$plan_id'";
+								 $resultset = $this->db->query($update_query);
+								 
 							}
 					 }
 							$data = array("email"=>$rows->email,"mobile"=>$rows->mobile,"msg"=>"success","detail_flag"=>$rows->detail_flag,"user_role"=>$rows->user_role,"status"=>"success","user_id"=>$rows->id,"inst_type"=>$institute_type);
