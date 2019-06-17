@@ -681,7 +681,8 @@ $('#plans_select_form').validate({
                  dataType: "json",
                  success: function(response) {
                     var stats=response.status;
-					var last_insert_id=response.last_insert_id;
+					var purchase_id=response.last_insert_id;
+					var last_insert_id = btoa(purchase_id);
                      if (stats=="success") {
                        swal({
                          title: "Plan Selected!..",

@@ -16,4 +16,8 @@ $route['logout'] = 'home/logout';
 // $route['project_details/(:num)'] = 'welcome/project_details/$1';
 $route['about'] = 'home/about';
 $route['home'] = 'home/index';
+
+$route['user_profile'] = 'user/user_profile';
+$route['order_history'] = 'user/order_history';
+$route['plan_history'] = 'user/plan_history';
 //--------PIA MODULE ENDS-------//

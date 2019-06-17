@@ -73,8 +73,8 @@
                                     <a class="nav-link" href="<?php echo base_url(); ?>admin/customers">Customers</a>
                                 </li>
                             </ul>
-						<?php $email = $this->session->userdata('email');
-							if($email !=''){?>
+						<?php $user_role = $this->session->userdata('user_role');
+							if($user_role !=''){?>
 								<a href="<?php echo base_url(); ?>logout" class="button bt-black pull-right"><i class="ion-android-close"></i></a>
 						<?php }else{ ?>
 							  <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right"><i class="ion-log-in"></i></a>

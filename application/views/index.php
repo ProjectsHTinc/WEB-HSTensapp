@@ -70,26 +70,38 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#contact">Contact</a>
                                 </li>
-								<?php $email = $this->session->userdata('email');
-								if($email !=''){?>
+								<?php
+								//print_r($this->session->userdata); 
+								$user_role = $this->session->userdata('user_role');
+									
+								if ($user_role == '1') {
+								?>
+								<li class="nav-item">
+                                    <a class="nav-link" href="<?php echo base_url(); ?>admin/dashboard">Admin Panel</a>
+                                </li>
+								<?php 
+								} 
+								if ($user_role == '2') {
+								 ?>
 								<li class="nav-item dropdown">
                                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
                                    <div class="dropdown-menu">
                                      <a class="dropdown-item" href="<?php echo base_url(); ?>dashboard">Dashboard</a>
-									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_renewals">My Renewals</a>
+									 <a class="dropdown-item" href="<?php echo base_url(); ?>plan_history">Plan History</a>
+									 <a class="dropdown-item" href="<?php echo base_url(); ?>order_history">Order History</a>
 									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_profile">Profile</a>
 
                                    </div>
                                 </li>
 							<?php  } ?>
                             </ul>
-                           <?php $email = $this->session->userdata('email');
-							if($email !=''){?>
+							<?php 
+							if($user_role !=''){?>
 								<a href="<?php echo base_url(); ?>logout" class="button bt-black pull-right"><i class="ion-android-close"></i></a>
-						<?php }else{ ?>
+							<?php }else{ ?>
 							  <a href="<?php echo base_url(); ?>register" class="button bt-black pull-right" title="Register"><i class="fa fa-user" aria-hidden="true"></i></a>
 							  <a href="<?php echo base_url(); ?>login" class="button bt-black pull-right" title="Login here"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
-						<?php  } ?>
+							<?php  } ?>
                         </div>
                     </nav>
                 </div>

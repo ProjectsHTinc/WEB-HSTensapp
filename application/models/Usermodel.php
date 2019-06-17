@@ -160,6 +160,8 @@ Class Usermodel extends CI_Model
 
 //#################### SMS End ####################//
   
+  
+ //#################### Institute Plans ####################//
    function inst_plans(){
 		$user_id = $this->session->userdata('user_id');
 		$inst_type = $this->session->userdata('inst_type');
@@ -182,17 +184,22 @@ Class Usermodel extends CI_Model
 		return $inst_plans;
 	}
 	
+	//#################### Institute Plans End ####################//
 	
-   function user_plans(){
+	
+    //#################### User Already Purchased Plans ####################//
+   function user_purchased_plans(){
 	 $user_id = $this->session->userdata('user_id');
 	 
 	 $query="SELECT A.*,B.plan_name,B.no_of_users from user_plan_history A, plan_master B WHERE A.plan_id = B.id AND A.user_id='$user_id' AND A.status ='Live'";
 	 $res=$this->db->query($query);
-	 $user_plans = $res->result();
-	 return $user_plans;
+	 $user_purchased_plans = $res->result();
+	 return $user_purchased_plans;
    }
-
+ //#################### User Already Purchased Plans End ####################//
   	
+  	
+ //#################### User Select Plan ####################//  	
 	function user_select_plan($plan_id){
 		$user_id = $this->session->userdata('user_id');
 		
@@ -223,13 +230,22 @@ Class Usermodel extends CI_Model
 		return $response;
 	}
 	
+	//#################### User Select Plan End ####################//  
+	
+	
+	
+	//#################### User Purchase Plan Details ####################//  
+	
 	function purchase_details($purchase_id){
 		$query = "SELECT A.*,B.plan_name,B.no_of_users,B.duration,C.institute_name FROM user_purchase_history A,plan_master B,user_details C WHERE A.plan_id = B.id AND A.user_id = C.user_master_id AND A.id = '$purchase_id'";
 		$res = $this->db->query($query);
 		$result = $res->result();
 		return $result;
 	}
+	//#################### User Purchase Plan End ####################// 
 	
+	
+	//#################### Folder Copy ####################// 
 	
 	function folder_copy($src, $dst){
 		if(is_dir($src))
@@ -252,8 +268,11 @@ Class Usermodel extends CI_Model
 			copy($src, $dst);
 		}
 	}
+//#################### Folder Copy End ####################// 
 
-	
+
+//#################### Order Confirmation and Generation URL and DB for Users ####################// 
+
 	function order_confirm($purchase_id){
 	    
 		$user_id = $this->session->userdata('user_id');
@@ -268,8 +287,6 @@ Class Usermodel extends CI_Model
            $purchase_order_id = $srow->purchase_order_id ;
 		   $user_id = $srow->user_id ;
 		}
-		
-		
 		
 		$sQuery = "SELECT * FROM plan_master WHERE id = '$plan_id'";
 		$sResult = $this->db->query($sQuery);
@@ -286,25 +303,27 @@ Class Usermodel extends CI_Model
 		   }
 		}
 
-
+        $sQuery = "SELECT * FROM user_master WHERE id = '$user_id'";
+    		$sResult = $this->db->query($sQuery);
+    		foreach($sResult->result() as $srow){
+    		   $institute_code = $srow->institute_code ;
+    		}
 
         $sQuery = "SELECT * FROM user_plan_history WHERE user_id = '$user_id'";
 		$sResult = $this->db->query($sQuery);
 		
 		if($sResult->num_rows()>0){
 		    
-		   // echo "Already Exist";
-		   // exit;
+		        $query = "INSERT INTO user_plan_history(user_id,plan_id,purchase_order_id,activated_date,expiry_date,status,created_by,created_at) VALUES('$user_id','$plan_id','$purchase_order_id','$current_date','$expiry_date','Success','$user_id',now())";
+        		$result = $this->db->query($query);
+        		
+        		$query = "INSERT INTO institute_dashboard(user_master_id,user_type_id,user_type,no_of_users,created_by,created_at) VALUES('$user_id','$institute_type','$plan_type_name','$no_of_users','$user_id',now())";
+        		$result = $this->db->query($query);
 		    
+			
+				redirect('/order_history');
            }else{
 
-        		$sQuery = "SELECT * FROM user_master WHERE id = '$user_id'";
-        		$sResult = $this->db->query($sQuery);
-        		foreach($sResult->result() as $srow){
-        		   $institute_code = $srow->institute_code ;
-        		}
-        		
-        		
         		//#-------------DATABASE AND TABLE CREATION--------------#//
         		
         		$base_db =  "ensyfi_".$institute_code;
@@ -315,8 +334,8 @@ Class Usermodel extends CI_Model
         		$config = array();
         		$config['hostname'] = "localhost";
         		$config['username'] = "root";
-        		$config['password'] = "O+E7vVgBr#{}";
-        	//	$config['password'] = "";
+        	//	$config['password'] = "O+E7vVgBr#{}";
+        		$config['password'] = "";
         		$config['database'] = $base_db;
         		$config['dbdriver'] = "mysqli";
         		$config['dbprefix'] = "";
@@ -388,14 +407,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+\$db['second'] = array(
+    'dsn'   => '',
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => 'O+E7vVgBr#{}',
+    'database' => 'ensyfi_testing',
+    'dbdriver' => 'mysqli',
+    'dbprefix' => '',
+    'pconnect' => FALSE,
+    'db_debug' => (ENVIRONMENT !== 'production'),
+    'cache_on' => FALSE,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+    'swap_pre' => '',
+    'encrypt' => FALSE,
+    'compress' => FALSE,
+    'stricton' => FALSE,
+    'failover' => array(),
+    'save_queries' => TRUE
+);
 MOD;
 
         		fwrite($fDb, $string);
         		fclose($fDb);
         		chmod($dbFile,0777);
         		
-        		//$base_url = "http://localhost/".$institute_code;
-        		$base_url = "http://ensyfi.com/".$institute_code;
+        		$base_url = "http://localhost/".$institute_code;
+        		//$base_url = "http://ensyfi.com/".$institute_code;
         
         		$conFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/config.php";
         		$fcon = fopen($conFile,"w");
@@ -456,18 +497,35 @@ POD;
         		fclose($fcon);
         		chmod($conFile,0777);
         
-        		$query = "INSERT INTO user_plan_history(user_id,plan_id,purchase_order_id,activated_date,expiry_date,status,created_by,created_at) VALUES('$user_id','$plan_id','$purchase_order_id','$current_date','$expiry_date','Live','$user_id',now())";
+        		$query = "INSERT INTO user_plan_history(user_id,plan_id,purchase_order_id,activated_date,expiry_date,status,created_by,created_at) VALUES('$user_id','$plan_id','$purchase_order_id','$current_date','$expiry_date','Success','$user_id',now())";
         		$result = $this->db->query($query);
         		
         		$query = "INSERT INTO institute_dashboard(user_master_id,user_type_id,user_type,no_of_users,created_by,created_at) VALUES('$user_id','$institute_type','$plan_type_name','$no_of_users','$user_id',now())";
         		$result = $this->db->query($query);
         		
-        		redirect('/dashboard');
+        		redirect('/order_history');
            }    
 
 		
 	}
-	
+	//#################### Order Confirmation End ####################// 
 
+	//#################### Plan Details ####################// 
+	function plan_details($user_id){
+		$query = "SELECT A.*,B.plan_name FROM user_plan_history A, plan_master B WHERE A.plan_id = B.id AND A.user_id = '$user_id' ORDER BY A.id DESC";
+		$res = $this->db->query($query);
+		$result = $res->result();
+		return $result;
+	}
+	//#################### Plan Details End ####################// 
+	
+	//#################### Purchase Details ####################// 
+	function order_history($user_id){
+		$query = "SELECT A.*,B.plan_name FROM user_purchase_history A, plan_master B WHERE A.plan_id = B.id AND A.user_id = '$user_id' ORDER BY A.id DESC";
+		$res = $this->db->query($query);
+		$result = $res->result();
+		return $result;
+	}
+	//#################### Purchase Details End ####################//
 }
 ?>

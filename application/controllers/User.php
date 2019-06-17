@@ -11,6 +11,28 @@ class User extends CI_Controller {
 			$this->load->model('loginmodel');
 			$this->load->model('usermodel');
 		 }
+		 
+//-------------------------------------------------//
+
+	public function user_profile(){
+		$datas = $this->session->userdata();
+		$user_id = $this->session->userdata('user_id');
+		$user_type = $this->session->userdata('user_type');
+		
+		//$datas['user_details'] = $this->usermodel->user_details($user_id);
+		if($user_id !=''){
+			$this->load->view('site_header');
+			//$this->load->view('user_profile',$datas);
+			$this->load->view('user_profile');
+			$this->load->view('site_footer');
+		 }else{
+			 redirect('/login');
+		 }
+	}
+
+//-------------------------------------------------//
+
+//-------------------------------------------------//
 
 	public function user_select_plan(){
 		$datas = $this->session->userdata();
@@ -25,11 +47,16 @@ class User extends CI_Controller {
 		}
 	}
 
+//-------------------------------------------------//
+
 	public function purchase_plan(){
 		$datas = $this->session->userdata();
 		$user_id = $this->session->userdata('user_id');
 		$user_type = $this->session->userdata('user_type');
-		$purchase_id = $this->uri->segment(3);
+		$enc_purchase_id = $this->uri->segment(3);
+		
+		$purchase_id = base64_decode($enc_purchase_id);
+
 		$datas['purchase_details'] = $this->usermodel->purchase_details($purchase_id);
 		if($user_id !=''){
 			$this->load->view('site_header');
@@ -39,9 +66,12 @@ class User extends CI_Controller {
 			 redirect('/login');
 		 }
 	}
-	
+
+//-------------------------------------------------//
+
 	public function order_confirm($enc_purchase_id){
 		$purchase_id = base64_decode($enc_purchase_id);
+		
 		$datas = $this->session->userdata();
 		$user_id = $this->session->userdata('user_id');
 		$user_type = $this->session->userdata('user_type');
@@ -58,6 +88,46 @@ class User extends CI_Controller {
 		 }
 	}
 	
+//-------------------------------------------------//
+
+//-------------------------------------------------//
+
+	public function order_history(){
+		$datas = $this->session->userdata();
+		$user_id = $this->session->userdata('user_id');
+		$user_type = $this->session->userdata('user_type');
+		
+		$datas['order_history'] = $this->usermodel->order_history($user_id);
+		if($user_id !=''){
+			$this->load->view('site_header');
+			$this->load->view('order_history',$datas);
+			$this->load->view('site_footer');
+		 }else{
+			 redirect('/login');
+		 }
+	}
+
+//-------------------------------------------------//
+
+//-------------------------------------------------//
+
+	public function plan_history(){
+		$datas = $this->session->userdata();
+		$user_id = $this->session->userdata('user_id');
+		$user_type = $this->session->userdata('user_type');
+		
+		$datas['plan_details'] = $this->usermodel->plan_details($user_id);
+		if($user_id !=''){
+			$this->load->view('site_header');
+			$this->load->view('plan_history',$datas);
+			$this->load->view('site_footer');
+		 }else{
+			 redirect('/login');
+		 }
+	}
+
+//-------------------------------------------------//
+
 	/* public function checkout_demo(){
 		$datas = $this->session->userdata();
 		$user_id = $this->session->userdata('user_id');
@@ -75,6 +145,7 @@ class User extends CI_Controller {
 			 redirect('/login');
 		 }
 	} */
+	
 	
 	/* public function change_plan(){
 		$datas = $this->session->userdata();

@@ -31,9 +31,12 @@ class Home extends CI_Controller {
 		$user_id=$this->session->userdata('user_id');
 		$inst_type=$this->session->userdata('inst_type');
 		$user_type=$this->session->userdata('user_role');
-		$data['user_plans']=$this->usermodel->user_plans();
 		$data['inst_plans']=$this->usermodel->inst_plans();
+		$data['user_purchased_plans']=$this->usermodel->user_purchased_plans();
+		
 		//print_r($data);
+    	//exit;
+    	
 		if($user_type=='1'){
 			$this->load->view('admin/header');
 			$this->load->view('admin/dashboard');

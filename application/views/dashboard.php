@@ -1,10 +1,10 @@
 <?php 
-	if (count($user_plans)>0){ 
-		foreach($user_plans as $rows){  
+	if (count($user_purchased_plans)>0){ 
+		foreach($user_purchased_plans as $rows){  
 			$old_plan_id = $rows->plan_id; 
 		}
 	} else {
-		$old_plan_id = "";
+		    $old_plan_id = "";
 	}
 ?>
  	<section id="pricing" class="overview-block-ptb grey-bg iq-price-table" style="padding-top:150px;">
@@ -26,7 +26,7 @@
                             </ul>
                             <div class="price-footer">
 								<?php if ($old_plan_id != $rows->id) { ?>
-								<input type="radio" name="plan_id" value="<?php echo $rows->id; ?>" <?php if ($i == '0') {?>checked<?php } ?>>
+								<input type="radio" name="plan_id" value="<?php echo $rows->id; ?>" <?php if ($i == '0') {?><?php } ?>>
 								<?php } ?>
                             </div>
                         </div>
@@ -41,7 +41,3 @@
 				<?php }  ?>
             </div></form>
         </section>    
-
-		
-		
-    
