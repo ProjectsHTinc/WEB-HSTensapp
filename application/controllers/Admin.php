@@ -146,4 +146,24 @@ class Admin extends CI_Controller {
 		 }		
 	}
 	
+	public function edit_customer($customer_id)
+	{
+		$customer_id = base64_decode($customer_id);
+		$user_data = $this->session->userdata();
+		$user_id = $this->session->userdata('id');
+		$user_role = $this->session->userdata('user_role');
+		
+		$datas['customer_details'] = $this->adminmodel->view_customer_details($customer_id);
+		//$datas['plan_details'] = $this->adminmodel->view_customer_plans($customer_id);
+		//$datas['purchase_details'] = $this->adminmodel->view_customer_purchase($customer_id);
+		
+		if($user_role=='1'){
+			$this->load->view('admin/header');
+			$this->load->view('admin/edit_customer',$datas);
+			$this->load->view('admin/footer');
+		 }else{
+			 redirect('/login');
+		 }		
 	}
+	
+}

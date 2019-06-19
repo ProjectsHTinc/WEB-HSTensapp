@@ -47,6 +47,7 @@
 			<form method="post" name="customerData"  class="confirm_process" action="<?php echo base_url(); ?>ccavenue_web/ccavRequestHandler.php">
 				<input type="hidden" name="merchant_id" value="216134"/>
 				<input type="hidden" name="order_id" value="<?php echo $order_id;?>"/>
+				<input type="hidden" name="purchase_id" value="<?php echo $rows->id;?>"/>
 				<input type="hidden" name="amount" value="<?php echo $rows->purchase_amount;?>"/>
 				<input type="hidden" name="currency" value="INR"/>
 				<input type="hidden" name="redirect_url" value="<?php echo base_url(); ?>ccavenue_web/ccavResponseHandler.php"/>

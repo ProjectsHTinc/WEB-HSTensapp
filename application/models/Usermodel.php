@@ -21,6 +21,66 @@ Class Usermodel extends CI_Model
 
 //#################### Email End ####################//
 
+//#################### SMS ####################//
+
+	function sendSMS($user_mobile,$mobile_message)
+	{
+        //Your authentication key
+          $authKey = "191431AStibz285a4f14b4";
+
+          //Multiple mobiles numbers separated by comma
+          $mobile = "$user_mobile";
+
+          //Sender ID,While using route4 sender id should be 6 characters long.
+          $senderId = "ENSYFI";
+
+          //Your message to send, Add URL encoding here.
+          $message = $mobile_message;
+
+          //Define route
+          $route = "transactional";
+
+          //Prepare you post parameters
+          $postData = array(
+              'authkey' => $authKey,
+              'mobiles' => $mobile,
+              'message' => $message,
+              'sender' => $senderId,
+              'route' => $route
+          );
+
+          //API URL
+          $url="https://control.msg91.com/api/sendhttp.php";
+
+          // init the resource
+          $ch = curl_init();
+          curl_setopt_array($ch, array(
+              CURLOPT_URL => $url,
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_POST => true,
+              CURLOPT_POSTFIELDS => $postData
+              //,CURLOPT_FOLLOWLOCATION => true
+          ));
+
+
+          //Ignore SSL certificate verification
+          curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+
+          //get response
+          $output = curl_exec($ch);
+
+          //Print error if any
+          if(curl_errno($ch))
+          {
+              echo 'error:' . curl_error($ch);
+          }
+
+          curl_close($ch);
+	}
+
+//#################### SMS End ####################//
 
 //#################### Notification ####################//
 
@@ -99,67 +159,7 @@ Class Usermodel extends CI_Model
 //#################### Notification End ####################//
 
 
-//#################### SMS ####################//
-
-	function sendSMS($Phoneno,$Message)
-	{
-        //Your authentication key
-          $authKey = "191431AStibz285a4f14b4";
-
-          //Multiple mobiles numbers separated by comma
-          $mobileNumber = "$phone";
-
-          //Sender ID,While using route4 sender id should be 6 characters long.
-          $senderId = "ENSYFI";
-
-          //Your message to send, Add URL encoding here.
-          $message = $notes;
-
-          //Define route
-          $route = "transactional";
-
-          //Prepare you post parameters
-          $postData = array(
-              'authkey' => $authKey,
-              'mobiles' => $phone,
-              'message' => $notes,
-              'sender' => $senderId,
-              'route' => $route
-          );
-
-          //API URL
-          $url="https://control.msg91.com/api/sendhttp.php";
-
-          // init the resource
-          $ch = curl_init();
-          curl_setopt_array($ch, array(
-              CURLOPT_URL => $url,
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_POST => true,
-              CURLOPT_POSTFIELDS => $postData
-              //,CURLOPT_FOLLOWLOCATION => true
-          ));
-
-
-          //Ignore SSL certificate verification
-          curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-
-          //get response
-          $output = curl_exec($ch);
-
-          //Print error if any
-          if(curl_errno($ch))
-          {
-              echo 'error:' . curl_error($ch);
-          }
-
-          curl_close($ch);
-	}
-
-//#################### SMS End ####################//
-  
+ 
   
  //#################### Institute Plans ####################//
    function inst_plans(){
@@ -291,6 +291,7 @@ Class Usermodel extends CI_Model
 		$sQuery = "SELECT * FROM plan_master WHERE id = '$plan_id'";
 		$sResult = $this->db->query($sQuery);
 		foreach($sResult->result() as $srow){
+		   $plan_name = $srow->plan_name ;
 		   $institute_type = $srow->institute_type ;
 		   $no_of_users = $srow->no_of_users;
 		   
@@ -302,11 +303,14 @@ Class Usermodel extends CI_Model
 			    $plan_type_name = "PIA";
 		   }
 		}
-
-        $sQuery = "SELECT * FROM user_master WHERE id = '$user_id'";
+		$query = "SELECT A.id,A.institute_code,A.email,A.mobile,A.email_verify,A.mobile_verify,B.* FROM user_master A, user_details B WHERE A.id = B.user_master_id AND A.id = '$user_id'";
+        //$sQuery = "SELECT * FROM user_master WHERE id = '$user_id'";
     		$sResult = $this->db->query($sQuery);
     		foreach($sResult->result() as $srow){
     		   $institute_code = $srow->institute_code ;
+			   $user_email = $srow->email;
+			   $user_mobile  = $srow->mobile;
+			   $institute_name  = $srow->institute_name;
     		}
 
         $sQuery = "SELECT * FROM user_plan_history WHERE user_id = '$user_id'";
@@ -503,6 +507,16 @@ POD;
         		$query = "INSERT INTO institute_dashboard(user_master_id,user_type_id,user_type,no_of_users,created_by,created_at) VALUES('$user_id','$institute_type','$plan_type_name','$no_of_users','$user_id',now())";
         		$result = $this->db->query($query);
         		
+				
+				$subject = "Ensyfi - School Application - Login details";
+				$htmlContent = "Hi ".$institute_name.", Plan successfully placed.<br><br>Institute Code : ".$institute_code.".<br>Plan Name : ".$plan_name.".<br>No of Users : ".$no_of_users.".<br>Website URL : ".$base_url.".<br>Username : admin<br>Password : admin<br><br><br>Ensyfi";
+				$this->sendMail($user_email,$subject,$htmlContent);
+
+
+				$mobile_message = "Inst. Code:".$institute_code." - User Name : admin - Password - admin";
+				$this->sendSMS($user_mobile,$mobile_message);
+				
+				
         		redirect('/order_history');
            }    
 
