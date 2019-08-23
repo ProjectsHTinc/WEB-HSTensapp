@@ -36,11 +36,20 @@ include("connection.php");
 	$resp_data .= "purchase_id=".$purchase_id."&";
 	$resp_data .= "order_id=".$order_id."&";
 	
-	$sQuery = "SELECT * FROM user_purchase_history WHERE id ='$purchase_id' LIMIT 1";
+	
+	
+	$sQuery = "SELECT
+                B.pricing
+                FROM
+                    institute_plan_history A,
+                    institute_plans B
+                WHERE
+                    A.id = '$purchase_id' AND A.institute_plan_id = B.id
+                LIMIT 1";
 	$objRs = mysql_query($sQuery);
 	while ($row = mysql_fetch_array($objRs))
 	{
-		$purchase_amount  = trim($row['purchase_amount']);
+		$purchase_amount  = trim($row['pricing']);
 	}
 
 	if ($amount != $purchase_amount){

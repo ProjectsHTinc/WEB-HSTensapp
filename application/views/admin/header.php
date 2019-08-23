@@ -62,15 +62,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?php echo base_url(); ?>admin/dashboard">Dashboard</a>
                                 </li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Plans</a>
-                                   <div class="dropdown-menu">
-                                     <a class="dropdown-item" href="<?php echo base_url(); ?>admin/add_plan">Add Plan</a>
-										<a class="dropdown-item" href="<?php echo base_url(); ?>admin/plans">View Plans</a>
-                                   </div>
-                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?php echo base_url(); ?>admin/customers">Customers</a>
+                                </li>
+								<li class="nav-item">
+                                    <a class="nav-link" href="<?php echo base_url(); ?>admin/list_plans">Plan Details</a>
                                 </li>
                             </ul>
 						<?php $user_role = $this->session->userdata('user_role');

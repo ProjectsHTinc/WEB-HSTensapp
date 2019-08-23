@@ -158,94 +158,341 @@ Class Usermodel extends CI_Model
 
 //#################### Notification End ####################//
 
+//#################### Payment Review ####################// 
+	function user_details($user_id){
+		$query = "SELECT
+					*
+				FROM
+					institute_master A,
+					institute_details B
+				WHERE
+					A.id = '$user_id' AND A.id = B.institute_master_id";
+		$res = $this->db->query($query);
+		$user_details = $res->result();
+		return $user_details;
+	}
+//#################### Plan Details End ####################// 
 
- 
+//#################### Master Plans ####################//
+	function checkmobile($phone,$user_id){
+		$select="SELECT * FROM institute_master WHERE mobile='$phone' AND id !='$user_id'";
+		$result=$this->db->query($select);
+		 
+		 if($result->num_rows()>0){
+				echo "false";
+		   }else{
+				echo "true";
+		 }
+	}
+//#################### Master Plans ####################//
+
+//#################### Master Plans ####################//
+	
+	function checkemail($email,$user_id){
+			$select="SELECT * FROM institute_master WHERE email='$email' AND id !='$user_id'";
+			$result=$this->db->query($select);
+			
+			   if($result->num_rows()>0){
+					echo "false";
+				 }else{
+				   echo "true";
+			   }
+	}
+	
+//#################### Master Plans ####################//
+
+//#################### Master Plans ####################//
+		   
+	function update_profile($inst_name,$email,$phone,$contact_person,$person_designation,$user_id){
+		  $update_query ="UPDATE institute_details SET institute_name='$inst_name',contact_person ='$contact_person',person_designation= '$person_designation'  WHERE institute_master_id='$user_id'";
+		  $resultset_update=$this->db->query($update_query);
+		  
+		  $update_query ="UPDATE institute_master SET email='$email',mobile='$phone' WHERE id='$user_id'";
+		  $resultset_update=$this->db->query($update_query);
+		  
+		  if($resultset_update){
+			$data = array("status" => "success");
+			return $data;
+		  }else{
+			$data = array("status" => "failed");
+			return $data;
+		  }
+
+	}
+ //#################### Master Plans ####################//
   
- //#################### Institute Plans ####################//
-   function inst_plans(){
+ //#################### Master Plans ####################//
+		   
+	function password_update($new_password,$user_id){
+		  
+		  $new_spassword = md5($new_password);
+		  $update_query ="UPDATE institute_master SET password='$new_spassword' WHERE id='$user_id'";
+		  $resultset_update=$this->db->query($update_query);
+		  
+		  if($resultset_update){
+				$datas=$this->session->userdata();
+				$this->session->unset_userdata($datas);
+				$this->session->sess_destroy();
+			$data = array("status" => "success");
+			return $data;
+		  }else{
+			$data = array("status" => "failed");
+			return $data;
+		  }
+
+	}
+  //#################### Master Plans ####################// 
+  
+  
+//#################### Master Plans ####################//
+   function master_plans(){
 		$user_id = $this->session->userdata('user_id');
 		$inst_type = $this->session->userdata('inst_type');
 
-		$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id AND A.institute_type = '$inst_type' AND A.status='Active'";
+		$query = "SELECT * FROM master_plans WHERE status='Active'";
 		$res = $this->db->query($query);
-
-		/* $sQuery = "SELECT * FROM user_plan_history WHERE user_id = '$user_id'";
-		$sResult = $this->db->query($sQuery);
-		 if($sResult->num_rows()>0){
-
-			$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id AND A.institute_type = '$inst_type' AND A.status='Active' AND A.id NOT IN (1,2,3);";
-			$res = $this->db->query($query);
-		 } else {
-			$query = "SELECT A.*,B.type_name FROM plan_master A, institute_type B WHERE A.institute_type = B.id AND A.institute_type = '$inst_type' AND A.status='Active'";
-			$res = $this->db->query($query);
-		 } */
 		 
-		$inst_plans = $res->result();
-		return $inst_plans;
+		$master_plans = $res->result();
+		return $master_plans;
 	}
 	
-	//#################### Institute Plans End ####################//
+//#################### Master Plans End ####################//
 	
 	
-    //#################### User Already Purchased Plans ####################//
-   function user_purchased_plans(){
-	 $user_id = $this->session->userdata('user_id');
-	 
-	 $query="SELECT A.*,B.plan_name,B.no_of_users from user_plan_history A, plan_master B WHERE A.plan_id = B.id AND A.user_id='$user_id' AND A.status ='Live'";
-	 $res=$this->db->query($query);
-	 $user_purchased_plans = $res->result();
-	 return $user_purchased_plans;
-   }
- //#################### User Already Purchased Plans End ####################//
-  	
-  	
- //#################### User Select Plan ####################//  	
-	function user_select_plan($plan_id){
-		$user_id = $this->session->userdata('user_id');
+	
+//#################### First Time User Select Plan ####################//  	
+	function user_request_plan($master_plan_id){
+		$institute_master_id = $this->session->userdata('user_id');
 		
-		$sQuery = "SELECT * FROM plan_master WHERE id = '$plan_id'";
+		$sQuery = "SELECT * FROM institute_master A, institute_details B WHERE A.id = '$institute_master_id' AND A.id = B.institute_master_id";
 		$sResult = $this->db->query($sQuery);
-		foreach($sResult->result() as $srow){
-		   $plan_name = $srow->plan_name ;
-		   $no_of_users = $srow->no_of_users ;
-		   $duration = $srow->duration ;
-		   $pricing = $srow->pricing ;
-		   $discount = $srow->discount ;
-		   $total_amount = $pricing - $discount;
+		foreach($sResult->result() as $row){
+		   $institute_name = $row->institute_name;
+		   $contact_person = $row->contact_person;
+		   $institute_type_id = $row->institute_type;
+		   $email = $row->email;
+		   $mobile = $row->mobile;
 		}
-		$sQuery = "SELECT * FROM user_details WHERE user_master_id = '$user_id'";
+		
+		$current_date = date('Y-m-d');
+		$date = strtotime("+7 day");
+		$expiry_day = date('Y-m-d', $date);
+
+		$length = 6;    
+		$random_string = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1,$length);
+		$random_string = "abc123";
+		$random_password = md5($random_string);
+
+		$sQuery = "SELECT * FROM institute_plans WHERE master_plan_id = '$master_plan_id' AND institute_master_id = '$institute_master_id' AND status = 'Requested'";
 		$sResult = $this->db->query($sQuery);
-		foreach($sResult->result() as $srow){
-		   $institute_name = $srow->institute_name ;
+		
+		if($sResult->num_rows()>0){
+			$response = array("status" => "Already");
+		} else {
+			if ($master_plan_id ==1){
+				$query = "INSERT INTO institute_plans(institute_master_id,institute_type_id,master_plan_id,notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_type_id','$master_plan_id','Demo Plan','Active','$institute_master_id',now())";
+				$result = $this->db->query($query);
+				$institute_plan_id = $this->db->insert_id();
+				
+				$query = "INSERT INTO institute_plan_history(institute_master_id,institute_plan_id,master_plan_id,purchase_order_id,purchase_date,purchase_amount,purchase_notes,activated_date,expiry_date,status,created_by,created_at) VALUES('$institute_master_id','$institute_plan_id','$master_plan_id','','$current_date','','Demo Plan','$current_date','$expiry_day','Live','$institute_master_id',now())";
+				$result = $this->db->query($query);
+				
+				//------------Connect demo DB ---------------//
+				$this->db_second = $this->load->database('second', TRUE); 
+				$query = "INSERT INTO edu_users(name,user_name,user_password,user_type,status) VALUES('$contact_person','$mobile','$random_password','1','Active')";
+				$result = $this->db_second->query($query);
+				$this->db_second->close();
+				//------------Connect demo DB End---------------//
+				
+				$subject = "Ensyfi - Demo Login details";
+				$htmlContent = "Hi ".$institute_name.", <br><br>Website URL : https://ensyfi.com/demo/ <br>Username : ".$mobile."<br>Password : ".$random_string."<br><br><br>Ensyfi";
+				$this->sendMail($email,$subject,$htmlContent);
+
+				$mobile_message = "Hi ".$institute_name.",\n Demo Login Details \n URL : https://ensyfi.com/demo/ \n User Name : ".$mobile." \n Password : ".$random_string."";
+				$this->sendSMS($mobile,$mobile_message);
+				
+			} 
+			else if ($master_plan_id ==2){
+				$query = "INSERT INTO institute_plans(institute_master_id,institute_type_id,master_plan_id,notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_type_id','$master_plan_id','Standard Plan','Requested','$institute_master_id',now())";
+				$result = $this->db->query($query);
+				$institute_plan_id = $this->db->insert_id();
+				
+				$query = "INSERT INTO institute_plan_history(institute_master_id,institute_plan_id,master_plan_id,purchase_notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_plan_id','$master_plan_id','Standard Plan','Requested',' $institute_master_id ',now())";
+				$result = $this->db->query($query);
+				
+				$subject = "Ensyfi";
+				$htmlContent = "Hi ".$institute_name.", <br><br>Thanks for your Request.. We will contact you shortly<br><br><br>Ensyfi";
+				$this->sendMail($email,$subject,$htmlContent);
+
+				$mobile_message = "Hi ".$institute_name.",\n Thanks for your Request..\n We will contact you shortly";
+				$this->sendSMS($mobile,$mobile_message);
+			}
+			else {
+				$query = "INSERT INTO institute_plans(institute_master_id,institute_type_id,master_plan_id,notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_type_id','$master_plan_id','Advanced Plan','Requested','$institute_master_id',now())";
+				$result = $this->db->query($query);
+				$institute_plan_id = $this->db->insert_id();
+				
+				$query = "INSERT INTO institute_plan_history(institute_master_id,institute_plan_id,master_plan_id,purchase_notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_plan_id','$master_plan_id','Advanced Plan','Requested',' $institute_master_id ',now())";
+				$result = $this->db->query($query);
+				
+				$subject = "Ensyfi";
+				$htmlContent = "Hi ".$institute_name.", <br><br>Thanks for your Request.. We will contact you shortly<br><br><br>Ensyfi";
+				$this->sendMail($email,$subject,$htmlContent);
+
+				$mobile_message = "Hi ".$institute_name.",\n Thanks for your Request..\n We will contact you shortly";
+				$this->sendSMS($mobile,$mobile_message);
+				
+			}
+			$response = array("status" => "success");
 		}
-		$current_date = date("Y-m-d");
-		$query = "INSERT INTO user_purchase_history(user_id,plan_id,purchase_date,purchase_amount,status,created_by,created_at) VALUES('$user_id','$plan_id','$current_date','$total_amount','Pending','$user_id',now())";
-		$result = $this->db->query($query);
-		$insert_id = $this->db->insert_id();
-		if($result){
-			$response = array("status" => "success","last_insert_id" =>$insert_id);
-		}else{
-			$response = array("status" => "failed");
-		}
+
+
 		return $response;
 	}
 	
-	//#################### User Select Plan End ####################//  
+//#################### User Select Plan End ####################//  
+ 	
+  	
+//#################### Institute Plans ####################//
+   function institute_plans(){
+		$user_id = $this->session->userdata('user_id');
+		$inst_type = $this->session->userdata('inst_type');
+
+		$query = "SELECT
+					A.id,
+					C.plan_name,
+					A.institute_master_id,
+					A.master_plan_id,
+					A.purchase_amount,
+					A.activated_date,
+					A.expiry_date,
+					A.status
+				FROM
+					institute_plan_history A,
+					master_plans C
+				WHERE
+					A.institute_master_id = '$user_id' AND A.master_plan_id = C.id ORDER BY A.id DESC";
+		$res = $this->db->query($query);
+		 
+		$institute_plans = $res->result();
+		return $institute_plans;
+	}
+	
+//#################### Institute Plans End ####################//
+	
+	
+//#################### Renew or Update Plans ####################//
+   function renew_plans(){
+		$user_id = $this->session->userdata('user_id');
+		$inst_type = $this->session->userdata('inst_type');
+
+		$query = "SELECT
+					dm.id,
+					dm.plan_name,
+					dd.institute_master_id,
+					dd.master_plan_id,
+					dd.id AS institute_plan_id
+				FROM
+					master_plans AS dm
+				LEFT JOIN institute_plans AS dd
+				ON
+					dm.id = dd.master_plan_id AND dd.institute_master_id = '$user_id'";
+		$res = $this->db->query($query);
+		 
+		$renew_plans = $res->result();
+		return $renew_plans;
+	
+   }
+//#################### Renew or Update Plans End ####################//
+	
+		
+//#################### Institute Renew or Update Plans ####################//
+   function renew_request_plan($master_plan_id,$renew_type,$institute_plan_id){
+		$inst_type = $this->session->userdata('inst_type');
+		$institute_master_id = $this->session->userdata('user_id');
+
+		$sQuery = "SELECT * FROM institute_master A, institute_details B WHERE A.id = '$institute_master_id' AND A.id = B.institute_master_id";
+		$sResult = $this->db->query($sQuery);
+			foreach($sResult->result() as $row){
+			   $institute_name = $row->institute_name;
+			   $contact_person = $row->contact_person;
+			   $institute_type_id = $row->institute_type;
+			   $email = $row->email;
+			   $mobile = $row->mobile;
+			}
+			
+			if ($master_plan_id =='2'){
+				
+					if ($renew_type == 'New') {
+						$query = "INSERT INTO institute_plans(institute_master_id,institute_type_id,master_plan_id,notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_type_id','$master_plan_id','Standard Plan','Requested','$institute_master_id',now())";
+						$result = $this->db->query($query);
+						$institute_plan_id = $this->db->insert_id();
+					}
+				
+					$query = "INSERT INTO institute_plan_history(institute_master_id,institute_plan_id,master_plan_id,purchase_notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_plan_id','$master_plan_id','Standard Plan','Requested','$institute_master_id ',now())";
+					$result = $this->db->query($query);
+					
+				$subject = "Ensyfi";
+				$htmlContent = "Hi ".$institute_name.", <br><br>Thanks for your Request.. We will contact you shortly<br><br><br>Ensyfi";
+				$this->sendMail($email,$subject,$htmlContent);
+
+				$mobile_message = "Hi ".$institute_name.",\n Thanks for your Request..\n We will contact you shortly";
+				$this->sendSMS($mobile,$mobile_message);
+			}
+			else {
+				if ($renew_type == 'New') {
+					$query = "INSERT INTO institute_plans(institute_master_id,institute_type_id,master_plan_id,notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_type_id','$master_plan_id','Advanced Plan','Requested','$institute_master_id',now())";
+					$result = $this->db->query($query);
+					$institute_plan_id = $this->db->insert_id();
+				}
+				
+				$query = "INSERT INTO institute_plan_history(institute_master_id,institute_plan_id,master_plan_id,purchase_notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_plan_id','$master_plan_id','Advanced Plan','Requested','$institute_master_id ',now())";
+				$result = $this->db->query($query);
+				
+				$subject = "Ensyfi";
+				$htmlContent = "Hi ".$institute_name.", <br><br>Thanks for your Request.. We will contact you shortly<br><br><br>Ensyfi";
+				$this->sendMail($email,$subject,$htmlContent);
+
+				$mobile_message = "Hi ".$institute_name.",\n Thanks for your Request..\n We will contact you shortly";
+				$this->sendSMS($mobile,$mobile_message);
+			}
+			
+			$response = array("status" => "success");
+
+		return $response;
+	}
+	
+//#################### Institute Renew or Update Plans End ####################//
 	
 	
 	
-	//#################### User Purchase Plan Details ####################//  
 	
-	function purchase_details($purchase_id){
-		$query = "SELECT A.*,B.plan_name,B.no_of_users,B.duration,C.institute_name FROM user_purchase_history A,plan_master B,user_details C WHERE A.plan_id = B.id AND A.user_id = C.user_master_id AND A.id = '$purchase_id'";
+//#################### Payment Review ####################// 
+	function payment_review($plan_id){
+		$query = "SELECT
+					A.id,
+					A.institute_master_id,
+					C.institute_name,
+					B.no_of_users,
+					B.plan_duration,
+					B.pricing,
+					D.plan_name,
+					A.status
+				FROM
+					institute_plan_history A,
+					institute_plans B,
+					institute_details C,
+					master_plans D
+				WHERE
+					A.id = '$plan_id' AND A.institute_plan_id = B.id AND A.master_plan_id = D.id AND A.institute_master_id = C.institute_master_id";
 		$res = $this->db->query($query);
 		$result = $res->result();
 		return $result;
 	}
-	//#################### User Purchase Plan End ####################// 
+//#################### Plan Details End ####################// 
 	
-	
-	//#################### Folder Copy ####################// 
+		
+//#################### Folder Copy ####################// 
 	
 	function folder_copy($src, $dst){
 		if(is_dir($src))
@@ -278,54 +525,64 @@ Class Usermodel extends CI_Model
 		$user_id = $this->session->userdata('user_id');
 		$current_date = date('Y-m-d H:i:s');
 		$startDate = time();
+		
 		$expiry_date = date('Y-m-d H:i:s', strtotime('+10 day', $startDate));
-		
-		$sQuery = "SELECT * FROM user_purchase_history WHERE id = '$purchase_id'";
-		$sResult = $this->db->query($sQuery);
-		foreach($sResult->result() as $srow){
-		   $plan_id = $srow->plan_id ;
-           $purchase_order_id = $srow->purchase_order_id ;
-		   $user_id = $srow->user_id ;
-		}
-		
-		$sQuery = "SELECT * FROM plan_master WHERE id = '$plan_id'";
-		$sResult = $this->db->query($sQuery);
-		foreach($sResult->result() as $srow){
-		   $plan_name = $srow->plan_name ;
-		   $institute_type = $srow->institute_type ;
-		   $no_of_users = $srow->no_of_users;
-		   
-		   if ($institute_type ==1){
-			   $plan_type_name = "School";
-		   } else if ($institute_type ==2){
-			   $plan_type_name = "College";
-		   } else {
-			    $plan_type_name = "PIA";
-		   }
-		}
-		$query = "SELECT A.id,A.institute_code,A.email,A.mobile,A.email_verify,A.mobile_verify,B.* FROM user_master A, user_details B WHERE A.id = B.user_master_id AND A.id = '$user_id'";
-        //$sQuery = "SELECT * FROM user_master WHERE id = '$user_id'";
-    		$sResult = $this->db->query($sQuery);
+
+			$sQuery = "SELECT
+			           A.purchase_order_id,
+					   B.institute_type_id,
+					   B.pricing,
+					   B.no_of_users
+					FROM
+						institute_plan_history A,
+						institute_plans B
+					WHERE
+						A.id = '$purchase_id' AND A.institute_plan_id = B.id";
+			$sResult = $this->db->query($sQuery);
+			
+			foreach($sResult->result() as $srow){
+			    $institute_type_id = $srow->institute_type_id;
+			    $pricing = $srow->pricing ;
+			    $orderid = $srow->purchase_order_id ;
+			    $no_of_users = $srow->no_of_users ;
+			    
+    			   if ($institute_type_id ==1){
+    			        $plan_type_name = "School";
+    			   } else if ($institute_type_id ==2){
+    				   $plan_type_name = "College";
+    			   } else {
+    					$plan_type_name = "PIA";
+    			   }
+			} 
+	
+		$sQuery = "SELECT A.id,A.institute_code,A.email,A.mobile,A.email_verify,A.mobile_verify,B.* FROM institute_master A, institute_details B WHERE A.id = B.institute_master_id AND A.id = '$user_id' ";
+   		$sResult = $this->db->query($sQuery);
     		foreach($sResult->result() as $srow){
-    		   $institute_code = $srow->institute_code ;
-			   $user_email = $srow->email;
-			   $user_mobile  = $srow->mobile;
-			   $institute_name  = $srow->institute_name;
+    		    $institute_code = $srow->institute_code;
+			    $user_email = $srow->email;
+			    $user_mobile  = $srow->mobile;
+			    $institute_name  = $srow->institute_name;
     		}
 
-        $sQuery = "SELECT * FROM user_plan_history WHERE user_id = '$user_id'";
+        $sQuery = "SELECT * FROM  institute_master WHERE id = '$user_id' AND app_status ='1'";
 		$sResult = $this->db->query($sQuery);
 		
 		if($sResult->num_rows()>0){
 		    
-		        $query = "INSERT INTO user_plan_history(user_id,plan_id,purchase_order_id,activated_date,expiry_date,status,created_by,created_at) VALUES('$user_id','$plan_id','$purchase_order_id','$current_date','$expiry_date','Success','$user_id',now())";
-        		$result = $this->db->query($query);
-        		
-        		$query = "INSERT INTO institute_dashboard(user_master_id,user_type_id,user_type,no_of_users,created_by,created_at) VALUES('$user_id','$institute_type','$plan_type_name','$no_of_users','$user_id',now())";
-        		$result = $this->db->query($query);
-		    
+				$query = "UPDATE institute_plan_history SET purchase_order_id = '$orderid', purchase_date = '$current_date',purchase_amount ='$pricing',status = 'Success' WHERE id = '$purchase_id'";
+				$result = $this->db->query($query);
+				
+				$query = "UPDATE institute_dashboard SET no_of_users = '$no_of_users' WHERE user_master_id = '$user_id'";
+				$result = $this->db->query($query);
 			
-				redirect('/order_history');
+				$subject = "Ensyfi";
+				$htmlContent = "Hi ".$institute_name.", <br><br>Website URL : https://ensyfi.com/".$institute_code."/ <br>No of Users : ".$no_of_users."<br> Please Activate your plan in your login";
+				$this->sendMail($user_email,$subject,$htmlContent);
+
+				$mobile_message = "Hi ".$institute_name.", Plan successfully placed. Login details \n URL : https://ensyfi.com/".$institute_code."/ \n No of Users : ".$no_of_users."";
+				$this->sendSMS($user_mobile,$mobile_message);	
+			
+				redirect('/dashboard');
            }else{
 
         		//#-------------DATABASE AND TABLE CREATION--------------#//
@@ -338,8 +595,7 @@ Class Usermodel extends CI_Model
         		$config = array();
         		$config['hostname'] = "localhost";
         		$config['username'] = "root";
-        	//	$config['password'] = "O+E7vVgBr#{}";
-        		$config['password'] = "";
+        		$config['password'] = "O+E7vVgBr#{}";
         		$config['database'] = $base_db;
         		$config['dbdriver'] = "mysqli";
         		$config['dbprefix'] = "";
@@ -394,7 +650,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => '',
+	'password' => 'O+E7vVgBr#{}',
 	'database' => '$base_db',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
@@ -417,7 +673,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     'hostname' => 'localhost',
     'username' => 'root',
     'password' => 'O+E7vVgBr#{}',
-    'database' => 'ensyfi_testing',
+    'database' => 'ensyfi_newsite',
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
@@ -439,8 +695,7 @@ MOD;
         		fclose($fDb);
         		chmod($dbFile,0777);
         		
-        		$base_url = "http://localhost/".$institute_code;
-        		//$base_url = "http://ensyfi.com/".$institute_code;
+        		$base_url = "http://ensyfi.com/".$institute_code;
         
         		$conFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/config.php";
         		$fcon = fopen($conFile,"w");
@@ -501,45 +756,124 @@ POD;
         		fclose($fcon);
         		chmod($conFile,0777);
         
-        		$query = "INSERT INTO user_plan_history(user_id,plan_id,purchase_order_id,activated_date,expiry_date,status,created_by,created_at) VALUES('$user_id','$plan_id','$purchase_order_id','$current_date','$expiry_date','Success','$user_id',now())";
+
+        		$query = "UPDATE institute_plan_history SET purchase_order_id = '$orderid', purchase_date = '$current_date',purchase_amount ='$pricing', activated_date = '$current_date' ,expiry_date = '$expiry_date', status = 'Live' WHERE id = '$purchase_id'";
+				$result = $this->db->query($query);
+        		
+        		$query = "INSERT INTO institute_dashboard(user_master_id,user_type_id,user_type,no_of_users,created_by,created_at) VALUES('$user_id','$institute_type_id','$plan_type_name','$no_of_users','$user_id',now())";
         		$result = $this->db->query($query);
         		
-        		$query = "INSERT INTO institute_dashboard(user_master_id,user_type_id,user_type,no_of_users,created_by,created_at) VALUES('$user_id','$institute_type','$plan_type_name','$no_of_users','$user_id',now())";
-        		$result = $this->db->query($query);
-        		
-				
-				$subject = "Ensyfi - School Application - Login details";
-				$htmlContent = "Hi ".$institute_name.", Plan successfully placed.<br><br>Institute Code : ".$institute_code.".<br>Plan Name : ".$plan_name.".<br>No of Users : ".$no_of_users.".<br>Website URL : ".$base_url.".<br>Username : admin<br>Password : admin<br><br><br>Ensyfi";
+        	    $query = "UPDATE institute_master SET app_status = '1' WHERE id = '$user_id'";
+        	    $result = $this->db->query($query);     	    
+        	    
+        	    $subject = "Ensyfi - Login details";
+				$htmlContent = "Hi ".$institute_name.", <br><br>Website URL : https://ensyfi.com/".$institute_code."/ <br>No of Users : ".$no_of_users."<br>Username : admin<br>Password : admin<br><br><br>Ensyfi";
 				$this->sendMail($user_email,$subject,$htmlContent);
 
-
-				$mobile_message = "Inst. Code:".$institute_code." - User Name : admin - Password - admin";
-				$this->sendSMS($user_mobile,$mobile_message);
+				$mobile_message = "Hi ".$institute_name.", Plan successfully placed. Login details \n URL : https://ensyfi.com/".$institute_code."/ \n No of Users : ".$no_of_users."\n User Name : admin \n Password : admin";
+				$this->sendSMS($user_mobile,$mobile_message);	
 				
-				
-        		redirect('/order_history');
+        		redirect('/dashboard');
            }    
 
 		
 	}
-	//#################### Order Confirmation End ####################// 
-
-	//#################### Plan Details ####################// 
-	function plan_details($user_id){
-		$query = "SELECT A.*,B.plan_name FROM user_plan_history A, plan_master B WHERE A.plan_id = B.id AND A.user_id = '$user_id' ORDER BY A.id DESC";
-		$res = $this->db->query($query);
-		$result = $res->result();
-		return $result;
-	}
-	//#################### Plan Details End ####################// 
+//#################### Order Confirmation End ####################// 
 	
-	//#################### Purchase Details ####################// 
-	function order_history($user_id){
-		$query = "SELECT A.*,B.plan_name FROM user_purchase_history A, plan_master B WHERE A.plan_id = B.id AND A.user_id = '$user_id' ORDER BY A.id DESC";
+	
+//#################### Activate Plan Details ####################// 
+	function activate_plan($purchase_id){
+		
+		$user_id = $this->session->userdata('user_id');
+		$current_date = date('Y-m-d H:i:s');
+		$startDate = time();
+		$expiry_date = date('Y-m-d H:i:s', strtotime('+30 day', $startDate));
+		
+		$query = "UPDATE institute_plan_history SET activated_date = '$current_date',expiry_date = '$expiry_date', status = 'Live' WHERE id = '$purchase_id'";
+		$result = $this->db->query($query);
+		
+		
+		$query = "UPDATE institute_plan_history SET status = 'Expiry' WHERE id != '$purchase_id'";
+		$result = $this->db->query($query);
+		
+		
+		$query = "SELECT
+					A.id,
+					A.institute_master_id,
+					A.activated_date,
+					A.expiry_date,
+					C.institute_name,
+					B.no_of_users,
+					B.plan_duration,
+					B.pricing,
+					D.plan_name,
+					A.status,
+					E.mobile,
+					E.email
+				FROM
+					institute_plan_history A,
+					institute_plans B,
+					institute_details C,
+					master_plans D,
+					institute_master E
+				WHERE
+					A.id = '$purchase_id' AND A.institute_plan_id = B.id AND A.master_plan_id = D.id AND A.institute_master_id = C.institute_master_id AND C.institute_master_id = E.id";
+		$res = $this->db->query($query);
+		$result = $res->result();
+		foreach($result->result() as $srow){
+				$institute_name = $srow->institute_name ;
+				$mobile = $srow->mobile;
+				$mobile = $srow->email;
+			}
+			
+				$subject = "Ensyfi - Plan Activated";
+				$htmlContent = "Hi ".$institute_name.", <br><br>Your Plan is activated<br><br><br>Ensyfi";
+				$this->sendMail($user_email,$subject,$htmlContent);
+
+				$mobile_message = "Hi ".$institute_name.", Plan Activated. ";
+				$this->sendSMS($user_mobile,$mobile_message);	
+				
+		return $result;
+	}
+//#################### Activate Plan Details End ####################// 
+
+	
+//#################### Plan Details ####################// 
+	function plan_history($user_id){
+		$query = "SELECT A.*,B.plan_name FROM institute_plans A, master_plans B WHERE A.master_plan_id = B.id AND A.institute_master_id = '$user_id' ORDER BY A.id DESC";
 		$res = $this->db->query($query);
 		$result = $res->result();
 		return $result;
 	}
-	//#################### Purchase Details End ####################//
+//#################### Plan Details End ####################// 
+		
+
+
+
+
+
+
+
+
+	//#################### Plan Expiry check ####################// 
+	function plan_expiry_check(){
+		$sQuery = "SELECT * FROM user_plan_history WHERE status = 'Live'";
+		$sResult = $this->db->query($sQuery);
+		$current_date = date('Y-m-d H:i:s');
+		
+		foreach($sResult->result() as $srow){
+		    $plan_id = $srow->id ;
+		    $expiry_date = $srow->expiry_date;
+
+		    if($expiry_date > $current_date)
+			{
+			    $query = "UPDATE user_plan_history SET status ='Expiry'  WHERE id ='$plan_id'";
+	        	$res = $this->db->query($query);
+			}  
+		}
+	}
+	//#################### Plan Expiry check End ####################//
+
+	
 }
 ?>

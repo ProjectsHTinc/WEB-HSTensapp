@@ -246,297 +246,390 @@ $(document).ready(function() {
     });
 
 
-    $('#registerform').validate({
-      rules: {
-        name: {
-            required: true
-        },
-          username: {
-              required: true
-          },
-          password: {
-              required: true,
-              // alphanumeric: true
-          },
-          email: {
-								required: true,
-								email: true,
-								remote: {
-											 url: "home/checkemail",
-											 type: "post"
-										}
-						},
 
-          phone: {
-            required: true,
-                maxlength: 10,
-                minlength:10,
-                number:true,
-                remote: {
-                       url: "home/checkmobile",
-                       type: "post"
-                    }
-          }
-      },
-      messages: {
-          name: "Please enter name",
-          username: "Please enter Username",
-          email: {
-									 required: "Please enter your email address.",
-									 email: "Please enter a valid email address.",
-									 remote: "Email already in use!"
-							 },
-           password: {
-                   required: "Please enter password.",
-                   alphanumeric: "Please enter letters and numbers",
-               },
-          phone: {
-              required: "Enter mobile number",
-              maxlength:"Maximum 10 digits",
-              minlength:"Minimum 10 digits",
-              remote: "Mobile number Already Exist",
-              number:"Only Numbers"
+//==================Custom Functions Start =========================/
 
+
+	$('#registerform').validate({
+		  rules: {
+			name: {
+				required: true
+			},
+			  username: {
+				  required: true
+			  },
+			  password: {
+				  required: true,
+				  // alphanumeric: true
+			  },
+			  email: {
+					required: true,
+					email: true,
+					remote: {
+							 url: "home/checkemail",
+							 type: "post"
+							}
+					},
+
+			  phone: {
+					required: true,
+					maxlength: 10,
+					minlength:10,
+					number:true,
+					remote: {
+						   url: "home/checkmobile",
+						   type: "post"
+						}
+			  }
+		  },
+		  messages: {
+			  name: "Please enter name",
+			  username: "Please enter Username",
+			  email: {
+					 required: "Please enter your email address.",
+					 email: "Please enter a valid email address.",
+					 remote: "Email already in use!"
+								 },
+			   password: {
+					   required: "Please enter password.",
+					   alphanumeric: "Please enter letters and numbers",
+				   },
+			  phone: {
+				  required: "Enter mobile number",
+				  maxlength:"Maximum 10 digits",
+				  minlength:"Minimum 10 digits",
+				  remote: "Mobile number Already Exist",
+				  number:"Only Numbers"
+
+				 }
+		  },
+		submitHandler: function(form) {
+		  $.ajax({
+					 url: "home/get_register",
+					 type: 'POST',
+					 data: $('#registerform').serialize(),
+					 dataType: "json",
+					 success: function(response) {
+						var stats=response.status;
+						   $("#loading").show();
+						   setTimeout(function(){ },3000);
+						 if (stats=="success") {
+							$("#loading").hide();
+							 $('#last_insert').val(response.last_id);
+							 $("#otp_section").show();
+							 $("#ins_details").hide();
+							 $('#first_form').hide();
+					   }else{
+
+						   }
+					 }
+				 });
+			   }
+
+	});
+	
+	$('#updateform').validate({
+		  rules: {
+				inst_name: {
+					required: true
+				},
+			  email: {
+					required: true,
+					email: true,
+					remote: {
+							 url: "user/checkemail",
+							 type: "post"
+							}
+				},
+			  phone: {
+					required: true,
+					maxlength: 10,
+					minlength:10,
+					number:true,
+					remote: {
+						   url: "user/checkmobile",
+						   type: "post"
+						}
+			  }
+		  },
+		  messages: {
+			  inst_name: "Please enter institute name",
+			  email: {
+					 required: "Please enter your email address.",
+					 email: "Please enter a valid email address.",
+					 remote: "Email already in use!"
+					},
+			  phone: {
+				  required: "Enter mobile number",
+				  maxlength:"Maximum 10 digits",
+				  minlength:"Minimum 10 digits",
+				  remote: "Mobile number Already Exist",
+				  number:"Only Numbers"
+
+				 }
+		  },
+		submitHandler: function(form) {
+		  $.ajax({
+					 url: "user/update_profile",
+					 type: 'POST',
+					 data: $('#updateform').serialize(),
+					 dataType: "json",
+					 success: function(response) {
+						 
+							var stats=response.status;
+							 if (stats=="success") {
+							   swal({
+								 title: "Profile Updated",
+								 type: "success"
+							 }).then(function() {
+								 window.location = "dashboard";
+							 });
+						   }else{
+
+							   }
+					 }
+				 });
+			   }
+
+	});
+
+
+	$('#passwordform').validate({
+		  rules: {
+			  
+			  new_password: {
+                 required: true,
+                 maxlength: 10,
+                 minlength:6
+             },
+             confirm_password: {
+                 required: true,
+                 maxlength: 10,
+                 minlength:6,equalTo: '[name="new_password"]'
              }
-      },
-    submitHandler: function(form) {
-      $.ajax({
-                 url: "home/get_register",
-                 type: 'POST',
-                 data: $('#registerform').serialize(),
-                 dataType: "json",
-                 success: function(response) {
-                    var stats=response.status;
-                       $("#loading").show();
-                       setTimeout(function(){ },3000);
-                     if (stats=="success") {
-                        $("#loading").hide();
-                         $('#last_insert').val(response.last_id);
-                         $("#otp_section").show();
-                         $("#ins_details").hide();
-                         $('#first_form').hide();
-                   }else{
+		  },
+		  messages: {
+			   new_password: {
+                  required: "Enter new password",
+                  maxlength:"Maximum 10 digits",
+                  minlength:"Minimum 6 digits"
 
-                       }
-                 }
-             });
-           }
-
-});
-jQuery.validator.addMethod("alphanumeric", function(value, element) {
-return this.optional(element) || /^\w+$/i.test(value);
-}, "Letters, numbers, and underscores only please");
-
-
-    $('#ins_detail_form').validate({
-      rules: {
-        institute_code: {
-            required: true,
-            lettersonly: true,
-            maxlength: 10,
-            minlength:6,
-            remote: {
-                   url: "home/check_ins_code",
-                   type: "post"
+                },
+               confirm_password: {
+                 required: "Enter confirm password",
+                 maxlength:"Maximum 10 digits",
+                 minlength:"Minimum 6 digits",
+                 equalTo:"Password Must Match"
                 }
-        },
-          institute_name: {
-              required: true,
-              remote: {
-                     url: "home/check_ins_name",
-                     type: "post"
-                  }
-          },
-          institute_type: {
-              required: true
-          },
-          city: {
-              required: true
-          },
-          state: {
-              required: true
-          },
-          no_of_student: {
-              required: true
-          },
-          how_you_hear: {
-              required: true
-          },
-          notes: {
-              required: true
-          },
-          contact_person: {
-              required: true
-          },
-          person_designation: {
-              required: true
-          }
-      },
-      messages: {
-          city: "Please Enter City",
-          contact_person: "Please Enter Contact Person",
-          state: "Please Enter State",
-          person_designation: "Enter Person Designation",
-          institute_type: "Select Institute Type",
-          institute_code: {
-									 required: "Enter the Institute Code.",
-                   lettersonly: "Only Characters",
-                   maxlength:"Maximum 10 Characters",
-                   minlength:"Minimum 6 Characters",
-									 remote: "Institute Code already in Exist!"
-							 },
-          institute_name: {
-									 required: "Please enter Institute Name",
-									 remote: "Institute Name already in Exist!"
-							 },
-          no_of_student: {
-              required: "Enter No Of Students",
-              number:"Only Numbers"
+		  },
+		submitHandler: function(form) {
+		  $.ajax({
+					 url: "user/password_update",
+					 type: 'POST',
+					 data: $('#passwordform').serialize(),
+					 dataType: "json",
+					 success: function(response) {
+						 
+							var stats=response.status;
+							 if (stats=="success") {
+							   swal({
+								 title: "Password Updated",
+								 type: "success"
+							 }).then(function() {
+								 
+								 window.location = "login";
+							 });
+						   }else{
 
-             }
-      },
-    submitHandler: function(form) {
-      $.ajax({
-                 url: "home/get_ins_details",
-                 type: 'POST',
-                 data: $('#ins_detail_form').serialize(),
-                 dataType: "json",
-                 success: function(response) {
-                    var stats=response.status;
-                     if (stats=="success") {
-                       swal({
-                         title: "Thank you for Registering!",
-                         text: "Verfiy Your Email",
-                         type: "success"
-                     }).then(function() {
-                         window.location = "login";
-                     });
-                   }else{
+							   }
+					 }
+				 });
+			   }
 
-                       }
-                 }
-             });
-           }
+	});
 
-});
+	$('#ins_detail_form').validate({
+		  rules: {
+			  institute_name: {
+				  required: true,
+				  remote: {
+						 url: "home/check_ins_name",
+						 type: "post"
+					  }
+			  },
+			  institute_type: {
+				  required: true
+			  },
+			  city: {
+				  required: true
+			  },
+			  state: {
+				  required: true
+			  },
+			
+			 
+			  contact_person: {
+				  required: true
+			  },
+			  person_designation: {
+				  required: true
+			  }
+		  },
+		  messages: {
+			   institute_name: {
+				 required: "Please enter Institute Name",
+				 remote: "Institute Name already in Exist!"
+			},
+				contact_person: "Please Enter Contact Person",
+				person_designation: "Enter Person Designation",
+				institute_type: "Select Institute Type",
+				city: "Please Enter City",
+				state: "Please Enter State",
+			
+		  },
+		submitHandler: function(form) {
+		  $.ajax({
+					 url: "home/get_ins_details",
+					 type: 'POST',
+					 data: $('#ins_detail_form').serialize(),
+					 dataType: "json",
+					 success: function(response) {
+						
+						var stats=response.status;
+						 if (stats=="success") {
+						   swal({
+							 title: "Thank you for Registering!",
+							 text: "Verfiy Your Email",
+							 type: "success"
+						 }).then(function() {
+							 window.location = "login";
+						 });
+					   }else{
 
+						   }
+					 }
+				 });
+			   }
 
-
-$('#login_form').validate({
-  rules: {
-      email: {
-          required: true
-      },
-      password: {
-          required: true
-      }
-  },
-  messages: {
-      email: "Please Enter Email",
-      password: "Please Enter Password"
-  },
-submitHandler: function(form) {
-  $.ajax({
-             url: "home/check_login",
-             type: 'POST',
-             data: $('#login_form').serialize(),
-             dataType: "json",
-             success: function(response) {
-                var stats=response.status;
-                 if (stats=="success") {
-                   swal('Logging in Please wait')
-                   window.setTimeout(function () {
-                    location.href = "dashboard";
-                }, 3000);
-
-               }else if(stats=='incomplete'){
-                 $("#loading").hide();
-                  $('#last_insert').val(response.last_id)
-                  $("#ins_details").show();
-                  $('#login_section').hide();
-               }else{
-                   $('#res').html(response.msg)
-                   }
-             }
-         });
-       }
-
-});
+	});
 
 
-$('#sch_login_form').validate({
-  rules: {
-      school_id: {
-          required: true
-      }
-  },
-  messages: {
-      school_id: "Please Enter School Code"
-  },
-submitHandler: function(form) {
-  $.ajax({
-             url: "home/check_school_code",
-             type: 'POST',
-             data: $('#sch_login_form').serialize(),
-             dataType: "json",
-             success: function(response) {
-                var stats=response.status;
-				
-                 if (stats=="success") {
-					var school_url = response.school_url;
-                   swal('Logging in Please wait')
-						window.setTimeout(function () {
-							location.href = school_url;
+
+	$('#login_form').validate({
+	  rules: {
+		  email: {
+			  required: true
+		  },
+		  password: {
+			  required: true
+		  }
+	  },
+	  messages: {
+		  email: "Please Enter Mobile or Email",
+		  password: "Please Enter Password"
+	  },
+	submitHandler: function(form) {
+	  $.ajax({
+				 url: "home/check_login",
+				 type: 'POST',
+				 data: $('#login_form').serialize(),
+				 dataType: "json",
+				 success: function(response) {
+					var stats=response.status;
+					 if (stats=="success") {
+					   swal('Logging in Please wait')
+					   window.setTimeout(function () {
+						location.href = "dashboard";
 					}, 3000);
-               }else{
-                   $('#sch_res').html(response.msg)
-                   }
-             }
-         });
-       }
 
-});
+				   }else if(stats=='incomplete'){
+					 $("#loading").hide();
+					  $('#last_insert').val(response.last_id)
+					  $("#ins_details").show();
+					  $('#login_section').hide();
+				   }else{
+					   $('#res').html(response.msg)
+					   }
+				 }
+			 });
+		   }
 
-$('#mobile_otp_form').validate({
-  rules: {
-      otp: {
-          required: true,
-          maxlength: 6,
-          minlength:6
-      }
-  },
-  messages: {
-    otp: {
-             required: "Enter the OTP.",
-             lettersonly: "Only Characters",
-             maxlength:"Maximum 6 Numbers",
-             minlength:"Minimum 6 Numbers"
+	});
 
-         }
-  },
-submitHandler: function(form) {
-  $.ajax({
-             url: "home/check_otp",
-             type: 'POST',
-             data: $('#mobile_otp_form').serialize(),
-             dataType: "json",
-             success: function(response) {
-                var stats=response.status;
-                 if (stats=="success"){
-                   $("#loading").hide();
-                    $('#last_insert_id').val(response.last_id);
-                    $("#otp_section").hide();
-                    $("#ins_details").show();
-                    $('#first_form').hide();
 
-               }else{
-                   $('#res').html(response.msg)
-                   }
-             }
-         });
-       }
+	$('#sch_login_form').validate({
+	  rules: {
+		  school_id: {
+			  required: true
+		  }
+	  },
+	  messages: {
+		  school_id: "Please Enter School Code"
+	  },
+	submitHandler: function(form) {
+	  $.ajax({
+				 url: "home/check_school_code",
+				 type: 'POST',
+				 data: $('#sch_login_form').serialize(),
+				 dataType: "json",
+				 success: function(response) {
+					var stats=response.status;
+					
+					 if (stats=="success") {
+						var school_url = response.school_url;
+					   swal('Logging in Please wait')
+							window.setTimeout(function () {
+								location.href = school_url;
+						}, 3000);
+				   }else{
+					   $('#sch_res').html(response.msg)
+					   }
+				 }
+			 });
+		   }
 
-});
+	});
+
+	$('#mobile_otp_form').validate({
+	  rules: {
+		  otp: {
+			  required: true,
+			  maxlength: 6,
+			  minlength:6
+		  }
+	  },
+	  messages: {
+		otp: {
+				 required: "Enter the OTP.",
+				 lettersonly: "Only Characters",
+				 maxlength:"Maximum 6 Numbers",
+				 minlength:"Minimum 6 Numbers"
+
+			 }
+	  },
+	submitHandler: function(form) {
+	  $.ajax({
+				 url: "home/check_otp",
+				 type: 'POST',
+				 data: $('#mobile_otp_form').serialize(),
+				 dataType: "json",
+				 success: function(response) {
+					var stats=response.status;
+					 if (stats=="success"){
+					   $("#loading").hide();
+						$('#last_insert_id').val(response.last_id);
+						$("#otp_section").hide();
+						$("#ins_details").show();
+						$('#first_form').hide();
+
+				   }else{
+					   $('#res').html(response.msg)
+					   }
+				 }
+			 });
+		   }
+
+	});
 
 
   $('#plan_form').validate({
@@ -606,98 +699,300 @@ submitHandler: function(form) {
              });
            }
 
-});
+	});
 
 
- $('#edit_plan_form').validate({
-      rules: {
-         plan_name: {
-              required: true
-          },
-          institute_type: {
-              required: true
-          },
-		   plan_type: {
-              required: true
-          },
-          no_of_users: {
-              required: true,
-			  number:true
-          },
-          duration: {
-              required: true
-          },
-          pricing: {
-              required: true,
-			  number:true
-          }
-         
-      },
-      messages: {
-          plan_name: "Please Enter Plan Name",
-		  institute_type: "Select Institute Type",
-		  plan_type: "Select Plan Type",
-          duration: "Select Plan Duration",
-		  pricing: {
-              required: "Please Enter Plan Price",
-              number:"Only Numbers"
-             },
-          no_of_users: {
-              required: "Enter No Of Users",
-              number:"Only Numbers"
-             }
-      },
-    submitHandler: function(form) {
-      $.ajax({
-                 url: "../update_plan_details",
-                 type: 'POST',
-                 data: $('#edit_plan_form').serialize(),
-                 dataType: "json",
-                 success: function(response) {
-                    var stats=response.status;
-                     if (stats=="success") {
-                       swal({
-                         title: "Plan Updated!..",
-                         type: "success"
-                     }).then(function() {
-                         window.location = "../plans";
-                     });
-                   }else{
+	$('#edit_plan_form').validate({
+		  rules: {
+			 plan_name: {
+				  required: true
+			  },
+			  institute_type: {
+				  required: true
+			  },
+			   plan_type: {
+				  required: true
+			  },
+			  no_of_users: {
+				  required: true,
+				  number:true
+			  },
+			  duration: {
+				  required: true
+			  },
+			  pricing: {
+				  required: true,
+				  number:true
+			  }
+			 
+		  },
+		  messages: {
+			  plan_name: "Please Enter Plan Name",
+			  institute_type: "Select Institute Type",
+			  plan_type: "Select Plan Type",
+			  duration: "Select Plan Duration",
+			  pricing: {
+				  required: "Please Enter Plan Price",
+				  number:"Only Numbers"
+				 },
+			  no_of_users: {
+				  required: "Enter No Of Users",
+				  number:"Only Numbers"
+				 }
+		  },
+		submitHandler: function(form) {
+		  $.ajax({
+					 url: "../update_plan_details",
+					 type: 'POST',
+					 data: $('#edit_plan_form').serialize(),
+					 dataType: "json",
+					 success: function(response) {
+						var stats=response.status;
+						 if (stats=="success") {
+						   swal({
+							 title: "Plan Updated!..",
+							 type: "success"
+						 }).then(function() {
+							 window.location = "../plans";
+						 });
+					   }else{
 
-                       }
-                 }
-             });
-           }
+						   }
+					 }
+				 });
+			   }
 
-});
+	});
 
 
-$('#plans_select_form').validate({
-    submitHandler: function(form) {
-      $.ajax({
-                 url: "user/user_select_plan",
-                 type: 'POST',
-                 data: $('#plans_select_form').serialize(),
-                 dataType: "json",
-                 success: function(response) {
-                    var stats=response.status;
-					var purchase_id=response.last_insert_id;
-					var last_insert_id = btoa(purchase_id);
-                     if (stats=="success") {
-                       swal({
-                         title: "Plan Selected!..",
-                         type: "success"
-                     }).then(function() {
-                         window.location = "user/purchase_plan/"+last_insert_id;
-                     });
-                   }else{
 
-                       }
-                 }
-             });
-           }
 
-});
+	/* $('#plans_select_form').validate({
+		submitHandler: function(form) {
+		  $.ajax({
+					 url: "user/user_select_plan",
+					 type: 'POST',
+					 data: $('#plans_select_form').serialize(),
+					 dataType: "json",
+					 success: function(response) {
+						var stats=response.status;
+						var purchase_id=response.last_insert_id;
+						var last_insert_id = btoa(purchase_id);
+						 if (stats=="success") {
+						   swal({
+							 title: "Plan Selected!..",
+							 type: "success"
+						 }).then(function() {
+							 window.location = "user/purchase_plan/"+last_insert_id;
+						 });
+					   }else{
 
+						   }
+					 }
+				 });
+			   }
+
+	}); */
+	
+	
+	
+	
+	$('#demo_request').validate({
+		submitHandler: function(form) {
+		  $.ajax({
+				 url: "user/user_request_plan",
+				 type: 'POST',
+				 data: $('#demo_request').serialize(),
+				 dataType: "json",
+				 success: function(response) {
+					var stats=response.status;
+					//var purchase_id=response.last_insert_id;
+					//var last_insert_id = btoa(purchase_id);
+					 if (stats=="success") {
+					   swal({
+						 title: "Plan Selected!..",
+						 type: "success"
+					 }).then(function() {
+						 location.href = "dashboard";
+					 });
+				   }else{
+						swal({
+						 title: "Already Requested!..",
+						 type: "success"
+					 })
+					   }
+				 }
+			});
+		}
+	});
+	
+	$('#standard_request').validate({
+		submitHandler: function(form) {
+		  $.ajax({
+				 url: "user/user_request_plan",
+				 type: 'POST',
+				 data: $('#standard_request').serialize(),
+				 dataType: "json",
+				 success: function(response) {
+					var stats=response.status;
+					//var purchase_id=response.last_insert_id;
+					//var last_insert_id = btoa(purchase_id);
+					 if (stats=="success") {
+					   swal({
+						 title: "Plan Selected!..",
+						 type: "success"
+					 }).then(function() {
+						 location.href = "dashboard";
+					 });
+				   }else{
+						swal({
+						 title: "Already Requested!..",
+						 type: "success"
+					 })
+					   }
+				 }
+			});
+		}
+	});
+	
+	$('#renew_standard_request').validate({
+		submitHandler: function(form) {
+		  $.ajax({
+				 url: "user/renew_request_plan",
+				 type: 'POST',
+				 data: $('#renew_standard_request').serialize(),
+				 dataType: "json",
+				 success: function(response) {
+					var stats=response.status;
+					 if (stats=="success") {
+					   swal({
+						 title: "Plan Selected!..",
+						 type: "success"
+					 }).then(function() {
+						 location.href = "dashboard";
+					 });
+				   }else{
+						swal({
+						 title: "Already Requested!..",
+						 type: "success"
+					 })
+					   }
+				 }
+			});
+		}
+	});
+	
+	
+	$('#advance_request').validate({
+		submitHandler: function(form) {
+		  $.ajax({
+				 url: "user/user_request_plan",
+				 type: 'POST',
+				 data: $('#advance_request').serialize(),
+				 dataType: "json",
+				 success: function(response) {
+					var stats=response.status;
+					//var purchase_id=response.last_insert_id;
+					//var last_insert_id = btoa(purchase_id);
+					 if (stats=="success") {
+					   swal({
+						 title: "Plan Selected!..",
+						 type: "success"
+					 }).then(function() {
+						 location.href = "dashboard";
+					 });
+				   }else{
+						swal({
+						 title: "Already Requested!..",
+						 type: "success"
+					 })
+					   }
+				 }
+			});
+		}
+	});
+	
+	$('#renew_advance_request').validate({
+		submitHandler: function(form) {
+		  $.ajax({
+				 url: "user/renew_request_plan",
+				 type: 'POST',
+				 data: $('#renew_advance_request').serialize(),
+				 dataType: "json",
+				 success: function(response) {
+					var stats=response.status;
+					//var purchase_id=response.last_insert_id;
+					//var last_insert_id = btoa(purchase_id);
+					 if (stats=="success") {
+					   swal({
+						 title: "Plan Selected!..",
+						 type: "success"
+					 }).then(function() {
+						 location.href = "dashboard";
+					 });
+				   }else{
+						swal({
+						 title: "Already Requested!..",
+						 type: "success"
+					 })
+					   }
+				 }
+			});
+		}
+	});
+	
+	
+	
+	$('#assign_plan_form').validate({
+		  rules: {
+			  no_of_users: {
+				  required: true,
+				  number:true
+			  },
+			  duration: {
+				  required: true
+			  },
+			  pricing: {
+				  required: true,
+				  number:true
+			  }
+			 
+		  },
+		  messages: {
+			  duration: "Select Plan Duration",
+			  pricing: {
+				  required: "Please Enter Plan Price",
+				  number:"Only Numbers"
+				 },
+			  no_of_users: {
+				  required: "Enter No Of Users",
+				  number:"Only Numbers"
+				 }
+		  },
+		submitHandler: function(form) {
+		  $.ajax({
+					 url: "../update_assign_plan",
+					 type: 'POST',
+					 data: $('#assign_plan_form').serialize(),
+					 dataType: "json",
+					 success: function(response) {
+						var stats=response.status;
+						 if (stats=="success") {
+						   swal({
+							 title: "Plan Assigned!..",
+							 type: "success"
+						 }).then(function() {
+							 window.location = "../requested_plans";
+						 });
+					   }else{
+
+						   }
+					 }
+				 });
+			   }
+
+	});
+	
+//==================Custom Functions End =========================/
 
 });

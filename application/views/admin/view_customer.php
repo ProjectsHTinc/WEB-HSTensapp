@@ -29,12 +29,6 @@
 				<td>State</td>
 				<td><?php echo $rows->state; ?></td>
 			  </tr>
-			   <tr>
-				<td>Country</td>
-				<td><?php echo $rows->country; ?></td>
-				<td>School Students</td>
-				<td><?php echo $rows->no_of_student; ?></td>
-			  </tr>
 			</table>
 	</div>
 	<div class="row" style="margin-top:30px;">
@@ -59,30 +53,7 @@
 		<?php } ?>
 		</tbody>
 	  </table>
-	  
 	  </div>
-	 <div class="row" style="margin-top:30px;">
-		<h4 class="iq-tw-7 iq-mb-20">Purchase Details</h4>
-		<table class="table">
-		<thead class="thead-light">
-		  <tr>
-			<th>Plan Name</th>
-			<th>Purchase Date</th>
-			<th>Purchase Amount</th>
-			<th>Status</th>
-		  </tr>
-		</thead>
-		<tbody style="background:#ffffff;">
-		<?php foreach($purchase_details as $rows){ ?>
-		  <tr>
-			<td><?php echo $rows->plan_name; ?></td>
-			<td><?php echo $rows->purchase_date ; ?></td>
-			<td><?php echo $rows->purchase_amount ; ?></td>
-			<td><?php echo $rows->status ; ?></td>
-		  </tr>
-		<?php } ?>
-		</tbody>
-	  </table>
-        </div>
+	  
     </div>
 </section>

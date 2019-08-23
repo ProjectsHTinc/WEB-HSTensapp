@@ -88,9 +88,8 @@
                                    <div class="dropdown-menu">
                                      <a class="dropdown-item" href="<?php echo base_url(); ?>dashboard">Dashboard</a>
 									 <a class="dropdown-item" href="<?php echo base_url(); ?>plan_history">Plan History</a>
-									 <a class="dropdown-item" href="<?php echo base_url(); ?>order_history">Order History</a>
-									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_profile">Profile</a>
-
+									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_profile">Profile Update</a>
+									 <a class="dropdown-item" href="<?php echo base_url(); ?>change_password">Change Password</a>
                                    </div>
                                 </li>
 							<?php  } ?>

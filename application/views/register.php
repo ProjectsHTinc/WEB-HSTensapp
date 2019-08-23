@@ -6,10 +6,10 @@
                     <h4 class="iq-tw-7 iq-mb-20">Register</h4>
                     <form id="registerform" method="post" action="" enctype="multipart/form-data">
                         <div class="contact-form">
-                            <div class="section-field">
+                            <!-- <div class="section-field">
                                 <input class=" " id="name" type="text" placeholder="Name*" name="name">
                             </div>
-                            <!-- <div class="section-field">
+                            <div class="section-field">
                                 <input class="" id="username" type="text" placeholder="username*" name="username">
                             </div> -->
 
@@ -59,7 +59,7 @@
                     <form id="ins_detail_form" method="post" action="" enctype="multipart/form-data">
                         <div class="contact-form">
                           <div class="section-field">
-                              <input class=" " id="institute_code" type="text" placeholder="Institute Code" name="institute_code">
+                              <!--<input class=" " id="institute_code" type="text" placeholder="Institute Code" name="institute_code">-->
                               <input  id="last_insert_id" type="hidden" name="last_insert" value="">
                           </div>
                             <div class="section-field">
@@ -83,10 +83,10 @@
                                 <input class="" id="city" type="text" placeholder="City*" name="city">
                             </div>
                             <div class="section-field">
-                                <input class="" id="state" type="text" placeholder="state*" name="state">
+                                <input class="" id="state" type="text" placeholder="State*" name="state">
                             </div>
                             <div class="section-field">
-                                <input class="" id="no_of_student" type="text" placeholder="No Of Students*" name="no_of_student">
+                                <input class="" id="no_of_student" type="text" placeholder="No Of Students" name="no_of_student">
                             </div>
                             <div class="section-field">
                                 <input class="" id="how_you_hear" type="text" placeholder="How You Hear us.." name="how_you_hear">

@@ -16,9 +16,12 @@ class Admin extends CI_Controller {
 		$user_data = $this->session->userdata();
 		$user_id = $this->session->userdata('id');
 		$user_role = $this->session->userdata('user_role');
+		
+		$datas['result']=$this->adminmodel->Dashboard_datas();
+		
 		if($user_role=='1'){
 			$this->load->view('admin/header');
-			$this->load->view('admin/dashboard');
+			$this->load->view('admin/dashboard',$datas);
 			$this->load->view('admin/footer');
 		 }else{
 			 redirect('/login');
@@ -26,16 +29,150 @@ class Admin extends CI_Controller {
 	}
 
 
-	public function plans()
+	public function requested_plans()
 	{
 		$user_data = $this->session->userdata();
 		$user_id = $this->session->userdata('id');
 		$user_role = $this->session->userdata('user_role');
-		$datas['result']=$this->adminmodel->view_plan_details();
+		$datas['result']=$this->adminmodel->requested_plans();
 		
 		if($user_role=='1'){
 			$this->load->view('admin/header');
-			$this->load->view('admin/plans',$datas);
+			$this->load->view('admin/requested_plans',$datas);
+			$this->load->view('admin/footer');
+		 }else{
+			 redirect('/login');
+		 }		
+	}
+
+
+	public function assign_plan($plan_id)
+	{
+		$plan_id = base64_decode($plan_id);
+		
+		$user_data = $this->session->userdata();
+		$user_id = $this->session->userdata('id');
+		$user_role = $this->session->userdata('user_role');
+		
+		$datas['plan_details'] = $this->adminmodel->requested_plan_details($plan_id);
+		
+		if($user_role=='1'){
+			$this->load->view('admin/header');
+			$this->load->view('admin/assign_plan',$datas);
+			$this->load->view('admin/footer');
+		 }else{
+			 redirect('/login');
+		 }		
+	}
+	
+	
+	public function update_assign_plan(){
+			$user_id = $this->session->userdata('id');
+			$plan_id=$this->db->escape_str($this->input->post('plan_id'));
+			$no_of_users=$this->db->escape_str($this->input->post('no_of_users'));
+			$duration=$this->db->escape_str($this->input->post('duration'));
+			$pricing=$this->db->escape_str($this->input->post('pricing'));
+			$notes=$this->db->escape_str($this->input->post('notes'));
+			$data['res']=$this->adminmodel->update_assign_plan($plan_id,$no_of_users,$duration,$pricing,$notes,$user_id);
+			echo json_encode($data['res']);
+	}
+	
+	
+	public function delete_request($plan_id){
+		
+		$plan_id = base64_decode($plan_id);
+		
+		$user_data = $this->session->userdata();
+		$user_id = $this->session->userdata('id');
+		$user_role = $this->session->userdata('user_role');
+
+		if($user_role=='1'){
+			$datas['status'] = $this->adminmodel->delete_request($plan_id);
+			redirect('/admin/requested_plans');
+		 }else{
+			 redirect('/login');
+		 }
+	}
+
+
+	
+	public function customers()
+	{
+		$user_data = $this->session->userdata();
+		$user_id = $this->session->userdata('id');
+		$user_role = $this->session->userdata('user_role');
+		$datas['result']=$this->adminmodel->view_customers();
+
+		if($user_role=='1'){
+			$this->load->view('admin/header');
+			$this->load->view('admin/customers',$datas);
+			$this->load->view('admin/footer');
+		 }else{
+			 redirect('/login');
+		 }		
+	}
+
+	public function view_customer($customer_id)
+	{
+		$customer_id = base64_decode($customer_id);
+		$user_data = $this->session->userdata();
+		$user_id = $this->session->userdata('id');
+		$user_role = $this->session->userdata('user_role');
+		$datas['customer_details'] = $this->adminmodel->view_customer_details($customer_id);
+		$datas['plan_details'] = $this->adminmodel->view_customer_plans($customer_id);
+		//$datas['purchase_details'] = $this->adminmodel->view_customer_purchase($customer_id);
+		
+		if($user_role=='1'){
+			$this->load->view('admin/header');
+			$this->load->view('admin/view_customer',$datas);
+			$this->load->view('admin/footer');
+		 }else{
+			 redirect('/login');
+		 }		
+	}
+	
+	
+	
+	public function edit_customer($customer_id)
+	{
+		$customer_id = base64_decode($customer_id);
+		$user_data = $this->session->userdata();
+		$user_id = $this->session->userdata('id');
+		$user_role = $this->session->userdata('user_role');
+		
+		$datas['customer_details'] = $this->adminmodel->view_customer_details($customer_id);
+		//$datas['plan_details'] = $this->adminmodel->view_customer_plans($customer_id);
+		//$datas['purchase_details'] = $this->adminmodel->view_customer_purchase($customer_id);
+		
+		if($user_role=='1'){
+			$this->load->view('admin/header');
+			$this->load->view('admin/edit_customer',$datas);
+			$this->load->view('admin/footer');
+		 }else{
+			 redirect('/login');
+		 }		
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public function list_plans()
+	{
+		$user_data = $this->session->userdata();
+		$user_id = $this->session->userdata('id');
+		$user_role = $this->session->userdata('user_role');
+		$datas['result']=$this->adminmodel->list_plans();
+		
+		if($user_role=='1'){
+			$this->load->view('admin/header');
+			$this->load->view('admin/list_plans',$datas);
 			$this->load->view('admin/footer');
 		 }else{
 			 redirect('/login');
@@ -111,59 +248,6 @@ class Admin extends CI_Controller {
 			echo json_encode($data['res']);
 	}
 	
-	public function customers()
-	{
-		$user_data = $this->session->userdata();
-		$user_id = $this->session->userdata('id');
-		$user_role = $this->session->userdata('user_role');
-		$datas['result']=$this->adminmodel->view_customers();
-		
-		if($user_role=='1'){
-			$this->load->view('admin/header');
-			$this->load->view('admin/customers',$datas);
-			$this->load->view('admin/footer');
-		 }else{
-			 redirect('/login');
-		 }		
-	}
-
-	public function view_customer($customer_id)
-	{
-		$customer_id = base64_decode($customer_id);
-		$user_data = $this->session->userdata();
-		$user_id = $this->session->userdata('id');
-		$user_role = $this->session->userdata('user_role');
-		$datas['customer_details'] = $this->adminmodel->view_customer_details($customer_id);
-		$datas['plan_details'] = $this->adminmodel->view_customer_plans($customer_id);
-		$datas['purchase_details'] = $this->adminmodel->view_customer_purchase($customer_id);
-		
-		if($user_role=='1'){
-			$this->load->view('admin/header');
-			$this->load->view('admin/view_customer',$datas);
-			$this->load->view('admin/footer');
-		 }else{
-			 redirect('/login');
-		 }		
-	}
 	
-	public function edit_customer($customer_id)
-	{
-		$customer_id = base64_decode($customer_id);
-		$user_data = $this->session->userdata();
-		$user_id = $this->session->userdata('id');
-		$user_role = $this->session->userdata('user_role');
-		
-		$datas['customer_details'] = $this->adminmodel->view_customer_details($customer_id);
-		//$datas['plan_details'] = $this->adminmodel->view_customer_plans($customer_id);
-		//$datas['purchase_details'] = $this->adminmodel->view_customer_purchase($customer_id);
-		
-		if($user_role=='1'){
-			$this->load->view('admin/header');
-			$this->load->view('admin/edit_customer',$datas);
-			$this->load->view('admin/footer');
-		 }else{
-			 redirect('/login');
-		 }		
-	}
 	
 }
