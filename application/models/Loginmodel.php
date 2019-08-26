@@ -9,7 +9,9 @@ Class Loginmodel extends CI_Model
 		  $this->load->model('smsmodel');
 
 	  }
-	   
+
+//-------------------------------------------------//	
+
 	function check_login($email,$password)
 	{
 		  $query = "SELECT * FROM institute_master WHERE  email = '$email' OR mobile = '$email'";
@@ -96,8 +98,10 @@ Class Loginmodel extends CI_Model
 
 	}
 
+//-------------------------------------------------//	
 
 	function get_register($email,$phone,$password){
+			 
 			 $digits = 6;
 			 $otp=rand(pow(10, $digits-1), pow(10, $digits)-1);
 			 $notes=$otp;
@@ -160,6 +164,7 @@ Class Loginmodel extends CI_Model
 			  }
 	}
 
+//-------------------------------------------------//	
 
 	function get_ins_details($last_insert,$institute_name,$institute_type,$person_designation,$contact_person,$city,$state,$no_of_student,$how_you_hear,$notes){
 		  $update_query ="UPDATE institute_details SET institute_name='$institute_name',person_designation='$person_designation',contact_person='$contact_person',institute_type='$institute_type',city='$city',state='$state',no_of_student='$no_of_student',how_you_hear='$how_you_hear',notes='$notes',updated_by='$last_insert',updated_at=NOW()  WHERE institute_master_id='$last_insert'";
@@ -178,6 +183,8 @@ Class Loginmodel extends CI_Model
 
 	}
 
+//-------------------------------------------------//	
+
 	function checkemail($email){
 			$select="SELECT * FROM institute_master Where email='$email'";
 			$result=$this->db->query($select);
@@ -188,7 +195,9 @@ Class Loginmodel extends CI_Model
 				   echo "true";
 			   }
 	}
-		   
+
+//-------------------------------------------------//	
+	   
 	function checkmobile($phone){
 		$select="SELECT * FROM institute_master Where mobile='$phone'";
 		$result=$this->db->query($select);
@@ -199,6 +208,8 @@ Class Loginmodel extends CI_Model
 				echo "true";
 		 }
 	}
+
+//-------------------------------------------------//	
 		   
 	function check_ins_name($institute_name){
 		$select="SELECT * FROM institute_details Where institute_name='$institute_name'";
@@ -210,6 +221,8 @@ Class Loginmodel extends CI_Model
 				echo "true";
 	   }
 	}
+
+//-------------------------------------------------//	
 
 	function check_otp($otp,$last_insert){
 		$select="SELECT * FROM institute_master Where mobile_otp='$otp' AND id='$last_insert'";
@@ -225,7 +238,9 @@ Class Loginmodel extends CI_Model
 		   return $data;
 	   }
 	}
-		   
+
+//-------------------------------------------------//	
+
 	function email_verify($email){
 
 			$decrpty_email=base64_decode($email);
@@ -256,7 +271,7 @@ Class Loginmodel extends CI_Model
 			}
 	 }
 
-
+//-------------------------------------------------//	
 
 
 

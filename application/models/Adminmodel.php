@@ -158,6 +158,10 @@ Class Adminmodel extends CI_Model
 
 //#################### Notification End ####################//
 
+	
+	
+//#################### Dashboard Section ####################//  	
+
 	function Dashboard_datas(){
 			
 			$total_demo = "SELECT * FROM institute_plan_history WHERE master_plan_id = '1'";
@@ -246,7 +250,10 @@ Class Adminmodel extends CI_Model
 			return $result;
 	}
 	
+//#################### Dashboard Section End ####################//  
 	
+	
+//#################### Requested plans ####################// 
 	function requested_plans(){
 			$query = "SELECT
 						A.id,
@@ -268,8 +275,10 @@ Class Adminmodel extends CI_Model
 			$result = $res->result();
 			return $result;
 	}
+//#################### Requested plans End ####################// 
 
-	
+
+//#################### Requested plans details ####################// 
 	function requested_plan_details($plan_id){
 		$query = "SELECT
 						A.id,
@@ -286,7 +295,11 @@ Class Adminmodel extends CI_Model
 		$result = $res->result();
 		return $result;
 	}
-	
+
+//#################### Requested plans details End ####################// 
+
+
+//#################### Assignes Plans ####################// 
 	function update_assign_plan($plan_id,$no_of_users,$duration,$pricing,$notes,$user_id){
 		
 		$query = "SELECT
@@ -344,9 +357,10 @@ Class Adminmodel extends CI_Model
 		return $response;
 	}
 	
-	
+//#################### Assignes Plans End ####################// 
 
-	
+
+//#################### Delete Plans ####################// 
 	function delete_request($plan_id){
 		
 		$sQuery = "SELECT B.id as ins_plan_id, B.status, A.id FROM institute_plan_history A, institute_plans B  WHERE A.id = '$plan_id' AND A.institute_plan_id = B.id";
@@ -374,22 +388,30 @@ Class Adminmodel extends CI_Model
 		return $response;
 	}
 
-
+//#################### Delete Plans End ####################// 
 	
+//#################### List Customers ####################// 
 	function view_customers(){
 		$query = "SELECT A.*,B.institute_name,B.contact_person FROM institute_master A, institute_details B WHERE A.id = B.institute_master_id AND A.user_role = '2'";
 		$res = $this->db->query($query);
 		$result = $res->result();
 		return $result;
 	}
+//#################### List Customers End ####################// 	
 	
+	
+//#################### View customer details ####################// 	
 	function view_customer_details($customer_id){
 		$query = "SELECT A.id,A.institute_code,A.email,A.mobile,A.email_verify,A.mobile_verify,B.* FROM institute_master A, institute_details B WHERE A.id = B.institute_master_id AND A.id = '$customer_id'";
 		$res = $this->db->query($query);
 		$result = $res->result();
 		return $result;
 	}
-	
+
+//#################### View customer details End ####################// 	
+
+
+//#################### View customer plans ####################// 
 	function view_customer_plans($customer_id){
 		$query = "SELECT
 					A.*,
@@ -406,8 +428,10 @@ Class Adminmodel extends CI_Model
 		$result = $res->result();
 		return $result;
 	}
+//#################### View customer plans End ####################// 
 	
-	
+
+//#################### List All Plans ####################// 
 	function list_plans(){
 		$query = "SELECT
 					A.*,
@@ -426,7 +450,7 @@ Class Adminmodel extends CI_Model
 		$result = $res->result();
 		return $result;
 	}
-	
+//#################### List All Plans End ####################// 	
 	
 	
 	
