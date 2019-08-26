@@ -84,11 +84,12 @@ class Home extends CI_Controller {
 		
 	public function get_register(){
 		//$name=$this->db->escape_str($this->input->post('name'));
-		$password=md5($this->db->escape_str($this->input->post('password')));
+		
 		$email=$this->db->escape_str($this->input->post('email'));
 		$phone=$this->db->escape_str($this->input->post('phone'));
-		$username=$this->db->escape_str($this->input->post('username'));
-		$data['res']=$this->loginmodel->get_register($name,$password,$email,$phone,$username);
+		$password=md5($this->db->escape_str($this->input->post('password')));
+		//$username=$this->db->escape_str($this->input->post('username'));
+		$data['res']=$this->loginmodel->get_register($email,$phone,$password);
 		echo json_encode($data['res']);
 
 	}

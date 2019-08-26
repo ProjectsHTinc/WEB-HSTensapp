@@ -555,7 +555,7 @@ Class Usermodel extends CI_Model
     			   }
 			} 
 	
-		$sQuery = "SELECT A.id,A.institute_code,A.email,A.mobile,A.email_verify,A.mobile_verify,B.* FROM institute_master A, institute_details B WHERE A.id = B.institute_master_id AND A.id = '$user_id' ";
+		$sQuery = "SELECT A.id,A.institute_code,A.email,A.mobile,A.email_verify,A.mobile_verify,B.* FROM institute_master A, institute_details B WHERE A.id = B.institute_master_id AND A.id = '$user_id'";
    		$sResult = $this->db->query($sQuery);
     		foreach($sResult->result() as $srow){
     		    $institute_code = $srow->institute_code;
@@ -846,7 +846,6 @@ POD;
 		return $result;
 	}
 //#################### Plan Details End ####################// 
-		
 
 
 
@@ -855,7 +854,22 @@ POD;
 
 
 
-	//#################### Plan Expiry check ####################// 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//#################### Plan Expiry check ####################// 
 	function plan_expiry_check(){
 		$sQuery = "SELECT * FROM user_plan_history WHERE status = 'Live'";
 		$sResult = $this->db->query($sQuery);
