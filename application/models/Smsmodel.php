@@ -70,5 +70,7 @@ Class Smsmodel extends CI_Model
 
 
 
+
+
 }
 ?>
