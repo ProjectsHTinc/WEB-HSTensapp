@@ -11,6 +11,8 @@ class Admin extends CI_Controller {
 		$this->load->model('adminmodel');
 	}
 
+//-------------------------------------------------//
+
 	public function dashboard()
 	{
 		$user_data = $this->session->userdata();
@@ -28,6 +30,7 @@ class Admin extends CI_Controller {
 		 }		
 	}
 
+//-------------------------------------------------//
 
 	public function requested_plans()
 	{
@@ -45,6 +48,7 @@ class Admin extends CI_Controller {
 		 }		
 	}
 
+//-------------------------------------------------//
 
 	public function assign_plan($plan_id)
 	{
@@ -65,7 +69,8 @@ class Admin extends CI_Controller {
 		 }		
 	}
 	
-	
+//-------------------------------------------------//
+
 	public function update_assign_plan(){
 			$user_id = $this->session->userdata('id');
 			$plan_id=$this->db->escape_str($this->input->post('plan_id'));
@@ -77,6 +82,7 @@ class Admin extends CI_Controller {
 			echo json_encode($data['res']);
 	}
 	
+//-------------------------------------------------//
 	
 	public function delete_request($plan_id){
 		
@@ -94,7 +100,7 @@ class Admin extends CI_Controller {
 		 }
 	}
 
-
+//-------------------------------------------------//
 	
 	public function customers()
 	{
@@ -111,6 +117,8 @@ class Admin extends CI_Controller {
 			 redirect('/login');
 		 }		
 	}
+	
+//-------------------------------------------------//
 
 	public function view_customer($customer_id)
 	{
@@ -131,7 +139,7 @@ class Admin extends CI_Controller {
 		 }		
 	}
 	
-	
+//-------------------------------------------------//	
 	
 	public function edit_customer($customer_id)
 	{
@@ -153,7 +161,7 @@ class Admin extends CI_Controller {
 		 }		
 	}
 
-
+//-------------------------------------------------//
 
 
 
