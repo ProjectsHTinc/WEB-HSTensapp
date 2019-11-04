@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Metrics extends CI_Controller {
 
 
-	var $url="http://ensyfi.com/admin/admin_api/ins_details.php/list_ins";
-	var $main_url="http://ensyfi.com/";
+	var $url="https://ensyfi.com/admin/admin_api/ins_details.php/list_ins";
+	var $main_url="https://ensyfi.com/";
 	var $list_func_name="/apisuperadmin/get_user_count/";
 
 	function __construct()
