@@ -60,8 +60,8 @@ class Metrics extends CI_Controller {
 		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
     $buffer = curl_exec($curl_handle);
     curl_close($curl_handle);
-    $result = json_encode($buffer,JSON_UNESCAPED_SLASHES);
-		echo $livedata=stripslashes($result);
+    $result = json_decode($buffer);
+	  echo $livedata=json_encode($result);
 
 
 
