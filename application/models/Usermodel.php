@@ -263,11 +263,11 @@ Class Usermodel extends CI_Model
 //#################### First Time User Select Plan ####################//  	
 	function user_request_plan($master_plan_id){
 		$institute_master_id = $this->session->userdata('user_id');
-		
 		$sQuery = "SELECT * FROM institute_master A, institute_details B WHERE A.id = '$institute_master_id' AND A.id = B.institute_master_id";
 		$sResult = $this->db->query($sQuery);
 		foreach($sResult->result() as $row){
 		   $institute_name = $row->institute_name;
+		   $institute_code = $row->institute_code;
 		   $contact_person = $row->contact_person;
 		   $institute_type_id = $row->institute_type;
 		   $email = $row->email;
@@ -275,7 +275,7 @@ Class Usermodel extends CI_Model
 		}
 		
 		$current_date = date('Y-m-d');
-		$date = strtotime("+7 day");
+		$date = strtotime("+30 day");
 		$expiry_day = date('Y-m-d', $date);
 
 		$length = 6;    
@@ -288,7 +288,204 @@ Class Usermodel extends CI_Model
 		
 		if($sResult->num_rows()>0){
 			$response = array("status" => "Already");
-		} else {
+		} else
+		{
+			
+			//#-------------DATABASE AND TABLE CREATION--------------#//
+        		
+        		$base_db =  "ensyfi_".$institute_code;
+        		
+        		$db_query = "CREATE DATABASE IF NOT EXISTS `".$base_db."`";
+                $db_ex = $this->db->query($db_query);	
+        		
+        		$config = array();
+        		$config['hostname'] = "localhost";
+        		$config['username'] = "root";
+				//$config['password'] = "";
+        		$config['password'] = "O+E7vVgBr#{}";
+        		$config['database'] = $base_db;
+        		$config['dbdriver'] = "mysqli";
+        		$config['dbprefix'] = "";
+        		$config['pconnect'] = FALSE;
+        		$config['db_debug'] = TRUE;
+        		$config['cache_on'] = FALSE;
+        		$config['cachedir'] = "";
+        		$config['char_set'] = "utf8";
+        		$config['dbcollat'] = "utf8_general_ci";
+        
+        
+        		$CI =& get_instance();
+        		$CI->db_1 = $CI->load->database($config, TRUE);
+        		$CI->db_1 =& $CI->db_1;
+         
+        		$temp_line = '';
+        		$lines = file($_SERVER["DOCUMENT_ROOT"]."/ensyfi_source_sql/ens_app.sql"); 
+        		foreach ($lines as $line)
+        		{
+        			if (substr($line, 0, 2) == '--' || $line == '' || substr($line, 0, 1) == '#')
+        				continue;
+        			$temp_line .= $line;
+        			if (substr(trim($line), -1, 1) == ';')
+        			{
+        			    $this->db_1->query($temp_line);
+        				$temp_line = '';
+        			}
+        		}
+        
+        		$query = "INSERT INTO edu_users(`user_id`, `school_id`, `name`, `user_name`, `user_password`, `user_pic`, `user_type`, `user_master_id`, `parent_id`, `teacher_id`, `student_id`, `created_date`, `updated_date`, `status`, `last_login_date`, `login_count`, `password_status`) VALUES
+        (1, '$institute_code', '$institute_code', 'admin', '21232f297a57a5a743894a0e4a801fc3', '', 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active', '0000-00-00 00:00:00', 0, 1)";
+        		$result = $this->db_1->query($query);
+        		
+        		$this->db_1->close();
+        		
+        		//#-------------DATABASE AND TABLE CREATION END--------------#//
+        		
+
+        		
+        		$src = $_SERVER["DOCUMENT_ROOT"]."/ensyfi_source_code";
+        		$dst = $_SERVER["DOCUMENT_ROOT"]."/".$institute_code;
+        		$this->folder_copy($src,$dst);
+        
+        		$dbFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/database.php";
+        		$fDb = fopen($dbFile,"w");
+$string = <<<MOD
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+\$active_group = 'default';
+\$query_builder = TRUE;
+\$db['default'] = array(
+	'dsn'	=> '',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => 'O+E7vVgBr#{}',
+	'database' => '$base_db',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+\$db['second'] = array(
+    'dsn'   => '',
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => 'O+E7vVgBr#{}',
+    'database' => 'ensyfi_newsite',
+    'dbdriver' => 'mysqli',
+    'dbprefix' => '',
+    'pconnect' => FALSE,
+    'db_debug' => (ENVIRONMENT !== 'production'),
+    'cache_on' => FALSE,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+    'swap_pre' => '',
+    'encrypt' => FALSE,
+    'compress' => FALSE,
+    'stricton' => FALSE,
+    'failover' => array(),
+    'save_queries' => TRUE
+);
+MOD;
+
+        		fwrite($fDb, $string);
+        		fclose($fDb);
+        		chmod($dbFile,0777);
+        		
+        		$base_url = "http://ensyfi.com/".$institute_code;
+        
+        		$conFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/config.php";
+        		$fcon = fopen($conFile,"w");
+$content = <<<POD
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+\$config['base_url'] = '$base_url';
+\$config['index_page'] = '';
+\$config['uri_protocol'] = 'REQUEST_URI';
+\$config['url_suffix'] = '';
+\$config['language']	= 'english';
+\$config['charset'] = 'UTF-8';
+\$config['enable_hooks'] = FALSE;
+\$config['subclass_prefix'] = 'MY_';
+\$config['composer_autoload'] = FALSE;
+\$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+\$config['allow_get_array'] = TRUE;
+\$config['enable_query_strings'] = FALSE;
+\$config['controller_trigger'] = 'c';
+\$config['function_trigger'] = 'm';
+\$config['directory_trigger'] = 'd';
+\$config['log_threshold'] = 0;
+\$config['log_path'] = '';
+\$config['log_file_extension'] = '';
+\$config['log_file_permissions'] = 0644;
+\$config['log_date_format'] = 'Y-m-d H:i:s';
+\$config['error_views_path'] = '';
+\$config['cache_path'] = '';
+\$config['cache_query_string'] = FALSE;
+\$config['encryption_key'] = '';
+\$config['sess_driver'] = 'files';
+\$config['sess_cookie_name'] = 'ci_session';
+\$config['sess_expiration'] = 7200;
+\$config['sess_save_path'] = sys_get_temp_dir();
+\$config['sess_match_ip'] = FALSE;
+\$config['sess_time_to_update'] = 300;
+\$config['sess_regenerate_destroy'] = FALSE;
+\$config['cookie_prefix']	= '';
+\$config['cookie_domain']	= '';
+\$config['cookie_path']		= '/';
+\$config['cookie_secure']	= FALSE;
+\$config['cookie_httponly'] 	= FALSE;
+\$config['standardize_newlines'] = FALSE;
+\$config['global_xss_filtering'] = FALSE;
+\$config['csrf_protection'] = FALSE;
+\$config['csrf_token_name'] = 'csrf_test_name';
+\$config['csrf_cookie_name'] = 'csrf_cookie_name';
+\$config['csrf_expire'] = 7200;
+\$config['csrf_regenerate'] = TRUE;
+\$config['csrf_exclude_uris'] = array();
+\$config['compress_output'] = FALSE;
+\$config['time_reference'] = 'local';
+\$config['rewrite_short_tags'] = FALSE;
+\$config['proxy_ips'] = '';
+POD;
+
+        		fwrite($fcon, $content);
+        		fclose($fcon);
+        		chmod($conFile,0777);
+        
+				$query = "INSERT INTO institute_plans(institute_master_id,institute_type_id,master_plan_id,notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_type_id','$master_plan_id','Demo Plan','Active','$institute_master_id',now())";
+				$result = $this->db->query($query);
+				$institute_plan_id = $this->db->insert_id();
+				
+				$query = "INSERT INTO institute_plan_history(institute_master_id,institute_plan_id,master_plan_id,purchase_order_id,purchase_date,purchase_amount,purchase_notes,activated_date,expiry_date,status,created_by,created_at) VALUES('$institute_master_id','$institute_plan_id','$master_plan_id','','$current_date','','Demo Plan','$current_date','$expiry_day','Live','$institute_master_id',now())";
+				$result = $this->db->query($query);
+	  
+	  
+        	    $query = "UPDATE institute_master SET app_status = '1' WHERE id = '$user_id'";
+        	    $result = $this->db->query($query);     	    
+        	    
+        	    $subject = "Ensyfi - Login details";
+				$htmlContent = "Hi ".$institute_name.", <br><br>Website URL : https://ensyfi.com/".$institute_code."/ <br>Institute code : ".$institute_code."<br>Username : admin<br>Password : admin<br><br><br>Ensyfi";
+				$this->sendMail($user_email,$subject,$htmlContent);
+
+				$mobile_message = "Hi ".$institute_name.", Plan successfully placed. Login details \n URL : https://ensyfi.com/".$institute_code."/ \n Institute code : ".$institute_code."\n User Name : admin \n Password : admin";
+				$this->sendSMS($user_mobile,$mobile_message);	
+				
+        		redirect('/dashboard');
+
+				
+		}			
+		/* {
 			if ($master_plan_id ==1){
 				$query = "INSERT INTO institute_plans(institute_master_id,institute_type_id,master_plan_id,notes,status,created_by,created_at) VALUES('$institute_master_id','$institute_type_id','$master_plan_id','Demo Plan','Active','$institute_master_id',now())";
 				$result = $this->db->query($query);
@@ -344,7 +541,7 @@ Class Usermodel extends CI_Model
 				
 			}
 			$response = array("status" => "success");
-		}
+		} */
 
 
 		return $response;

@@ -1,9 +1,12 @@
 <section class="overview-block-ptb grey-bg" style="margin-top:50px;">
+<form id="customer_update_form" name="customer_update_form" method="post" action="" enctype="multipart/form-data">
     <div class="container">
-
+ 
        <div class="row">
+	  
 		   <h4 class="iq-tw-7 iq-mb-20">Customer Details</h4>
 			<?php foreach($customer_details as $rows){ } ?>
+			
 			<table  class="table" id="example">
 			  <tr>
 				<td>Inst. Code</td>
@@ -35,8 +38,32 @@
 				<td>School Students</td>
 				<td><?php echo $rows->no_of_student; ?></td>
 			  </tr>
+			  <tr>
+				<td></td>
+				<td></td>
+				<td>Status</td>
+				<td> 
+					<select name="status">
+					  <option value="">Select</option>
+					  <option value="Active">Active</option>
+					  <option value="Deactive">Inactive</option>
+					</select><script language="JavaScript">document.customer_update_form.status.value="<?php echo $rows->cust_status; ?>";</script>
+					</td>
+			  </tr>
+			  <tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<input type = "hidden" name="customer_id" value="<?php echo $rows->id; ?>">
+					<input type = "hidden" name="mobile_number" value="<?php echo $rows->mobile; ?>">
+					<button id="Save" name="submit" type="submit" value="Send" class="button iq-mt-15">Save</button>
+				</td>
+			  </tr>
 			</table>
+			
 	</div>
 	
     </div>
+	</form>
 </section>

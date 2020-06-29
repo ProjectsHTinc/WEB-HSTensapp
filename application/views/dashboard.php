@@ -3,7 +3,7 @@
 ?>
 	<section class="overview-block-ptb grey-bg" style="margin-top:50px;">
     <div class="container">
-	<div style="text-align:right;"><a href="renew_plans">Update Plans</a></div>
+	<!--<div style="text-align:right;"><a href="renew_plans">Update Plans</a></div>-->
        <div class="row">
 		<h4 class="iq-tw-7 iq-mb-20" style="float:right">Plan Details</h4>
 		
@@ -13,9 +13,9 @@
 			<th>Plan Name</th>
 			<th>Activated Date</th>
 			<th>Expiry Date</th>
-			<th>Amount</th>
+			<!--<th>Amount</th>-->
 			<th>Status</th>
-			<th>Action</th>
+			<!--<th>Action</th>-->
 		  </tr>
 		</thead>
 		<tbody>
@@ -26,15 +26,15 @@
 			<td><?php echo $rows->plan_name; ?></td>
 			<td><?php if ($status =='Requested' || $status =='Assigned' || $status =='Success'){ } else { echo date("d-m-Y", strtotime($rows->activated_date)); } ?></td>
 			<td><?php if ($status =='Requested' || $status =='Assigned' || $status =='Success'){ } else { echo date("d-m-Y", strtotime($rows->expiry_date)); } ?></td>
-			<td><?php if ($status =='Requested' || $status =='Assigned'){ } else { echo $rows->purchase_amount; } ?></td>
+			<!--<td><?php if ($status =='Requested' || $status =='Assigned'){ } else { echo $rows->purchase_amount; } ?></td>-->
 			<td><?php echo $rows->status; ?> </td>
-			<td><?php 
+			<!--<td><?php 
 				if ($status == 'Assigned'){ ?> 
 				<a href = "<?php echo base_url();?>user/payment_review/<?php echo base64_encode($rows->id);?>">Make Payment</a> 
 				<?php } else if ($status == 'Success') { ?>
 				<a href = "<?php echo base_url();?>user/activate_plan/<?php echo base64_encode($rows->id);?>" onclick="return confirm('Are you sure you want to activate this Plan?');">Activate</a> 
 				<?php } ?>
-				</td>
+				</td>-->
 		  </tr>
 		<?php } ?>
 		</tbody>

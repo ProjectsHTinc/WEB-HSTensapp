@@ -163,7 +163,23 @@ class Admin extends CI_Controller {
 
 //-------------------------------------------------//
 
+//-------------------------------------------------//	
+	
+	public function update_customer()
+	{
+		$user_data = $this->session->userdata();
+		$user_id = $this->session->userdata('id');
+		$user_role = $this->session->userdata('user_role');
+		
+		 $customer_id=$this->db->escape_str($this->input->post('customer_id'));
+		 $mobile=$this->db->escape_str($this->input->post('mobile_number'));
+		 $status=$this->db->escape_str($this->input->post('status'));
+		 $datas['res'] = $this->adminmodel->update_customer_details($user_id,$customer_id,$mobile,$status);
+		
+		echo json_encode($datas['res']);		
+	}
 
+//-------------------------------------------------//
 
 
 

@@ -97,8 +97,8 @@
 								<li class="nav-item dropdown">
                                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
                                    <div class="dropdown-menu">
-                                     <a class="dropdown-item" href="<?php echo base_url(); ?>dashboard">Dashboard</a>
-									 <a class="dropdown-item" href="<?php echo base_url(); ?>plan_history">Plan History</a>
+                                     <!--<a class="dropdown-item" href="<?php echo base_url(); ?>dashboard">Dashboard</a>-->
+									 <a class="dropdown-item" href="<?php echo base_url(); ?>dashboard">Plan History</a>
 									 <a class="dropdown-item" href="<?php echo base_url(); ?>user_profile">Profile Update</a>
 									 <a class="dropdown-item" href="<?php echo base_url(); ?>change_password">Change Password</a>
                                    </div>

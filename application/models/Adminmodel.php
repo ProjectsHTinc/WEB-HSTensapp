@@ -402,7 +402,7 @@ Class Adminmodel extends CI_Model
 	
 //#################### View customer details ####################// 	
 	function view_customer_details($customer_id){
-		$query = "SELECT A.id,A.institute_code,A.email,A.mobile,A.email_verify,A.mobile_verify,B.* FROM institute_master A, institute_details B WHERE A.id = B.institute_master_id AND A.id = '$customer_id'";
+		$query = "SELECT A.id,A.institute_code,A.email,A.mobile,A.email_verify,A.mobile_verify,A.status as cust_status,B.* FROM institute_master A, institute_details B WHERE A.id = B.institute_master_id AND A.id = '$customer_id'";
 		$res = $this->db->query($query);
 		$result = $res->result();
 		return $result;
@@ -410,6 +410,27 @@ Class Adminmodel extends CI_Model
 
 //#################### View customer details End ####################// 	
 
+
+	function update_customer_details($user_id,$customer_id,$mobile,$status){
+		
+		//------------Connect demo DB ---------------//
+			$this->db_second = $this->load->database('second', TRUE); 
+			$query = "UPDATE `edu_users` SET `status`='$status',`updated_date`=now() WHERE user_name ='$mobile'";
+			$res = $this->db_second->query($query);
+			$this->db_second->close();
+		//------------Connect demo DB End---------------//
+				
+				
+		$query = "UPDATE `institute_master` SET `status`='$status',`updated_by`='$user_id',`updated_at`=now() WHERE id ='$customer_id'";
+		$res = $this->db->query($query);
+		if($res) {
+			$response = array("status" => "success");
+		}else{
+			$response = array("status" => "failed");
+		}
+		return $response;
+	}
+	
 
 //#################### View customer plans ####################// 
 	function view_customer_plans($customer_id){

@@ -65,12 +65,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?php echo base_url(); ?>admin/customers">Customers</a>
                                 </li>
-								                 <li class="nav-item">
+								 <!--<li class="nav-item">
                                     <a class="nav-link" href="<?php echo base_url(); ?>admin/list_plans">Plan Details</a>
                                 </li>
-                                <li class="nav-item">
+                               <li class="nav-item">
                                    <a class="nav-link" href="<?php echo base_url(); ?>metrics/index">Metrics</a>
-                               </li>
+                               </li>-->
                             </ul>
 						<?php $user_role = $this->session->userdata('user_role');
 							if($user_role !=''){?>

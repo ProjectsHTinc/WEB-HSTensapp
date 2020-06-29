@@ -993,6 +993,39 @@ $(document).ready(function() {
 
 	});
 	
+	
+	$('#customer_update_form').validate({
+		  rules: {
+			 status: {
+				  required: true
+			  }
+		  },
+		  messages: {
+			  status: "Select Status"
+		  },
+		submitHandler: function(form) {
+		  $.ajax({
+					 url: "../update_customer",
+					 type: 'POST',
+					 data: $('#customer_update_form').serialize(),
+					 dataType: "json",
+					 success: function(response) {
+						var stats=response.status;
+						 if (stats=="success") {
+						   swal({
+							 title: "Customer Updated!..",
+							 type: "success"
+						 }).then(function() {
+							 window.location = "../customers";
+						 });
+					   }else{
+
+						   }
+					 }
+				 });
+			   }
+
+	});
 //==================Custom Functions End =========================/
 
 });

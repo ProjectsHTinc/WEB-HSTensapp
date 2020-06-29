@@ -46,8 +46,8 @@
 		<?php foreach($plan_details as $rows){ ?>
 		  <tr>
 			<td><?php echo $rows->plan_name; ?></td>
-			<td><?php echo $rows->activated_date; ?></td>
-			<td><?php echo $rows->expiry_date; ?></td>
+			<td><?php echo date("d-m-Y", strtotime($rows->activated_date)); ?></td>
+			<td><?php echo date("d-m-Y", strtotime($rows->expiry_date)); ?></td>
 			<td><?php echo $rows->status ; ?></td>
 		  </tr>
 		<?php } ?>

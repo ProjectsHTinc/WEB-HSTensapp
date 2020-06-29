@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-			<div class="col-md-6 col-lg-4">
+			<!--<div class="col-md-6 col-lg-4">
                 <div class="iq-get-in">
                     <h4 class="iq-tw-7 iq-mb-20">School Login</h4>
                     <form id="sch_login_form" method="post" enctype="multipart/form-data">
@@ -40,7 +40,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div>-->
 		
 		
         <div class="row justify-content-center" id="ins_details">
