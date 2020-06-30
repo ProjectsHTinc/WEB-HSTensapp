@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center" id="login_section">
 			
-			<div class="col-md-6 col-lg-4">
+			<div class="col-md-6 col-lg-6">
                 <div class="iq-get-in">
                     <h4 class="iq-tw-7 iq-mb-20">Customer Login</h4>
                     <form id="login_form" method="post" enctype="multipart/form-data">

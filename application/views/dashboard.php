@@ -4,7 +4,7 @@
 	<section class="overview-block-ptb grey-bg" style="margin-top:50px;">
     <div class="container">
 	<!--<div style="text-align:right;"><a href="renew_plans">Update Plans</a></div>-->
-       <div class="row">
+       <div class="row ">
 		<h4 class="iq-tw-7 iq-mb-20" style="float:right">Plan Details</h4>
 		
 		<table class="table">
@@ -48,8 +48,8 @@
 <?php } else { ?>
 
 	<section id="pricing" class="overview-block-ptb grey-bg iq-price-table"  style="padding-top:150px;">
-		<div class="container">
-			<div class="row">
+		<div class="container" style="min-height:320px;">
+			<div class="row justify-content-center">
 			
 <?php
 	if (count($master_plans)>0){ 

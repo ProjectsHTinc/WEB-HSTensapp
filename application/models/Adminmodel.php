@@ -168,7 +168,7 @@ Class Adminmodel extends CI_Model
 			$total_demo_res = $this->db->query($total_demo);
 			$total_demo = $total_demo_res->num_rows();
 			
-			$total_demo_live = "SELECT * FROM institute_plan_history WHERE master_plan_id = '1' AND status = 'Active'";
+			$total_demo_live = "SELECT * FROM institute_plan_history WHERE master_plan_id = '1' AND status = 'Live'";
 			$total_demo_live_res = $this->db->query($total_demo_live);
 			$total_demo_live = $total_demo_live_res->num_rows();
 			
@@ -413,12 +413,12 @@ Class Adminmodel extends CI_Model
 
 	function update_customer_details($user_id,$customer_id,$mobile,$status){
 		
-		//------------Connect demo DB ---------------//
+		/* //------------Connect demo DB ---------------//
 			$this->db_second = $this->load->database('second', TRUE); 
 			$query = "UPDATE `edu_users` SET `status`='$status',`updated_date`=now() WHERE user_name ='$mobile'";
 			$res = $this->db_second->query($query);
 			$this->db_second->close();
-		//------------Connect demo DB End---------------//
+		//------------Connect demo DB End---------------// */
 				
 				
 		$query = "UPDATE `institute_master` SET `status`='$status',`updated_by`='$user_id',`updated_at`=now() WHERE id ='$customer_id'";

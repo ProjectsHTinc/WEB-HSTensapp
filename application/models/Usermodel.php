@@ -333,7 +333,7 @@ Class Usermodel extends CI_Model
         		}
         
         		$query = "INSERT INTO edu_users(`user_id`, `school_id`, `name`, `user_name`, `user_password`, `user_pic`, `user_type`, `user_master_id`, `parent_id`, `teacher_id`, `student_id`, `created_date`, `updated_date`, `status`, `last_login_date`, `login_count`, `password_status`) VALUES
-        (1, '$institute_code', '$institute_code', 'admin', '21232f297a57a5a743894a0e4a801fc3', '', 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active', '0000-00-00 00:00:00', 0, 1)";
+        (1, '$institute_code', '$institute_name', 'admin', '21232f297a57a5a743894a0e4a801fc3', '', 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active', '0000-00-00 00:00:00', 0, 1)";
         		$result = $this->db_1->query($query);
         		
         		$this->db_1->close();
@@ -402,7 +402,7 @@ MOD;
         		fclose($fDb);
         		chmod($dbFile,0777);
         		
-        		$base_url = "http://ensyfi.com/".$institute_code;
+        		$base_url = "https://ensyfi.com/".$institute_code;
         
         		$conFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/config.php";
         		$fcon = fopen($conFile,"w");
@@ -471,17 +471,17 @@ POD;
 				$result = $this->db->query($query);
 	  
 	  
-        	    $query = "UPDATE institute_master SET app_status = '1' WHERE id = '$user_id'";
+        	    $query = "UPDATE institute_master SET app_status = '1' WHERE id = '$institute_master_id'";
         	    $result = $this->db->query($query);     	    
         	    
         	    $subject = "Ensyfi - Login details";
 				$htmlContent = "Hi ".$institute_name.", <br><br>Website URL : https://ensyfi.com/".$institute_code."/ <br>Institute code : ".$institute_code."<br>Username : admin<br>Password : admin<br><br><br>Ensyfi";
-				$this->sendMail($user_email,$subject,$htmlContent);
+				$this->sendMail($email,$subject,$htmlContent);
 
 				$mobile_message = "Hi ".$institute_name.", Plan successfully placed. Login details \n URL : https://ensyfi.com/".$institute_code."/ \n Institute code : ".$institute_code."\n User Name : admin \n Password : admin";
-				$this->sendSMS($user_mobile,$mobile_message);	
+				$this->sendSMS($mobile,$mobile_message);	
 				
-        		redirect('/dashboard');
+        		$response = array("status" => "success");
 
 				
 		}			
