@@ -46,7 +46,7 @@
 					<select name="status">
 					  <option value="">Select</option>
 					  <option value="Active">Active</option>
-					  <option value="Deactive">Inactive</option>
+					  <option value="Inactive">Inactive</option>
 					</select><script language="JavaScript">document.customer_update_form.status.value="<?php echo $rows->cust_status; ?>";</script>
 					</td>
 			  </tr>

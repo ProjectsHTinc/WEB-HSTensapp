@@ -1,9 +1,9 @@
 <?php foreach($user_details as $rows){ }?>
 
 <section id="contact-us" class="footer-info white-bg" style="margin-top:100px;">
-    <div class="container">
+    <div class="container" style="min-height:450px;">
         <div class="row justify-content-center" id="first_form">
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-6">
                 <div class="iq-get-in">
                     <h4 class="iq-tw-7 iq-mb-20">Change Password</h4>
                     <form id="passwordform"  method="post" action="" enctype="multipart/form-data">

@@ -14,13 +14,13 @@
                             </div> -->
 
                             <div class="section-field">
-                                <input class="" id="email" type="email" placeholder="Email*" name="email">
+                                <input class="" id="email" type="email" placeholder="Email*" name="email" maxlength="30">
                             </div>
                             <div class="section-field">
-                                <input class="" id="phone" type="text" placeholder="Phone*" name="phone">
+                                <input class="" id="phone" type="text" placeholder="Phone*" name="phone" maxlength="10">
                             </div>
                             <div class="section-field">
-                                <input class="" id="password" type="password" placeholder="Password*" name="password">
+                                <input class="" id="password" type="password" placeholder="Password*" name="password" maxlength="10">
                             </div>
 
                             <button id="submit" name="submit" type="submit" value="Send" class="button iq-mt-15">Register</button>
@@ -30,8 +30,14 @@
                 </div>
             </div>
         </div>
+	</div>
+	
+	<div class="container">
         <div class="row justify-content-center" id="otp_section">
-            <div class="col-md-6 col-lg-4">
+		<div class="row">
+            <div class="col-sm-12 col-lg-3 col-md-3"></div>
+			
+            <div class="col-sm-12 col-lg-6 col-md-6">
                 <div class="iq-get-in">
                     <h4 class="iq-tw-7 iq-mb-20">Mobile verification</h4>
                     <form id="mobile_otp_form" method="post" action="" enctype="multipart/form-data">
@@ -49,11 +55,19 @@
                     </form>
                 </div>
             </div>
+			<div class="col-sm-12 col-lg-3 col-md-3"></div>
+		</div>
         </div>
-        <center><img src="<?php echo base_url(); ?>assets/loader.gif" id="loading"></center>
-          <div class="container">
+	</div>
+	
+	<center><img src="<?php echo base_url(); ?>assets/loader.gif" id="loading"></center>
+    
+	<div class="container">
         <div class="row justify-content-center" id="ins_details">
-            <div class="col-md-6 col-lg-6">
+		<div class="row">
+            <div class="col-sm-12 col-lg-3 col-md-3"></div>
+			
+            <div class="col-sm-12 col-lg-6 col-md-6">
                 <div class="iq-get-in">
                     <h4 class="iq-tw-7 iq-mb-20">Institute Details</h4>
                     <form id="ins_detail_form" method="post" action="" enctype="multipart/form-data">
@@ -94,19 +108,16 @@
                             <div class="section-field">
                                 <textarea class="" id="notes" type="text" rows="6" cols="6" placeholder="Add Notes" name="notes"></textarea>
                             </div>
-
-
-
-
                             <button id="Save" name="submit" type="submit" value="Send" class="button iq-mt-15">Save</button>
 
                         </div>
                     </form>
                 </div>
             </div>
+			<div class="col-sm-12 col-lg-3 col-md-3"></div>
+		</div>
         </div>
     </div>
-  </div>
 
 </section>
 <style>

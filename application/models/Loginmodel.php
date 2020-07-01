@@ -6,12 +6,163 @@ Class Loginmodel extends CI_Model
 	  public function __construct()
 	  {
 		  parent::__construct();
-		  $this->load->model('smsmodel');
-
+		  //$this->load->model('smsmodel');
+		  //$this->load->model('mailmodel');
 	  }
 
-//-------------------------------------------------//	
+//#################### Email ####################//
 
+	function sendMail($to,$subject,$email_message)
+	{
+		// Set content-type header for sending HTML email
+		$headers = "MIME-Version: 1.0" . "\r\n";
+		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+		// Additional headers
+		$headers .= 'From: ENSYFI<admin@ensyfi.com>' . "\r\n";
+		mail($to,$subject,$email_message,$headers);
+	}
+
+//#################### Email End ####################//
+
+//#################### SMS ####################//
+
+	function sendSMS($user_mobile,$mobile_message)
+	{
+        //Your authentication key
+          $authKey = "308533AMShxOBgKSt75df73187";
+
+          //Multiple mobiles numbers separated by comma
+          $mobile = "$user_mobile";
+
+          //Sender ID,While using route4 sender id should be 6 characters long.
+          $senderId = "ENSYFI";
+
+          //Your message to send, Add URL encoding here.
+          $message = $mobile_message;
+
+          //Define route
+          $route = "transactional";
+
+          //Prepare you post parameters
+          $postData = array(
+              'authkey' => $authKey,
+              'mobiles' => $mobile,
+              'message' => $message,
+              'sender' => $senderId,
+              'route' => $route
+          );
+
+          //API URL
+          $url="https://control.msg91.com/api/sendhttp.php";
+
+          // init the resource
+          $ch = curl_init();
+          curl_setopt_array($ch, array(
+              CURLOPT_URL => $url,
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_POST => true,
+              CURLOPT_POSTFIELDS => $postData
+              //,CURLOPT_FOLLOWLOCATION => true
+          ));
+
+
+          //Ignore SSL certificate verification
+          curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+
+          //get response
+          $output = curl_exec($ch);
+
+          //Print error if any
+          if(curl_errno($ch))
+          {
+              echo 'error:' . curl_error($ch);
+          }
+
+          curl_close($ch);
+	}
+
+//#################### SMS End ####################//
+
+//#################### Notification ####################//
+
+	function sendNotification($gcm_key,$Title,$Message,$mobiletype)
+	{
+		if ($mobiletype =='1'){
+
+		    require_once 'assets/notification/Firebase.php';
+            require_once 'assets/notification/Push.php';
+
+            $device_token = explode(",", $gcm_key);
+            $push = null;
+
+//        //first check if the push has an image with it
+		    $push = new Push(
+					$Title,
+					$Message,
+					'http://heylaapp.com/assets/notification/images/events.jpg'
+				);
+
+// 			//if the push don't have an image give null in place of image
+ 			// $push = new Push(
+ 			// 		'HEYLA',
+ 			// 		'Hi Testing from maran',
+ 			// 		null
+ 			// 	);
+
+    		//getting the push from push object
+    		$mPushNotification = $push->getPush();
+
+    		//creating firebase class object
+    		$firebase = new Firebase();
+
+    	foreach($device_token as $token) {
+    		 $firebase->send(array($token),$mPushNotification);
+    	}
+
+		} else {
+
+			$device_token = explode(",", $gcm_key);
+			$passphrase = 'hs123';
+		    $loction ='assets/notification/heylaapp.pem';
+
+			$ctx = stream_context_create();
+			stream_context_set_option($ctx, 'ssl', 'local_cert', $loction);
+			stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+			// Open a connection to the APNS server
+			$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+
+			if (!$fp)
+				exit("Failed to connect: $err $errstr" . PHP_EOL);
+
+			$body['aps'] = array(
+				'alert' => array(
+					'body' => $Message,
+					'action-loc-key' => 'Heyla App',
+				),
+				'badge' => 2,
+				'sound' => 'assets/notification/oven.caf',
+				);
+
+			$payload = json_encode($body);
+
+			foreach($device_token as $token) {
+
+				// Build the binary notification
+    			$msg = chr(0) . pack("n", 32) . pack("H*", str_replace(" ", "", $token)) . pack("n", strlen($payload)) . $payload;
+        		$result = fwrite($fp, $msg, strlen($msg));
+			}
+
+				fclose($fp);
+		}
+	}
+
+//#################### Notification End ####################//
+
+
+//-------------------------------------------------//	
 	function check_login($email,$password)
 	{
 		  $query = "SELECT * FROM institute_master WHERE  email = '$email' OR mobile = '$email'";
@@ -29,14 +180,14 @@ Class Loginmodel extends CI_Model
 					 $resultset = $this->db->query($quer);
 					 $email_verify = $rows->email_verify;
 					
-					 /* if($email_verify=='N'){
-					   $data= array("status" => "failed","msg" => "Verify your Email Account");
+					/*  if($email_verify=='N'){
+					   $data= array("status" => "failed","msg" => "Your email is not verfied! Please contact admin");
 					   return $data;
-					 } */
+					 }  */
 					 
 					 $mobile_verify=$rows->mobile_verify;
 					 if($mobile_verify=='N'){
-					   $data= array("status" => "failed","msg" => "Verify your Mobile Number");
+					   $data= array("status" => "failed","msg" => "Your mobile number is not verfied! Please contact admin");
 					   return $data;
 					 }
 				 
@@ -104,8 +255,7 @@ Class Loginmodel extends CI_Model
 			 
 			 $digits = 6;
 			 $otp=rand(pow(10, $digits-1), pow(10, $digits)-1);
-			 $notes=$otp;
-			 $this->smsmodel->send_sms($phone,$notes);
+			 $this->sendSMS($phone,$otp);
 			 
 			$sQuery = "SELECT * FROM `institute_master` ORDER BY id DESC LIMIT 1";
 			$sResult = $this->db->query($sQuery);
@@ -114,54 +264,34 @@ Class Loginmodel extends CI_Model
 				   $old_institute_code = $srow->institute_code ;
 				}
 			}
-			
 			$institute_code = $old_institute_code +9;
 			
 			$query = "SELECT * FROM `institute_master` ORDER BY id DESC LIMIT 1 ";
 			$resultset = $this->db->query($query);
 			 
-			$query ="INSERT INTO institute_master(institute_code,email,email_verify,mobile,mobile_otp,mobile_verify,password,user_role,status,detail_flag,created_at) VALUES('$institute_code','$email','N','$phone','$otp','N','$password','2','Active','0',NOW())";
-			$resultset=$this->db->query($query);
+			$query = "INSERT INTO institute_master(institute_code,email,email_verify,mobile,mobile_otp,mobile_verify,password,user_role,status,detail_flag,created_at) VALUES('$institute_code','$email','N','$phone','$otp','N','$password','2','Active','0',NOW())";
+			$resultset = $this->db->query($query);
 			$insert_id = $this->db->insert_id();
 			 
-			$query_2="INSERT INTO institute_details(institute_master_id,created_at,created_by) VALUES('$insert_id',NOW(),'$insert_id')";
-			$resultset_2=$this->db->query($query_2);
+			$query_2 = "INSERT INTO institute_details(institute_master_id,created_at,created_by) VALUES('$insert_id',NOW(),'$insert_id')";
+			$resultset_2 = $this->db->query($query_2);
 
-			$s=$email;
-			$encrypt_email= base64_encode($s);
+		  if($resultset_2){
+				$encrypt_email = base64_encode($email);
+				$subject = "Welcome to ENSYFI App";
+				$htmlContent = '<html>
+								<p>Dear Customer</p>
+								<p>To allow us to confirm the validity of your email address, click this verification link. <a href="'.base_url().'home/emailverfiy/'.$encrypt_email.'" target="_blank">Verfiy  Here</a></center></p>
+								<p>Ensyfi Team</p>
+								</html>';
+				$this->sendMail($email,$subject,$htmlContent);
 
-			  if($resultset_2){
-					$to=$email;
-					$subject="Welcome to ENSYFI App";
-					$htmlContent = '
-					<html>
-					<head>
-					<title></title>
-					   </head>
-					   <body style="background-color:#E4F1F7;"><div style="background-image: url('.base_url().'assets/front/images/email_1.png);height:700px;margin: auto;width: 100%;background-repeat: no-repeat;">
-						  <div  style="padding:50px;width:400px;"><p>Dear Customer</p>
-						 <p style="font-size:20px;">Welcome to
-						  <center><img src="'.base_url().'assets/front/images/heyla_b.png" style="width:120px;"></center>
-						 </p>
-						 <p style="margin-left:50px;"> <br>
-						 To allow us to confirm the validity of your email address,click this verification link. <center>   <a href="'. base_url().'home/emailverfiy/'.$encrypt_email.'" target="_blank"style="background-color: #478ECC;    padding: 12px;    text-decoration: none;    color: #fff;    border-radius: 20px;">Verfiy  Here</a></center>  </p>
-						 <p style="font-size:20px;">Thank you and enjoy, <br>
-						   The Heyla Team
-						   </p>
-						 </body>
-					  </html>';
-					$headers = "MIME-Version: 1.0" . "\r\n";
-					$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-					// Additional headers
-					$headers .= 'From: ensyfi<info@ensyfi.com>' . "\r\n";
-					$sent= mail($to,$subject,$htmlContent,$headers);
-					
-					$data = array("status" => "success","last_id"=>$insert_id);
-					return $data;
-			  }else{
-					$data = array("status" => "failed");
-					return $data;
-			  }
+				$data = array("status" => "success","last_id"=>$insert_id);
+				return $data;
+		  }else{
+				$data = array("status" => "failed");
+				return $data;
+		  }
 	}
 
 //-------------------------------------------------//	

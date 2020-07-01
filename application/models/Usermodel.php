@@ -26,7 +26,7 @@ Class Usermodel extends CI_Model
 	function sendSMS($user_mobile,$mobile_message)
 	{
         //Your authentication key
-          $authKey = "191431AStibz285a4f14b4";
+          $authKey = "308533AMShxOBgKSt75df73187";
 
           //Multiple mobiles numbers separated by comma
           $mobile = "$user_mobile";
@@ -301,8 +301,8 @@ Class Usermodel extends CI_Model
         		$config = array();
         		$config['hostname'] = "localhost";
         		$config['username'] = "root";
-				//$config['password'] = "";
-        		$config['password'] = "O+E7vVgBr#{}";
+				$config['password'] = "";
+        		//$config['password'] = "O+E7vVgBr#{}";
         		$config['database'] = $base_db;
         		$config['dbdriver'] = "mysqli";
         		$config['dbprefix'] = "";

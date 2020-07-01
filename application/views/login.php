@@ -1,7 +1,6 @@
 <section id="contact-us" class="footer-info white-bg" style="margin-top:100px;">
     <div class="container">
         <div class="row justify-content-center" id="login_section">
-			
 			<div class="col-md-6 col-lg-6">
                 <div class="iq-get-in">
                     <h4 class="iq-tw-7 iq-mb-20">Customer Login</h4>
@@ -9,10 +8,10 @@
                         <div class="contact-form">
 
                             <div class="section-field">
-                                <input class="require" id="email" type="text" placeholder="Mobile or Email*" name="email">
+                                <input class="require" id="email" type="text" placeholder="Mobile or Email*" name="email" maxlength="30">
                             </div>
                             <div class="section-field">
-                                <input class="require" id="contact_name" type="password" placeholder="Password*" name="password">
+                                <input class="require" id="contact_name" type="password" placeholder="Password*" name="password" maxlength="10">
                             </div>
                             <div class="section-field">
                                 <p id="res"></p>
@@ -39,12 +38,15 @@
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>-->
+            </div>-->
+        </div>
 		
 		
         <div class="row justify-content-center" id="ins_details">
-            <div class="col-md-6 col-lg-6">
+		<div class="row">
+            <div class="col-sm-12 col-lg-3 col-md-3"></div>
+			
+			<div class="col-sm-12 col-lg-6 col-md-6">
                 <div class="iq-get-in">
                     <h4 class="iq-tw-7 iq-mb-20">Institute Details</h4>
                     <form id="ins_detail_form" method="post" action="" enctype="multipart/form-data">
@@ -83,13 +85,16 @@
 								<input  id="last_insert" type="hidden" name="last_insert" value="">
                             <button id="Save" name="submit" type="submit" value="Send" class="button iq-mt-15">Save</button>
 
-                        </div>
-                    </form>
-                </div>
-            </div>
+							</div>
+						</form>
+					</div>
+				</div>
+			
+				<div class="col-sm-12 col-lg-3 col-md-3"></div>
+			</div>
         </div>
-    </div>
 
+    </div>
 </section>
 <style>
 #ins_details{

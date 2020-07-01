@@ -181,6 +181,8 @@ if ($con) {
 					 $update_plan = "UPDATE institute_plan_history SET status = 'Expiry' WHERE id ='$plan_id'";
                      $objRs1 = mysql_query($update_plan);
 					 
+					 $update_plan = "UPDATE institute_master SET status = 'Inactive' WHERE id ='$institute_master_id'";
+                     $objRs3 = mysql_query($update_plan);
 					 
 						$inst_details = "SELECT A.id,A.institute_code,A.email,A.mobile,A.email_verify,A.mobile_verify,B.* FROM institute_master A, institute_details B WHERE A.id = B.institute_master_id AND A.id = '$institute_master_id'";
 						$objRs2 = mysql_query($inst_details);
@@ -196,7 +198,7 @@ if ($con) {
 						}
 						$subject = "Ensyfi";
 						$htmlContent = "Hi ".$institute_name.", <br><br>Your Plan Expired.";
-						//sendMail($email,$subject,$htmlContent);
+						sendMail($email,$subject,$htmlContent);
 
 						$mobile_message = "Hi ".$institute_name.", Your Plan Expired";
 						sendSMS($mobile,$mobile_message);	

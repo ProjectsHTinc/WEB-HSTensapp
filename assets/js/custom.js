@@ -499,7 +499,7 @@ $(document).ready(function() {
 						 if (stats=="success") {
 						   swal({
 							 title: "Thank you for Registering!",
-							 text: "Verfiy Your Email",
+							 text: "Please login with your credentials",
 							 type: "success"
 						 }).then(function() {
 							 window.location = "login";
@@ -536,6 +536,7 @@ $(document).ready(function() {
 				 dataType: "json",
 				 success: function(response) {
 					var stats=response.status;
+					//alert(stats);
 					 if (stats=="success") {
 					   swal('Logging in Please wait')
 					   window.setTimeout(function () {
