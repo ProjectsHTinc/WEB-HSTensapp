@@ -2,28 +2,10 @@
 
 class Apimain extends CI_Controller {
 
-
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
-
 	public function index()
 	{
 		$this->load->view('welcome_message');
 	}
-
 
 	function __construct()
     {
@@ -35,6 +17,7 @@ class Apimain extends CI_Controller {
 
 	public function checkMethod()
 	{
+		$_SERVER['REQUEST_METHOD'];
 		if($_SERVER['REQUEST_METHOD'] != 'POST')
 		{
 			$res = array();
@@ -47,8 +30,7 @@ class Apimain extends CI_Controller {
 		return TRUE;
 	}
 
-
-//-----------------------------------------------//
+	//-----------------------------------------------//
 
 	public function chk_institute_code()
 	{
@@ -59,19 +41,7 @@ class Apimain extends CI_Controller {
 			return FALSE;
 		}
 
-		if($_POST == FALSE)
-		{
-			$res = array();
-			$res["opn"] = "Login";
-			$res["scode"] = 204;
-			$res["message"] = "Input error";
-
-			echo json_encode($res);
-			return;
-		}
-
 		$institute_code = '';
-
 		$institute_code = $this->input->post("institute_code");
 
 		$data['result']=$this->apimainmodel->chkInstitutecode($institute_code);

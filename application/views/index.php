@@ -846,9 +846,7 @@ Ensyfi is a solution that aims to simplify administrative processes and connect 
     <div id="back-to-top">
         <a class="top" id="top" href="#top"> <i class="ion-ios-upload-outline"></i> </a>
     </div>
-
-
-
+	
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/popper.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>

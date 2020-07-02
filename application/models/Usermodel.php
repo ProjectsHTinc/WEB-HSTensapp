@@ -268,6 +268,7 @@ Class Usermodel extends CI_Model
 		foreach($sResult->result() as $row){
 		   $institute_name = $row->institute_name;
 		   $institute_code = $row->institute_code;
+		   $enc_institute_code = $row->enc_institute_code;
 		   $contact_person = $row->contact_person;
 		   $institute_type_id = $row->institute_type;
 		   $email = $row->email;
@@ -278,9 +279,9 @@ Class Usermodel extends CI_Model
 		$date = strtotime("+30 day");
 		$expiry_day = date('Y-m-d', $date);
 
-		$length = 6;    
+		$length = 8;    
 		$random_string = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1,$length);
-		$random_string = "abc123";
+		//$random_string = "abc123";
 		$random_password = md5($random_string);
 
 		$sQuery = "SELECT * FROM institute_plans WHERE master_plan_id = '$master_plan_id' AND institute_master_id = '$institute_master_id' AND status = 'Requested'";
@@ -333,20 +334,19 @@ Class Usermodel extends CI_Model
         		}
         
         		$query = "INSERT INTO edu_users(`user_id`, `school_id`, `name`, `user_name`, `user_password`, `user_pic`, `user_type`, `user_master_id`, `parent_id`, `teacher_id`, `student_id`, `created_date`, `updated_date`, `status`, `last_login_date`, `login_count`, `password_status`) VALUES
-        (1, '$institute_code', '$institute_name', 'admin', '21232f297a57a5a743894a0e4a801fc3', '', 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active', '0000-00-00 00:00:00', 0, 1)";
+        (1, '$institute_code', '$institute_name', 'admin', '$random_password', '', 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Active', '0000-00-00 00:00:00', 0, 1)";
         		$result = $this->db_1->query($query);
         		
         		$this->db_1->close();
         		
         		//#-------------DATABASE AND TABLE CREATION END--------------#//
-        		
 
         		
         		$src = $_SERVER["DOCUMENT_ROOT"]."/ensyfi_source_code";
-        		$dst = $_SERVER["DOCUMENT_ROOT"]."/".$institute_code;
+        		$dst = $_SERVER["DOCUMENT_ROOT"]."/".$enc_institute_code;
         		$this->folder_copy($src,$dst);
         
-        		$dbFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/database.php";
+        		$dbFile = $_SERVER['DOCUMENT_ROOT'] . "/$enc_institute_code/application/config/database.php";
         		$fDb = fopen($dbFile,"w");
 $string = <<<MOD
 <?php
@@ -380,7 +380,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     'hostname' => 'localhost',
     'username' => 'root',
     'password' => 'O+E7vVgBr#{}',
-    'database' => 'ensyfi_newsite',
+    'database' => 'ensyfi_master',
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
@@ -402,9 +402,9 @@ MOD;
         		fclose($fDb);
         		chmod($dbFile,0777);
         		
-        		$base_url = "https://ensyfi.com/".$institute_code;
+        		$base_url = "https://ensyfi.com/".$enc_institute_code;
         
-        		$conFile = $_SERVER['DOCUMENT_ROOT'] . "/$institute_code/application/config/config.php";
+        		$conFile = $_SERVER['DOCUMENT_ROOT'] . "/$enc_institute_code/application/config/config.php";
         		$fcon = fopen($conFile,"w");
 $content = <<<POD
 <?php
@@ -475,10 +475,10 @@ POD;
         	    $result = $this->db->query($query);     	    
         	    
         	    $subject = "Ensyfi - Login details";
-				$htmlContent = "Hi ".$institute_name.", <br><br>Website URL : https://ensyfi.com/".$institute_code."/ <br>Institute code : ".$institute_code."<br>Username : admin<br>Password : admin<br><br><br>Ensyfi";
+				$htmlContent = "Hi ".$institute_name.", <br><br>Website URL : https://ensyfi.com/".$enc_institute_code."/ <br>Institute code : ".$institute_code."<br>Username : admin<br>Password : ".$random_string."<br><br><br>Ensyfi";
 				$this->sendMail($email,$subject,$htmlContent);
 
-				$mobile_message = "Hi ".$institute_name.", Plan successfully placed. Login details \n URL : https://ensyfi.com/".$institute_code."/ \n Institute code : ".$institute_code."\n User Name : admin \n Password : admin";
+				$mobile_message = "Hi ".$institute_name.", Plan successfully placed. Login details \n URL : https://ensyfi.com/".$enc_institute_code."/ \n Institute code : ".$institute_code."\n User Name : admin \n Password : ".$random_string."";
 				$this->sendSMS($mobile,$mobile_message);	
 				
         		$response = array("status" => "success");

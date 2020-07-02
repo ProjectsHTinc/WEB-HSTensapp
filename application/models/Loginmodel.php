@@ -265,11 +265,12 @@ Class Loginmodel extends CI_Model
 				}
 			}
 			$institute_code = $old_institute_code +9;
+			$enc_institute_code = base64_encode($institute_code);
 			
 			$query = "SELECT * FROM `institute_master` ORDER BY id DESC LIMIT 1 ";
 			$resultset = $this->db->query($query);
 			 
-			$query = "INSERT INTO institute_master(institute_code,email,email_verify,mobile,mobile_otp,mobile_verify,password,user_role,status,detail_flag,created_at) VALUES('$institute_code','$email','N','$phone','$otp','N','$password','2','Active','0',NOW())";
+			$query = "INSERT INTO institute_master(institute_code,enc_institute_code,email,email_verify,mobile,mobile_otp,mobile_verify,password,user_role,status,detail_flag,created_at) VALUES('$institute_code','$enc_institute_code','$email','N','$phone','$otp','N','$password','2','Active','0',NOW())";
 			$resultset = $this->db->query($query);
 			$insert_id = $this->db->insert_id();
 			 

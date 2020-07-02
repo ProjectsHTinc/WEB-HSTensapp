@@ -79,7 +79,7 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => '',
 //	'password' => 'O+E7vVgBr#{}',
-	'database' => 'ensapp',
+	'database' => 'ensyfi_master',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -96,7 +96,7 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
-$db['second']=array(
+/* $db['second']=array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
@@ -116,4 +116,4 @@ $db['second']=array(
 	'stricton' => FALSE,
 	'failover' => array(),
 	'save_queries' => TRUE
-);
+); */
