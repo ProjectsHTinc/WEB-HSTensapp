@@ -413,12 +413,41 @@ Class Adminmodel extends CI_Model
 
 	function update_customer_details($user_id,$customer_id,$mobile,$status){
 		
-		/* //------------Connect demo DB ---------------//
-			$this->db_second = $this->load->database('second', TRUE); 
-			$query = "UPDATE `edu_users` SET `status`='$status',`updated_date`=now() WHERE user_name ='$mobile'";
-			$res = $this->db_second->query($query);
-			$this->db_second->close();
-		//------------Connect demo DB End---------------// */
+		$sQuery = "SELECT * FROM institute_master WHERE id = '$customer_id'";
+		$sResult = $this->db->query($sQuery);	
+		foreach($sResult->result() as $srow){
+			$institute_code = $srow->institute_code ;
+		}
+			
+		$base_db =  "ensyfi_".$institute_code;					
+		$config = array();
+		$config['hostname'] = "localhost";
+		$config['username'] = "root";
+		$config['password'] = "";
+		//$config['password'] = "O+E7vVgBr#{}";
+		$config['database'] = $base_db;
+		$config['dbdriver'] = "mysqli";
+		$config['dbprefix'] = "";
+		$config['pconnect'] = FALSE;
+		$config['db_debug'] = TRUE;
+		$config['cache_on'] = FALSE;
+		$config['cachedir'] = "";
+		$config['char_set'] = "utf8";
+		$config['dbcollat'] = "utf8_general_ci";
+
+		$CI =& get_instance();
+		$CI->db_1 = $CI->load->database($config, TRUE);
+		$CI->db_1 =& $CI->db_1;
+
+
+		if ($status == 'Inactive'){
+			$update="UPDATE edu_users SET status = 'Deactive'";
+			$result=$this->db_1->query($update);
+		} else {
+			$update="UPDATE edu_users SET status = 'Active'";
+			$result=$this->db_1->query($update);
+		}
+		$this->db_1->close();	
 				
 				
 		$query = "UPDATE `institute_master` SET `status`='$status',`updated_by`='$user_id',`updated_at`=now() WHERE id ='$customer_id'";

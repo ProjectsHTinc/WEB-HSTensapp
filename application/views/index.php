@@ -1,3 +1,10 @@
+<?php 
+  
+  echo $hash = crypt('191928');
+  
+
+  
+?> 
 <!doctype html>
 <html lang="en">
 

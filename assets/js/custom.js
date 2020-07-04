@@ -536,20 +536,27 @@ $(document).ready(function() {
 				 dataType: "json",
 				 success: function(response) {
 					var stats=response.status;
-					//alert(stats);
-					 if (stats=="success") {
-					   swal('Logging in Please wait')
+					var last_id = response.last_id;
+					var last_insert_id = response.last_insert_id;
+					if (stats=="success") {
+					   swal('Logging in Please wait');
 					   window.setTimeout(function () {
 						location.href = "dashboard";
 					}, 3000);
-
+					}else if(stats=='otpverify'){
+					  $("#loading").hide();
+					  $("#otp_section").show();
+					  $('#last_insert_id').val(response.last_insert_id);
+					  $("#ins_details").hide();
+					  $('#login_section').hide();
 				   }else if(stats=='incomplete'){
 					 $("#loading").hide();
-					  $('#last_insert').val(response.last_id)
 					  $("#ins_details").show();
+					  $('#last_insert').val(response.last_id);
 					  $('#login_section').hide();
+					  $("#otp_section").hide();
 				   }else{
-					   $('#res').html(response.msg)
+					   $('#res').html(response.msg);
 					   }
 				 }
 			 });
@@ -622,7 +629,12 @@ $(document).ready(function() {
 						$("#otp_section").hide();
 						$("#ins_details").show();
 						$('#first_form').hide();
-
+					}else if(stats=='incomplete'){
+					 $("#loading").hide();
+					  $("#ins_details").show();
+					  $('#last_insert').val(response.last_id);
+					  $('#login_section').hide();
+					  $("#otp_section").hide();
 				   }else{
 					   $('#res').html(response.msg)
 					   }

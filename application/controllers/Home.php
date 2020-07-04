@@ -70,7 +70,8 @@ class Home extends CI_Controller {
 	public function check_otp(){
 		$otp=$this->db->escape_str($this->input->post('otp'));
 		$last_insert=$this->db->escape_str($this->input->post('last_insert'));
-		$data['res']=$this->loginmodel->check_otp($otp,$last_insert);
+		$last_insert_id=$this->db->escape_str($this->input->post('last_insert_id'));
+		$data['res']=$this->loginmodel->check_otp($otp,$last_insert,$last_insert_id);
 		echo json_encode($data['res']);
 	}
 
@@ -126,6 +127,7 @@ class Home extends CI_Controller {
 
 	public function get_ins_details(){
 		$last_insert=$this->db->escape_str($this->input->post('last_insert'));
+		$last_insert_id=$this->db->escape_str($this->input->post('last_insert_id'));
 		$institute_name=$this->db->escape_str($this->input->post('institute_name'));
 		$institute_type=$this->db->escape_str($this->input->post('institute_type'));
 		$person_designation=$this->db->escape_str($this->input->post('person_designation'));
@@ -136,7 +138,7 @@ class Home extends CI_Controller {
 		$how_you_hear=$this->db->escape_str($this->input->post('how_you_hear'));
 		$notes=$this->db->escape_str($this->input->post('notes'));
 		
-		$data['res']=$this->loginmodel->get_ins_details($last_insert,$institute_name,$institute_type,$person_designation,$contact_person,$city,$state,$no_of_student,$how_you_hear,$notes);
+		$data['res']=$this->loginmodel->get_ins_details($last_insert_id,$last_insert,$institute_name,$institute_type,$person_designation,$contact_person,$city,$state,$no_of_student,$how_you_hear,$notes);
 		echo json_encode($data['res']);
 	}
 
@@ -166,5 +168,14 @@ class Home extends CI_Controller {
 	}
 	
 //-------------------------------------------------//	
+
+//-------------------------------------------------//	
+
+	public function plan_expiry_check(){
+		$data['res']=$this->loginmodel->plan_expiry_check();
+		//echo $data['res']['msg'];
+	}
+//-------------------------------------------------//	
+
 
 }

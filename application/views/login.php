@@ -41,7 +41,35 @@
             </div>-->
         </div>
 		
-		
+		<div class="container">
+        <div class="row justify-content-center" id="otp_section">
+		<div class="row">
+            <div class="col-sm-12 col-lg-3 col-md-3"></div>
+			
+            <div class="col-sm-12 col-lg-6 col-md-6">
+                <div class="iq-get-in">
+                    <h4 class="iq-tw-7 iq-mb-20">Mobile verification</h4>
+                    <form id="mobile_otp_form" method="post" action="" enctype="multipart/form-data">
+                        <div class="contact-form">
+                            <div class="section-field">
+                                <input class=" " id="name" type="text" placeholder="Enter the OTP*" name="otp">
+                               
+                            </div>
+                          <!-- <span id="count">10</span> seconds... <span><a onclick="resend_otp()" id="resent_btn">Resend OTP</a></span></p> -->
+                            <div class="section-field">
+                                <p id="res"></p>
+                            </div>
+							 <input id="last_insert_id" type="hidden" name="last_insert_id" value="">
+                            <button id="submit" name="submit" type="submit" value="Send" class="button iq-mt-15">Submit OTP</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+			<div class="col-sm-12 col-lg-3 col-md-3"></div>
+		</div>
+        </div>
+	</div>
+	
         <div class="row justify-content-center" id="ins_details">
 		<div class="row">
             <div class="col-sm-12 col-lg-3 col-md-3"></div>
@@ -81,8 +109,9 @@
                                 <input class="" id="how_you_hear" type="text" placeholder="How You Hear us.." name="how_you_hear">
                             </div>
                             <div class="section-field">
-                                <textarea class="" id="notes" type="text" rows="6" cols="6" placeholder="Add Notes" name="notes"></textarea></div>
-								<input  id="last_insert" type="hidden" name="last_insert" value="">
+                                <textarea class="" id="notes" type="text" rows="6" cols="6" placeholder="Add Notes" name="notes"></textarea>
+							</div>
+								<input id="last_insert" type="hidden" name="last_insert" value="">
                             <button id="Save" name="submit" type="submit" value="Send" class="button iq-mt-15">Save</button>
 
 							</div>
@@ -103,4 +132,8 @@
 #loading{
   display: none;
 }
+#otp_section{
+  display: none;
+}
+
 </style>

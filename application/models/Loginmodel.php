@@ -165,39 +165,39 @@ Class Loginmodel extends CI_Model
 //-------------------------------------------------//	
 	function check_login($email,$password)
 	{
-		  $query = "SELECT * FROM institute_master WHERE  email = '$email' OR mobile = '$email'";
-		  $resultset = $this->db->query($query);
-	  
-			if($resultset->num_rows()==1){
-				$pwdcheck = "SELECT * FROM institute_master WHERE (email='$email' OR mobile = '$email') AND password='$password'";
+				$pwdcheck = "SELECT * FROM institute_master WHERE (email='$email' OR mobile = '$email') AND password='$password' AND status = 'Active'";
 				$res = $this->db->query($pwdcheck);
-
-				if($res->num_rows()==1){
+				
+				
+				if($res->num_rows()>0){
 					foreach($res->result() as $rows){
-
-					 $institute_master_id = $rows->id;
-					 $quer="SELECT * FROM institute_master WHERE id='$institute_master_id'";
+						$institute_master_id = $rows->id;
+					}
+					
+					 $quer = "SELECT * FROM institute_master WHERE id='$institute_master_id'";
 					 $resultset = $this->db->query($quer);
 					 $email_verify = $rows->email_verify;
-					
+					 $mobile_verify=$rows->mobile_verify;
+					 $detail_flag=$rows->detail_flag;
+					 $status= $rows->status;
+					 
 					/*  if($email_verify=='N'){
 					   $data= array("status" => "failed","msg" => "Your email is not verfied! Please contact admin");
 					   return $data;
 					 }  */
 					 
-					 $mobile_verify=$rows->mobile_verify;
+					 
 					 if($mobile_verify=='N'){
-					   $data= array("status" => "failed","msg" => "Your mobile number is not verfied! Please contact admin");
-					   return $data;
-					 }
-				 
-					 $detail_flag=$rows->detail_flag;
-					 if($detail_flag=='0'){
-					   $data= array("status" => "incomplete","msg" => "Fill the Insitute details","last_id"=>$rows->id);
+					   $data= array("status" => "otpverify","msg" => "Your mobile number is not verfied!","last_insert_id"=>$institute_master_id);
 					   return $data;
 					 }
 					 
-					$status= $rows->status;
+					 if($detail_flag=='0'){
+					   $data= array("status" => "incomplete","msg" => "Fill the Insitute details","last_id"=>$institute_master_id);
+					   return $data;
+					 }
+					 
+					
 
 				 switch($status){
 					case "Active":
@@ -216,7 +216,8 @@ Class Loginmodel extends CI_Model
 						   $expiry_date = $srow->expiry_date ;
 						   $plan_id = $srow->id ;
 					}
-					$current_date = date("Y-m-d H:i:s"); ;
+					
+						$current_date = date("Y-m-d H:i:s"); ;
 						
 						if ($current_date >= $expiry_date){
 							 $update_query = "UPDATE institute_plan_history SET status ='Expiry' WHERE institute_master_id='$plan_id'";
@@ -234,18 +235,13 @@ Class Loginmodel extends CI_Model
 							return $data;
 					  break;
 					  }
-				   }
+				   
 				 }
 				 else{
 					$data= array("status" => "failed","msg" => "Invalid Mobile or Email or Password");
 					return $data;
 				 }
-			 }
-			else{
-			  $data= array("status" => "failed","msg" => "Invalid Mobile or Email or Password");
-			  return $data;
-
-		}
+			 
 
 	}
 
@@ -297,11 +293,17 @@ Class Loginmodel extends CI_Model
 
 //-------------------------------------------------//	
 
-	function get_ins_details($last_insert,$institute_name,$institute_type,$person_designation,$contact_person,$city,$state,$no_of_student,$how_you_hear,$notes){
-		  $update_query ="UPDATE institute_details SET institute_name='$institute_name',person_designation='$person_designation',contact_person='$contact_person',institute_type='$institute_type',city='$city',state='$state',no_of_student='$no_of_student',how_you_hear='$how_you_hear',notes='$notes',updated_by='$last_insert',updated_at=NOW()  WHERE institute_master_id='$last_insert'";
+	function get_ins_details($last_insert_id,$last_insert,$institute_name,$institute_type,$person_designation,$contact_person,$city,$state,$no_of_student,$how_you_hear,$notes){
+		  
+		  if ($last_insert_id !=''){
+			  $id = $last_insert_id;
+		  } else {
+			  $id = $last_insert;
+		  }
+		  $update_query ="UPDATE institute_details SET institute_name='$institute_name',person_designation='$person_designation',contact_person='$contact_person',institute_type='$institute_type',city='$city',state='$state',no_of_student='$no_of_student',how_you_hear='$how_you_hear',notes='$notes',updated_by='$id',updated_at=NOW()  WHERE institute_master_id='$id'";
 		  $resultset_2=$this->db->query($update_query);
 		  
-		  $update_query_2="UPDATE institute_master SET detail_flag='1',updated_by='$last_insert',updated_at=NOW() WHERE id='$last_insert'";
+		  $update_query_2="UPDATE institute_master SET detail_flag='1',updated_by='$id',updated_at=NOW() WHERE id='$id'";
 		  $resultset_update=$this->db->query($update_query_2);
 		  
 		  if($resultset_update){
@@ -355,14 +357,27 @@ Class Loginmodel extends CI_Model
 
 //-------------------------------------------------//	
 
-	function check_otp($otp,$last_insert){
-		$select="SELECT * FROM institute_master Where mobile_otp='$otp' AND id='$last_insert'";
+	function check_otp($otp,$last_insert,$last_insert_id){
+		
+		if ($last_insert_id !=''){
+			  $id = $last_insert_id;
+		  } else {
+			  $id = $last_insert;
+		  }
+		  
+		$select="SELECT * FROM institute_master Where mobile_otp='$otp' AND id='$id'";
 		$result=$this->db->query($select);
 	   
 		if($result->num_rows()==1){
-			$update="UPDATE institute_master SET mobile_verify='Y' WHERE id='$last_insert'";
+			$update="UPDATE institute_master SET mobile_verify='Y' WHERE id='$id'";
 			$result=$this->db->query($update);
-			$data = array("status" => "success","last_id"=>$last_insert);
+			
+			if ($last_insert_id !=''){
+				 $data= array("status" => "incomplete","msg" => "Fill the Insitute details","last_id"=>$id);
+			} else {
+				$data = array("status" => "success","last_id"=>$id);
+			}
+			
 			return $data;
 		 }else{
 		   $data = array("status" => "failed","msg"=>"Invalid OTP");
@@ -404,7 +419,75 @@ Class Loginmodel extends CI_Model
 
 //-------------------------------------------------//	
 
+//-------------------------------------------------//	
 
+	function plan_expiry_check(){
+
+			$check_plan="SELECT * FROM institute_plan_history WHERE DATE_FORMAT(expiry_date,'%Y-%m-%d') <= DATE_FORMAT(now(), '%Y-%m-%d')";
+			$res=$this->db->query($check_plan);
+			if($res->num_rows()>0){
+				foreach($res->result() as $rows){
+						$plan_id=$rows->id;
+						$institute_master_id=$rows->institute_master_id;
+
+					$update="UPDATE institute_plan_history SET status = 'Expiry' WHERE id ='$plan_id'";
+					$result=$this->db->query($update);
+			   
+					$update_1="UPDATE institute_master SET status = 'Inactive' WHERE id ='$institute_master_id'";
+					$result=$this->db->query($update_1);
+					
+					$check_inst = "SELECT A.id,A.institute_code,A.email,A.mobile,A.email_verify,A.mobile_verify,B.* FROM institute_master A, institute_details B WHERE A.id = B.institute_master_id AND A.id = '$institute_master_id'";
+					$inst_res=$this->db->query($check_inst);
+					
+					if($inst_res->num_rows()>0){
+						foreach($inst_res->result() as $rows_1){
+							$email = $rows_1->email;
+							$mobile = $rows_1->mobile;
+							$institute_name = $rows_1->institute_name;
+							$institute_code = $rows_1->institute_code;
+						}
+					}
+					
+					$base_db =  "ensyfi_".$institute_code;					
+					$config = array();
+					$config['hostname'] = "localhost";
+					$config['username'] = "root";
+					$config['password'] = "O+E7vVgBr#{}";
+					$config['database'] = $base_db;
+					$config['dbdriver'] = "mysqli";
+					$config['dbprefix'] = "";
+					$config['pconnect'] = FALSE;
+					$config['db_debug'] = TRUE;
+					$config['cache_on'] = FALSE;
+					$config['cachedir'] = "";
+					$config['char_set'] = "utf8";
+					$config['dbcollat'] = "utf8_general_ci";
+			
+					$CI =& get_instance();
+					$CI->db_1 = $CI->load->database($config, TRUE);
+					$CI->db_1 =& $CI->db_1;
+			
+					$update="UPDATE edu_users SET status = 'Deactive'";
+					$result=$this->db_1->query($update);
+
+					$this->db_1->close();	
+					
+
+					$subject = "Ensyfi - Plan Expiry Notification";
+					$htmlContent = "Hi ".$institute_name.", <br><br>Your Ensyfi Plan Expired.";
+					$this->sendMail($email,$subject,$htmlContent);
+
+					$mobile_message = "Hi ".$institute_name.", Your Ensyfi Plan Expired.";
+					$this->sendSMS($mobile,$mobile_message);
+				}
+				$data=array("msg"=>"verify");
+			} else {
+				$data=array("msg"=>"error");
+			}
+			return $data;
+	 }
+
+//-------------------------------------------------//	
 
 
 
